@@ -4,11 +4,11 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			I den övre vänstra delen av skärmen kan du se den Peercoin adress som andra behöver för att kunna skicka Peercoins till dig.
-			Tryck med fingret på adressen för att skaffa dig en ny Peercoin adress.
+			I den övre vänstra delen av skärmen kan du se den Nubits adress som andra behöver för att kunna skicka Nubits till dig.
+			Tryck med fingret på adressen för att skaffa dig en ny Nubits adress.
 		</p>
 		<p>
-			QR koden till höger innehåller din Peercoin adress och kan scannas av de som vill skicka dig Peercoins.
+			QR koden till höger innehåller din Nubits adress och kan scannas av de som vill skicka dig Nubits.
 			Tryck med fingret på QR koden så visas en större version av den.
 		</p>
 		<p>
@@ -23,7 +23,7 @@
 			Dra med fingret åt vänster eller höger för att filtrera listan.
 		</p>
 		<p>
-			Du kan sända eller ta emot Peercoins genom att trycka med fingret på knapparna i aktivitetslistan.
+			Du kan sända eller ta emot Nubits genom att trycka med fingret på knapparna i aktivitetslistan.
 			Fler val är möjliga i menyn.
 		</p>
 	]]>
@@ -31,43 +31,43 @@
 	<string name="help_request_coins">
 <![CDATA[
 		<p>
-			Med denna dialog kan du ta emot Peercoins från någon annan (som redan har Peercoin Wallet installerad på sin telefon).
+			Med denna dialog kan du ta emot Nubits från någon annan (som redan har Nubits Wallet installerad på sin telefon).
 		</p>
 		<p>
-			Först anger du hur många Peercoins du vill att de skickar.
+			Först anger du hur många Nubits du vill att de skickar.
 		</p>
 		<p>
 			Sedan kan den andra personen scanna QR koden.
-			Eller så använder du "Dela" knappen i aktivitetslistan för att skicka din uppmaning att skicka Peercoins.
-			Den andra personen behöver sedan bara klicka på den Peercoin URL du skickat.
+			Eller så använder du "Dela" knappen i aktivitetslistan för att skicka din uppmaning att skicka Nubits.
+			Den andra personen behöver sedan bara klicka på den Nubits URL du skickat.
 		</p>
 		<p>
 			Sedan kommer den andra personen att få se en dialogruta där alla fält redan är ifyllda.
-			Om han eller hon sedan accapterar transaktionen så skickas Peercoins till dig.
+			Om han eller hon sedan accapterar transaktionen så skickas Nubits till dig.
 		</p>
 	]]>
 	</string>
 	<string name="help_send_coins">
 <![CDATA[
 		<p>
-			Du har påbörjat skickandet av Peercoins.
-			Du kom hit endera från huvudskärmen eller genom att klicka på en Peercoin URL i din webbläsare.
+			Du har påbörjat skickandet av Nubits.
+			Du kom hit endera från huvudskärmen eller genom att klicka på en Nubits URL i din webbläsare.
 		</p>
 		<p>
-			Ange först vilken Peercoin adress du vill skicka till.
+			Ange först vilken Nubits adress du vill skicka till.
 			Adressen kan automatiskt fyllas i om den börjar med någon av adresserna i din adressbok.
-			Du kan också scanna en QR kod innehållande en Peercoin adress, genom att trycka på QR knappen i aktivitetslistan.
+			Du kan också scanna en QR kod innehållande en Nubits adress, genom att trycka på QR knappen i aktivitetslistan.
 		</p>
 		<p>
-			Sedan kan du se hur många Peercoins du för tillfället kan skicka.
+			Sedan kan du se hur många Nubits du för tillfället kan skicka.
 			Om det antalet skiljer sig från det som visas på huvudskärmen, så beror det på hittills obekräftade överföringar som du ännu inte får använda.
 		</p>
 		<p>
-			Slutligen anger du hur många Peercoins du vill skicka vill betalar.
+			Slutligen anger du hur många Nubits du vill skicka vill betalar.
 		</p>
 		<p>
 			Du kan skapa en transaktion även om du inte är online.
-			Den kommer att skickas nästa gång Peercoin Wallet startas.
+			Den kommer att skickas nästa gång Nubits Wallet startas.
 			Om du vill att en transaktion ska processas så fort som möjligt, se till att ha bra koppling till internet (exempelvis ett WLAN).
 		</p>
 		<p>
@@ -80,20 +80,20 @@
 	<string name="help_safety">
 <![CDATA[
 		<p>
-			<b>Några ord om säkerhet och Peercoins:</n>
+			<b>Några ord om säkerhet och Nubits:</n>
 		</p>
 		<p>
-			Dina Peercoins i Peercoin Wallet sparas på din Android telefon.
-			<b>Om du tappar bort din telefon, så tappar du bort dina Peercoins.</b>
+			Dina Nubits i Nubits Wallet sparas på din Android telefon.
+			<b>Om du tappar bort din telefon, så tappar du bort dina Nubits.</b>
 			Precis som pengar i din vanliga plånbok.
 		</p>
 		<p>
-			<b>Innan du avinstallerar Peercoin Wallet</b> (eller tar bort appens data/rensar din telefon), <b>skicka dina Peercoins till en annan plånbok</b>.
-			Alla kvarvarande Peercoins kommer att försvinna.
+			<b>Innan du avinstallerar Nubits Wallet</b> (eller tar bort appens data/rensar din telefon), <b>skicka dina Nubits till en annan plånbok</b>.
+			Alla kvarvarande Nubits kommer att försvinna.
 		</p>
 		<p>
 			<b>Transaktioner kan inte stoppas</b>.
-			Efter att du skickat Peercoins finns det inget sätt att få dem tillbaka, annat än om du vet vem mottagaren är, och han/hon skickar dem tillbaka.
+			Efter att du skickat Nubits finns det inget sätt att få dem tillbaka, annat än om du vet vem mottagaren är, och han/hon skickar dem tillbaka.
 		</p>
 		<p>
 			<b>Se till att skydda din telefon!</b>
@@ -102,7 +102,7 @@
 		</p>
 		<p>
 			Utsätt dig inte för onödig risk!
-			<b>Använd bara Peercoin Wallet med mindre belopp</b> för daglig användning.
+			<b>Använd bara Nubits Wallet med mindre belopp</b> för daglig användning.
 		</p>
 	]]>
 	</string>

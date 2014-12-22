@@ -16,7 +16,7 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
-import com.matthewmitchell.peercoin_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

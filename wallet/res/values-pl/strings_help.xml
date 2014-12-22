@@ -4,11 +4,11 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			Po lewej górnej stronie ekranu wyświetlany jest Twój aktualnie wybrany adres Peercoin, który inne osoby muszą znać żeby wysłać Ci Peercoin.
+			Po lewej górnej stronie ekranu wyświetlany jest Twój aktualnie wybrany adres Nubits, który inne osoby muszą znać żeby wysłać Ci Nubits.
 			Naciśnij żeby, go zmienić.
 		</p>
 		<p>
-			Kod QR po prawej zawiera Twój adres Peercoin i może zeskanowany przez inną osobę.
+			Kod QR po prawej zawiera Twój adres Nubits i może zeskanowany przez inną osobę.
 			Naciśnij na kod QR żeby otrzymać jego większą wersje.
 		</p>
 		<p>
@@ -31,18 +31,18 @@
 	<string name="help_request_coins">
 <![CDATA[
 		<p>
-			Przy pomocy tego dialogu, możesz wysłać prośbę o Peercoiny do innej osoby, tak jakbyś wystawił jej rachunek do zapłacenia. Osoba ta powinna mieć zainstalowany Peercoin Wallet.
+			Przy pomocy tego dialogu, możesz wysłać prośbę o Nubitsy do innej osoby, tak jakbyś wystawił jej rachunek do zapłacenia. Osoba ta powinna mieć zainstalowany Nubits Wallet.
 		</p>
 		<p>
-			U góry, wpisz kwotę Peercoin, o którą chcesz zapytać.
+			U góry, wpisz kwotę Nubits, o którą chcesz zapytać.
 		</p>
 		<p>
 			Potem osoba wczyta wytworzony kod QR,
 			albo Ty możesz wysłać rachunek za pomocą guzika Opublikuj na listwie menu.
-			Odbiorca będzie musiał otworzyć Peercoin URL zawarty w wysłanej wiadomości.
+			Odbiorca będzie musiał otworzyć Nubits URL zawarty w wysłanej wiadomości.
 		</p>
 		<p>
-			Osoba, która otrzymała wysłane zapytanie otrzyma gotowy i wypełniony formularz wysyłania Peercoinów.
+			Osoba, która otrzymała wysłane zapytanie otrzyma gotowy i wypełniony formularz wysyłania Nubitsów.
 			Jedyne co będzie musiała zrobić to potwierdzenie transakcji.
 		</p>
 	]]>
@@ -51,15 +51,15 @@
 <![CDATA[
 		<p>
 			Zainicjowałeś proces wysyłania monet.
-			Przyszedłeś tutaj przez główny ekran albo naciskając na Peercoin URL w Twojej mobilnej przeglądarce.
+			Przyszedłeś tutaj przez główny ekran albo naciskając na Nubits URL w Twojej mobilnej przeglądarce.
 		</p>
 		<p>
-			Wpisz adres Peercoin na który ma wpłynąć zapłata.
+			Wpisz adres Nubits na który ma wpłynąć zapłata.
 			Wyświetlone zostaną podpowiedzi adresu z danych Twojej książki adresowej.
-			Możesz też skanować kody QR z adresami Peercoin albo zapytaniami Peercoin naciskając guzik QR w menu.
+			Możesz też skanować kody QR z adresami Nubits albo zapytaniami Nubits naciskając guzik QR w menu.
 		</p>
 		<p>
-			Poniżej widzisz ile Peercoin możesz wydać w tym momencie.
+			Poniżej widzisz ile Nubits możesz wydać w tym momencie.
 			Rożnica ze stanem konta na głównym ekranie wynika z jeszcze nie potwierdzonych monet, które nie mogą jeszcze zostać wydane.
 		</p>
 		<p>
@@ -80,20 +80,20 @@
 	<string name="help_safety">
 <![CDATA[
 		<p>
-			<b>Pare słów o bezpieczeństwie twoich Peercoin:</b>
+			<b>Pare słów o bezpieczeństwie twoich Nubits:</b>
 		</p>
 		<p>
-			Peercoin w Peercoin Wallet są magazynowane na urządzeniu.
-			<b>Jak zgubisz swoje urządzenie, zgubisz też swój portfel i Peercoiny.</b>
+			Nubits w Nubits Wallet są magazynowane na urządzeniu.
+			<b>Jak zgubisz swoje urządzenie, zgubisz też swój portfel i Nubitsy.</b>
 			Zupełnie jak pieniądze w Twoim fizycznym portfelu.
 		</p>
 		<p>
-			<b>Zanim odinstalujesz Peercoin Wallet</b> (albo wymażesz dane aplikacji/wyczyścisz swoje urządzenie), <b>przetransferuj twoje Peercoin na inny portfel</b>.
-			Każdy pozostały Peercoin będzie stracony.
+			<b>Zanim odinstalujesz Nubits Wallet</b> (albo wymażesz dane aplikacji/wyczyścisz swoje urządzenie), <b>przetransferuj twoje Nubits na inny portfel</b>.
+			Każdy pozostały Nubits będzie stracony.
 		</p>
 		<p>
 			<b>Żadne transakcje nie mogą zostać cofnięte</b>.
-			Jeżeli wyślesz swoje Peercoiny, nie będzie już możliwości żeby je odzyskać, dopóki nie znasz odbiorcy, który musi godzić się na ich odesłanie.
+			Jeżeli wyślesz swoje Nubitsy, nie będzie już możliwości żeby je odzyskać, dopóki nie znasz odbiorcy, który musi godzić się na ich odesłanie.
 		</p>
 		<p>
 			<b>Uważaj na swoje urządzenie Android!</b>
@@ -102,7 +102,7 @@
 		</p>
 		<p>
 			Utrzymuj niskie ryzyko!
-			<b>Używaj Peercoin Wallet do przetrzymywania jedynie małych ilości Peercoin</b> do użytku codziennego.
+			<b>Używaj Nubits Wallet do przetrzymywania jedynie małych ilości Nubits</b> do użytku codziennego.
 		</p>
 	]]>
 	</string>

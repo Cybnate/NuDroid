@@ -21,7 +21,7 @@
 			android:textSize="@dimen/font_size_small" />
 
 		<FrameLayout
-			android:id="@+id/peercoin_address_button"
+			android:id="@+id/nubits_address_button"
 			style="@style/My.Widget.Button.Borderless"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
 			android:foregroundGravity="bottom|right" >
 
 			<TextView
-				android:id="@+id/peercoin_address_label"
+				android:id="@+id/nubits_address_label"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:textSize="@dimen/font_size_normal" />
@@ -39,7 +39,7 @@
 	</LinearLayout>
 
 	<ImageView
-		android:id="@+id/peercoin_address_qr"
+		android:id="@+id/nubits_address_qr"
 		android:layout_width="@dimen/wallet_address_qr_size"
 		android:layout_height="@dimen/wallet_address_qr_size"
 		android:layout_gravity="center"

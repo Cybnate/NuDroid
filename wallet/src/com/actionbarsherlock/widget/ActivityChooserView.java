@@ -17,7 +17,7 @@
 package com.actionbarsherlock.widget;
 
 import android.os.Build;
-import com.matthewmitchell.peercoin_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.R;
 import com.actionbarsherlock.internal.widget.IcsLinearLayout;
 import com.actionbarsherlock.internal.widget.IcsListPopupWindow;
 import com.actionbarsherlock.view.ActionProvider;

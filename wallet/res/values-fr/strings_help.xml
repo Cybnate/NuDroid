@@ -4,11 +4,11 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			La partie supérieure gauche de l\'écran affiche votre adresse Peercoin choisie et que d\'autres personnes doivent connaître pour vous envoyer des peercoins.
+			La partie supérieure gauche de l\'écran affiche votre adresse Nubits choisie et que d\'autres personnes doivent connaître pour vous envoyer des nubitss.
 			Toquer pour changer cette adresse.
 		</p>
 		<p>
-			Le code QR à droite contient votre adresse Peercoin et peut être numérisée par un tiers.
+			Le code QR à droite contient votre adresse Nubits et peut être numérisée par un tiers.
 			Toquer le code QR pour l\'agrandir.
 		</p>
 		<p>
@@ -23,7 +23,7 @@
 			Glisser vers la gauche ou vers la droite pour appliquer des filtres à la liste.
 		</p>
 		<p>
-			Vous pouvez envoyer ou recevoir des peercoins en toquant les boutons dans la barre des actions.
+			Vous pouvez envoyer ou recevoir des nubitss en toquant les boutons dans la barre des actions.
 			Plus d\'options sont disponibles dans le menu des options.
 		</p>
 	]]>
@@ -31,14 +31,14 @@
 	<string name="help_request_coins">
 <![CDATA[
 		<p>
-			En utilisant cette zone de dialogue vous pouvez demander des pièces à une autre personne (qui devrait déjà avoir installé le Peercoin Wallet).
+			En utilisant cette zone de dialogue vous pouvez demander des pièces à une autre personne (qui devrait déjà avoir installé le Nubits Wallet).
 		</p>
 		<p>
-			Vous pouvez d\'abord saisir un montant de peercoins à demander.
+			Vous pouvez d\'abord saisir un montant de nubitss à demander.
 		</p>
 		<p>
 			Ensuite, soit l\'autre personne numérise le code QR généré, soit vous pouvez envoyer votre demande à une personne éloignée avec le bouton Partager de la barre des actions.
-			L\'autre personne devra cliquer sur l\'URL peercoin.
+			L\'autre personne devra cliquer sur l\'URL nubits.
 		</p>
 		<p>
 			Dans les deux cas, l\'autre personne obtiendra une zone de dialogue pré-remplie pour envoyer les pièces.
@@ -49,16 +49,16 @@
 	<string name="help_send_coins">
 <![CDATA[
 		<p>
-			Vous avez commencé le processus d\'envoi de peercoins.
-			Vous êtes arrivé ici depuis l\'écran principal ou en cliquant sur une URL peercoin dans votre navigateur.
+			Vous avez commencé le processus d\'envoi de nubitss.
+			Vous êtes arrivé ici depuis l\'écran principal ou en cliquant sur une URL nubits dans votre navigateur.
 		</p>
 		<p>
-			D\'abord, saisir l\'adresse Peercoin de destination.
+			D\'abord, saisir l\'adresse Nubits de destination.
 			L\'adresse sera complétée automatiquement pour les adresses enregistrées dans votre carnet.
-			Vous pouvez aussi numériser des codes QR avec des adresses peercoin ou des demandes de peercoins en pressant le bouton QR dans la barre des actions.
+			Vous pouvez aussi numériser des codes QR avec des adresses nubits ou des demandes de nubitss en pressant le bouton QR dans la barre des actions.
 		</p>
 		<p>
-			Ensuite, vous pouvez voir combien de peercoins peuvent être dépensés actuellement.
+			Ensuite, vous pouvez voir combien de nubitss peuvent être dépensés actuellement.
 			Tout écart avec le solde de l\'écran principal n\'est pas encore confirmé et ne peut donc pas être dépensé.
 		</p>
 		<p>
@@ -66,7 +66,7 @@
 		</p>
 		<p>
 			Vous pouvez saisir un paiement hors-ligne.
-			Il sera envoyé au prochain lancement du Peercoin Wallet.
+			Il sera envoyé au prochain lancement du Nubits Wallet.
 			Pour le traitement le plus rapide possible de votre paiement, assurez vous d\'être bien connecté (c.-à-d. sur un WLAN).
 		</p>
 		<p>
@@ -82,8 +82,8 @@
 			<b>Notes de sécurité importantes :</b>
 		</p>
 		<p>
-			Les peercoins sont stockés sur l\'appareil.
-			<b>Si vous le perdez, vous perdez vos peercoins.</b>
+			Les nubitss sont stockés sur l\'appareil.
+			<b>Si vous le perdez, vous perdez vos nubitss.</b>
 		</p>
 		<p>
 			Cela signifie que vous devez <b>sauvegarder votre portefeuille</b> !
@@ -91,12 +91,12 @@
 			Gardez votre sauvegarde en sûreté et souvenez-vous de votre mot de passe.
 		</p>
 		<p>
-			<b>Avant de désinstaller Peercoin Wallet</b> (ou d\'effacer les données de l\'appli/effacer les données de votre appareil), <b>transférez vos peercoins vers un autre portefeuille</b>.
-			Les peercoins restants seront perdus.
+			<b>Avant de désinstaller Nubits Wallet</b> (ou d\'effacer les données de l\'appli/effacer les données de votre appareil), <b>transférez vos nubitss vers un autre portefeuille</b>.
+			Les nubitss restants seront perdus.
 		</p>
 		<p>
 			<b>Les paiements sont irréversibles</b>.
-			Si vous envoyez vos peercoins dans le vide, il n\'y a presque aucun moyen de les récupérer.
+			Si vous envoyez vos nubitss dans le vide, il n\'y a presque aucun moyen de les récupérer.
 		</p>
 		<p>
 			<b>Assurez la sécurité de votre appareil mobile !</b>

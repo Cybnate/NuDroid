@@ -8,7 +8,7 @@ storage:
 	Testnet: /data/data/de.schildbach.wallet_test/files/wallet-protobuf-testnet (MODE_WORLD_READABLE | MODE_WORLD_WRITEABLE)
 
 The wallet file format is not compatible to wallet.dat (Satoshi client). Rather, it uses a custom protobuf format
-which should be compatible between clients using peercoinj.
+which should be compatible between clients using nubitsj.
 
 Certain actions cause automatic rolling backups of your wallet to app-private storage:
 
@@ -18,9 +18,9 @@ Certain actions cause automatic rolling backups of your wallet to app-private st
 
 Your wallet can be manually backed up to and restored from external storage:
 
-	Mainnet: /sdcard/Download/peercoin-wallet-backup-<yyyy-MM-dd>
+	Mainnet: /sdcard/Download/nubits-wallet-backup-<yyyy-MM-dd>
 
-	Testnet: /sdcard/Download/peercoin-wallet-backup-testnet-<yyyy-MM-dd>
+	Testnet: /sdcard/Download/nubits-wallet-backup-testnet-<yyyy-MM-dd>
 
 The manual backup files are encrypted using your chosen backup password. You can use OpenSSL to decrypt:
 
@@ -68,14 +68,14 @@ and unpack it to your workspace directory. Switch to that Android SDK directory,
 
 to download the necessary API level.
 
-Finally, you can build Peercoin Wallet and sign it with your development key. Again in your workspace,
+Finally, you can build Nubits Wallet and sign it with your development key. Again in your workspace,
 use
 
 	# first time only
-	git clone -b master https://github.com/MatthewLM/peercoin-android-wallet peercoin-wallet
+	git clone -b master https://github.com/Cybnate/Nubits-Android-wallet nubits-wallet
 
 	# each time
-	cd peercoin-wallet
+	cd nubits-wallet
 	git pull
 	mvn clean install -Dandroid.sdk.path=<path to your android sdk>
 
@@ -99,7 +99,7 @@ wallet file is protected against access from non-root users. In the code reposit
 separate 'prod' branch that gets rebased against master with each released version.
 
 	# each time
-	cd peercoin-wallet
+	cd nubits-wallet
 	git fetch origin
 	git checkout origin/prod
 	mvn clean install -Prelease -Dandroid.sdk.path=<path to your android sdk>
@@ -111,8 +111,8 @@ Make sure you've got Eclipse 3.7 (Indigo) with ADT 20 installed.
 
 Use Git to check out the project and an Android library dependency to your workspace:
 
-	# clone Peercoin Wallet project
-	git clone -b master https://github.Com.matthewmitchell/AndroidWallet.git peercoin-wallet
+	# clone Nubits Wallet project
+	git clone -b master https://github.Com.matthewmitchell/AndroidWallet.git nubits-wallet
 
 	# clone ActionBarSherlock library project
 	git clone https://github.com/JakeWharton/ActionBarSherlock.git action-bar-sherlock
@@ -121,7 +121,7 @@ Use Git to check out the project and an Android library dependency to your works
 
 Use the maven-eclipse-plugin to create Eclipse project files:
 
-	cd peercoin-wallet
+	cd nubits-wallet
 	mvn eclipse:eclipse
 
 Optional: In the generated .classpath, remove the org.eclipse.jdt.launching.JRE_CONTAINER
@@ -135,7 +135,7 @@ Java Compiler -> Errors/Warnings -> Annotations -> Missing @Override annotation 
 
 NFC (Near field communication)
 
-Peercoin Wallet supports reading Peercoin requests via NFC, either from a passive NFC tag or from
+Nubits Wallet supports reading Nubits requests via NFC, either from a passive NFC tag or from
 another NFC capable Android device that is requesting coins.
 
 For this to work, just enable NFC in your phone and hold your phone to the tag or device (with
@@ -149,31 +149,31 @@ Instructions for preparing an NFC tag with your address:
 
 - Some tags have less than 50 bytes capacity, those won't work. 1 KB tags recommended.
 
-- The tag needs to contain a Peercoin URI. You can construct one with the "Request coins" dialog,
+- The tag needs to contain a Nubits URI. You can construct one with the "Request coins" dialog,
   then share with messaging or email. You can also construct the URI manually. Example for Mainnet:
-  peercoin:1G2Y2jP5YFZ5RGk2PXaeWwbeA5y1ZtFhoL
+  nubits:1G2Y2jP5YFZ5RGk2PXaeWwbeA5y1ZtFhoL
 
 - The type of the message needs to be URI or URL (not Text).
 
 - If you put your tag at a public place, don't forget to enable write protect. Otherwise, someone
-  could overwrite the tag with his own Peercoin address.
+  could overwrite the tag with his own Nubits address.
 
 
 EXCHANGE RATES
 
-Peercoin Wallet reads this feed from "peercoin charts" for getting exchange rates:
+Nubits Wallet reads this feed from "nubits charts" for getting exchange rates:
 
-	http://peercoincharts.com/t/weighted_prices.json
+	http://nubitscharts.com/t/weighted_prices.json
 
 The feed is described on this page (see Weighted Prices):
 
-	http://peercoincharts.com/about/markets-api/
+	http://nubitscharts.com/about/markets-api/
 
 I chose this feed because it is not dependent on a single exchange. However, you should keep in
 mind it's always a 24h average (falling back to 7d or even 30d if no trade occurred for a long
 time).
 
-If Peercoincharts is not available, the feed from "Blockchain" is fetched instead:
+If Nubitscharts is not available, the feed from "Blockchain" is fetched instead:
 
 	https://blockchain.info/ticker
 
@@ -182,8 +182,8 @@ The feed is described here:
 	https://blockchain.info/api/exchange_rates_api
 
 
-PeercoinJ
+NubitsJ
 
-Peercoin Wallet uses peercoinj for Peercoin specific logic:
+Nubits Wallet uses nubitsj for Nubits specific logic:
 
-https://github.Com.matthewmitchell.peercoinjj
+https://github.Com.matthewmitchell.nubitsjj

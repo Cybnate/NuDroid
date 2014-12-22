@@ -4,10 +4,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.matthewmitchell.peercoin_android_wallet</groupId>
+	<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 	<artifactId>base</artifactId>
 	<name>base</name>
-	<version>1.2</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 
 	<modules>

@@ -9,13 +9,13 @@
 
 	<fragment
 		android:id="@+id/wallet_actions_fragment"
-		android:name="com.matthewmitchell.peercoin_android_wallet.ui.WalletActionsFragment"
+		android:name="com.matthewmitchell.nubits_android_wallet.ui.WalletActionsFragment"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" />
 
 	<fragment
 		android:id="@+id/wallet_disclaimer_fragment"
-		android:name="com.matthewmitchell.peercoin_android_wallet.ui.WalletDisclaimerFragment"
+		android:name="com.matthewmitchell.nubits_android_wallet.ui.WalletDisclaimerFragment"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" />
 

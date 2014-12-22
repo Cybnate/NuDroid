@@ -6,12 +6,12 @@
 
 	<artifactId>integration-android</artifactId>
 	<version>2.0</version>
-	<name>Peercoin Integration for Android</name>
+	<name>Nubits Integration for Android</name>
 
 	<parent>
-		<groupId>com.matthewmitchell.peercoin_android_wallet</groupId>
+		<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 		<artifactId>base</artifactId>
-		<version>1.2</version>
+		<version>1.0</version>
 	</parent>
 
 	<licenses>

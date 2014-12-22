@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
-import com.matthewmitchell.peercoin_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.R;
 
 public class FakeDialogPhoneWindow extends LinearLayout {
     final TypedValue mMinWidthMajor = new TypedValue();

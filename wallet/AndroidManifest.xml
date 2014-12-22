@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="com.matthewmitchell.peercoin_android_wallet"
+	package="com.matthewmitchell.nubits_android_wallet"
 	android:installLocation="internalOnly"
-	android:versionCode="3"
-	android:versionName="1.2" >
+	android:versionCode="1"
+	android:versionName="1.0" >
 
 	<uses-sdk
 		android:minSdkVersion="10"
@@ -55,20 +55,20 @@
 		android:xlargeScreens="true" />
 
 	<application
-		android:name="com.matthewmitchell.peercoin_android_wallet.WalletApplication"
+		android:name="com.matthewmitchell.nubits_android_wallet.WalletApplication"
 		android:allowBackup="false"
 		android:hardwareAccelerated="true"
 		android:icon="@drawable/app_icon"
 		android:label="@string/app_name"
 		android:theme="@style/My.Theme">
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.WalletActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.WalletActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:launchMode="singleTask" />
 
 		<activity-alias
-			android:name="com.matthewmitchell.peercoin_android_wallet.WalletActivity"
-			android:targetActivity="com.matthewmitchell.peercoin_android_wallet.ui.WalletActivity" >
+			android:name="com.matthewmitchell.nubits_android_wallet.WalletActivity"
+			android:targetActivity="com.matthewmitchell.nubits_android_wallet.ui.WalletActivity" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
@@ -84,7 +84,7 @@
 		</activity-alias>
 
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.SendCoinsActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.SendCoinsActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/send_coins_activity_title"
 			android:screenOrientation="behind"
@@ -92,7 +92,7 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.intent.action.VIEW" />
 
-				<data android:scheme="ppcoin" />
+				<data android:scheme="nbtoin" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
@@ -100,61 +100,61 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:scheme="ppcoin" />
+				<data android:scheme="nbtoin" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 			<intent-filter android:label="@string/send_coins_activity_title">
 				<action android:name="android.intent.action.VIEW" />
 
-				<data android:mimeType="application/peercoin-paymentrequest" />
+				<data android:mimeType="application/nubits-paymentrequest" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:mimeType="application/peercoin-paymentrequest" />
+				<data android:mimeType="application/nubits-paymentrequest" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.SendCoinsQrActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.SendCoinsQrActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar" >
 		</activity>
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.RequestCoinsActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.RequestCoinsActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/request_coins_activity_title"
 			android:screenOrientation="behind"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.AddressBookActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.AddressBookActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/address_book_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.ExchangeRatesActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.ExchangeRatesActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/exchange_rates_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.NetworkMonitorActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.NetworkMonitorActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/network_monitor_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.PreferencesActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.PreferencesActivity"
 			android:label="@string/preferences_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.AboutActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.AboutActivity"
 			android:label="@string/about_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.ImportKeysActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.ImportKeysActivity"
 			android:configChanges="orientation|keyboard|keyboardHidden"
 			android:theme="@style/My.Theme.Dialog" >
 			<intent-filter android:label="@string/import_keys_intent_filter_action" >
@@ -162,12 +162,12 @@
 
 				<category android:name="android.intent.category.DEFAULT" />
 
-				<data android:mimeType="application/x-peercoin-wallet-backup" />
+				<data android:mimeType="application/x-nubits-wallet-backup" />
 				<data android:mimeType="application/octet-stream" />
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="com.matthewmitchell.peercoin_android_wallet.ui.ScanActivity"
+			android:name="com.matthewmitchell.nubits_android_wallet.ui.ScanActivity"
 			android:configChanges="orientation|keyboard|keyboardHidden"
 			android:screenOrientation="landscape"
 			android:stateNotNeeded="true"
@@ -175,17 +175,17 @@
 			android:windowSoftInputMode="stateAlwaysHidden" />
 
 		<provider
-			android:name="com.matthewmitchell.peercoin_android_wallet.AddressBookProvider"
-			android:authorities="com.matthewmitchell.peercoin_android_wallet.address_book"
+			android:name="com.matthewmitchell.nubits_android_wallet.AddressBookProvider"
+			android:authorities="com.matthewmitchell.nubits_android_wallet.address_book"
 			android:exported="false" />
 		<provider
-			android:name="com.matthewmitchell.peercoin_android_wallet.ExchangeRatesProvider"
-			android:authorities="com.matthewmitchell.peercoin_android_wallet.exchange_rates"
+			android:name="com.matthewmitchell.nubits_android_wallet.ExchangeRatesProvider"
+			android:authorities="com.matthewmitchell.nubits_android_wallet.exchange_rates"
 			android:exported="false" />
 
 		<receiver
-			android:name="com.matthewmitchell.peercoin_android_wallet.WalletBalanceWidgetProvider"
-			android:label="Peercoin Wallet Balance" >
+			android:name="com.matthewmitchell.nubits_android_wallet.WalletBalanceWidgetProvider"
+			android:label="Nubits Wallet Balance" >
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>
@@ -196,13 +196,13 @@
 		</receiver>
 
 		<service
-			android:name="com.matthewmitchell.peercoin_android_wallet.service.BlockchainServiceImpl"
+			android:name="com.matthewmitchell.nubits_android_wallet.service.BlockchainServiceImpl"
 			android:exported="false" />
 		<service
-			android:name="com.matthewmitchell.peercoin_android_wallet.offline.AcceptBluetoothService"
+			android:name="com.matthewmitchell.nubits_android_wallet.offline.AcceptBluetoothService"
 			android:exported="false" />
 
-		<receiver android:name="com.matthewmitchell.peercoin_android_wallet.service.AutosyncReceiver" >
+		<receiver android:name="com.matthewmitchell.nubits_android_wallet.service.AutosyncReceiver" >
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>

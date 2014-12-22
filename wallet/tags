@@ -36,7 +36,7 @@ ATTRIBUTE_ACTIVITY	src/com/actionbarsherlock/widget/ActivityChooserModel.java	/^
 ATTRIBUTE_TIME	src/com/actionbarsherlock/widget/ActivityChooserModel.java	/^    private static final String ATTRIBUTE_TIME = "time";$/;"	f	class:ActivityChooserModel	file:
 ATTRIBUTE_WEIGHT	src/com/actionbarsherlock/widget/ActivityChooserModel.java	/^    private static final String ATTRIBUTE_WEIGHT = "weight";$/;"	f	class:ActivityChooserModel	file:
 AUTHOR_GOOGLEPLUS_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String AUTHOR_GOOGLEPLUS_URL = "https:\/\/plus.google.com\/114536489886133372917";$/;"	f	class:Constants
-AUTHOR_TWITTER_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String AUTHOR_TWITTER_URL = "https:\/\/twitter.com\/#!\/PeercoinCom";$/;"	f	class:Constants
+AUTHOR_TWITTER_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String AUTHOR_TWITTER_URL = "https:\/\/twitter.com\/#!\/NubitsCom";$/;"	f	class:Constants
 AUTO_FOCUS_INTERVAL_MS	src/de/schildbach/wallet/ui/ScanActivity.java	/^	private static final long AUTO_FOCUS_INTERVAL_MS = 2500L;$/;"	f	class:ScanActivity	file:
 AboutActivity	src/de/schildbach/wallet/ui/AboutActivity.java	/^public final class AboutActivity extends SherlockPreferenceActivity$/;"	c
 AbsActionBarView	src/com/actionbarsherlock/internal/widget/AbsActionBarView.java	/^    public AbsActionBarView(Context context) {$/;"	m	class:AbsActionBarView
@@ -139,7 +139,7 @@ BACKGROUND_TRACES_FILENAME	src/de/schildbach/wallet/util/CrashReporter.java	/^	p
 BACKUP_FILE_FILTER	src/de/schildbach/wallet/util/WalletUtils.java	/^	public static final FileFilter BACKUP_FILE_FILTER = new FileFilter()$/;"	f	class:WalletUtils
 BACKUP_MAX_CHARS	src/de/schildbach/wallet/Constants.java	/^	public static final long BACKUP_MAX_CHARS = 5000000;$/;"	f	class:Constants
 BASE64	src/de/schildbach/wallet/util/Crypto.java	/^	private static final BaseEncoding BASE64 = BaseEncoding.base64().withSeparator("\\n", 76);$/;"	f	class:Crypto	file:
-BINARY_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String BINARY_URL = "https:\/\/github.com\/Peercoin\/AndroidWallet\/releases";$/;"	f	class:Constants
+BINARY_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String BINARY_URL = "https:\/\/github.com\/Nubits\/AndroidWallet\/releases";$/;"	f	class:Constants
 BIP21	src/de/schildbach/wallet/data/PaymentIntent.java	/^		BIP21, BIP70$/;"	e	enum:PaymentIntent.Standard	file:
 BIP70	src/de/schildbach/wallet/data/PaymentIntent.java	/^		BIP21, BIP70$/;"	e	enum:PaymentIntent.Standard	file:
 BLOCKCHAININFO_FIELDS	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String[] BLOCKCHAININFO_FIELDS = new String[] { "15m" };$/;"	f	class:ExchangeRatesProvider	file:
@@ -206,7 +206,7 @@ CREATOR	src/com/actionbarsherlock/internal/widget/IcsProgressBar.java	/^        
 CREATOR	src/de/schildbach/wallet/data/PaymentIntent.java	/^		public static final Parcelable.Creator<Output> CREATOR = new Parcelable.Creator<Output>()$/;"	f	class:PaymentIntent.Output
 CREATOR	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public static final Parcelable.Creator<PaymentIntent> CREATOR = new Parcelable.Creator<PaymentIntent>()$/;"	f	class:PaymentIntent
 CREATOR	src/de/schildbach/wallet/ui/AddressAndLabel.java	/^	public static final Parcelable.Creator<AddressAndLabel> CREATOR = new Parcelable.Creator<AddressAndLabel>()$/;"	f	class:AddressAndLabel
-CREDITS_PeercoinJ_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String CREDITS_PeercoinJ_URL = "https:\/\/github.com\/Peercoin\/peercoinj\/";$/;"	f	class:Constants
+CREDITS_NubitsJ_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String CREDITS_NubitsJ_URL = "https:\/\/github.com\/Nubits\/nubitsj\/";$/;"	f	class:Constants
 CREDITS_ZXING_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String CREDITS_ZXING_URL = "https:\/\/github.com\/zxing\/zxing";$/;"	f	class:Constants
 CURRENCY_CODE_MRBT	src/de/schildbach/wallet/Constants.java	/^	public static final String CURRENCY_CODE_MRBT = "mRBT";$/;"	f	class:Constants
 CURRENCY_CODE_RBT	src/de/schildbach/wallet/Constants.java	/^	public static final String CURRENCY_CODE_RBT = "RBT";$/;"	f	class:Constants
@@ -316,10 +316,10 @@ EXCLUSIVE	src/com/actionbarsherlock/internal/view/menu/ActionMenuItem.java	/^   
 EXCLUSIVE	src/com/actionbarsherlock/internal/view/menu/MenuItemImpl.java	/^    private static final int EXCLUSIVE      = 0x00000004;$/;"	f	class:MenuItemImpl	file:
 EXPANDED_ACTION_VIEW_ID	src/com/actionbarsherlock/internal/view/menu/MenuBuilder.java	/^    private static final String EXPANDED_ACTION_VIEW_ID = "android:menu:expandedactionview";$/;"	f	class:MenuBuilder	file:
 EXPAND_LIST_TIMEOUT	src/com/actionbarsherlock/internal/widget/IcsListPopupWindow.java	/^    private static final int EXPAND_LIST_TIMEOUT = 250;$/;"	f	class:IcsListPopupWindow	file:
-EXPLORE_BASE_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String EXPLORE_BASE_URL = "https:\/\/www.peercoinexplorer.com\/";$/;"	f	class:Constants
-EXTERNAL_WALLET_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String EXTERNAL_WALLET_BACKUP = "peercoin-wallet-backup";$/;"	f	class:Constants
+EXPLORE_BASE_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String EXPLORE_BASE_URL = "https:\/\/www.nubitsexplorer.com\/";$/;"	f	class:Constants
+EXTERNAL_WALLET_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String EXTERNAL_WALLET_BACKUP = "nubits-wallet-backup";$/;"	f	class:Constants
 EXTERNAL_WALLET_BACKUP_DIR	src/de/schildbach/wallet/Constants.java	/^	public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);$/;"	f	class:Constants
-EXTERNAL_WALLET_KEY_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String EXTERNAL_WALLET_KEY_BACKUP = "peercoin-wallet-keys";$/;"	f	class:Constants
+EXTERNAL_WALLET_KEY_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String EXTERNAL_WALLET_KEY_BACKUP = "nubits-wallet-keys";$/;"	f	class:Constants
 EXTRA_SENDING	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^	private static final String EXTRA_SENDING = "sending";$/;"	f	class:AddressBookActivity	file:
 EditAddressBookEntryFragment	src/de/schildbach/wallet/ui/EditAddressBookEntryFragment.java	/^public final class EditAddressBookEntryFragment extends DialogFragment$/;"	c
 ExceptionHandler	src/de/schildbach/wallet/util/CrashReporter.java	/^		public ExceptionHandler(@Nonnull final Thread.UncaughtExceptionHandler previousHandler)$/;"	m	class:CrashReporter.ExceptionHandler
@@ -479,7 +479,7 @@ ItemView	src/com/actionbarsherlock/internal/view/menu/MenuView.java	/^    public
 KEYS_FILE_FILTER	src/de/schildbach/wallet/util/WalletUtils.java	/^	public static final FileFilter KEYS_FILE_FILTER = new FileFilter()$/;"	f	class:WalletUtils
 KEY_ABOUT_AUTHOR_GOOGLEPLUS	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_AUTHOR_GOOGLEPLUS = "about_author_googleplus";$/;"	f	class:AboutActivity	file:
 KEY_ABOUT_AUTHOR_TWITTER	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_AUTHOR_TWITTER = "about_author_twitter";$/;"	f	class:AboutActivity	file:
-KEY_ABOUT_CREDITS_PeercoinJ	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_CREDITS_PeercoinJ = "about_credits_peercoinj";$/;"	f	class:AboutActivity	file:
+KEY_ABOUT_CREDITS_NubitsJ	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_CREDITS_NubitsJ = "about_credits_nubitsj";$/;"	f	class:AboutActivity	file:
 KEY_ABOUT_CREDITS_ZXING	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_CREDITS_ZXING = "about_credits_zxing";$/;"	f	class:AboutActivity	file:
 KEY_ABOUT_LICENSE	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_LICENSE = "about_license";$/;"	f	class:AboutActivity	file:
 KEY_ABOUT_MARKET_APP	src/de/schildbach/wallet/ui/AboutActivity.java	/^	private static final String KEY_ABOUT_MARKET_APP = "about_market_app";$/;"	f	class:AboutActivity	file:
@@ -496,7 +496,7 @@ KEY_LENGTH	src/de/schildbach/wallet/util/Crypto.java	/^	private static final int
 KEY_MESSAGE	src/de/schildbach/wallet/ui/HelpDialogFragment.java	/^	private static final String KEY_MESSAGE = "message";$/;"	f	class:HelpDialogFragment	file:
 KEY_MESSAGE	src/de/schildbach/wallet/ui/ProgressDialogFragment.java	/^	private static final String KEY_MESSAGE = "message";$/;"	f	class:ProgressDialogFragment	file:
 KEY_RATE	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String KEY_RATE = "rate";$/;"	f	class:ExchangeRatesProvider	file:
-KEY_ROTATION_URI	src/de/schildbach/wallet/ui/TransactionsListFragment.java	/^	private static final Uri KEY_ROTATION_URI = Uri.parse("http:\/\/peercoin.org\/en\/alert\/2013-08-11-android");$/;"	f	class:TransactionsListFragment	file:
+KEY_ROTATION_URI	src/de/schildbach/wallet/ui/TransactionsListFragment.java	/^	private static final Uri KEY_ROTATION_URI = Uri.parse("http:\/\/nubits.org\/en\/alert\/2013-08-11-android");$/;"	f	class:TransactionsListFragment	file:
 KEY_ROWID	src/de/schildbach/wallet/AddressBookProvider.java	/^	public static final String KEY_ROWID = "_id";$/;"	f	class:AddressBookProvider
 KEY_SOURCE	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String KEY_SOURCE = "source";$/;"	f	class:ExchangeRatesProvider	file:
 KEY_SUGGESTED_ADDRESS_LABEL	src/de/schildbach/wallet/ui/EditAddressBookEntryFragment.java	/^	private static final String KEY_SUGGESTED_ADDRESS_LABEL = "suggested_address_label";$/;"	f	class:EditAddressBookEntryFragment	file:
@@ -538,7 +538,7 @@ Listener	src/de/schildbach/wallet/ui/CurrencyAmountView.java	/^	public static in
 LocalBinder	src/de/schildbach/wallet/service/BlockchainServiceImpl.java	/^	public class LocalBinder extends Binder$/;"	c	class:BlockchainServiceImpl
 MAC_URI_PARAM	src/de/schildbach/wallet/util/Bluetooth.java	/^	public static final String MAC_URI_PARAM = "bt";$/;"	f	class:Bluetooth
 MARKET_APP_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String MARKET_APP_URL = "market:\/\/details?id=%s";$/;"	f	class:Constants
-MARKET_PUBLISHER_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String MARKET_PUBLISHER_URL = "market:\/\/search?q=pub:\\"Peercoin\\"";$/;"	f	class:Constants
+MARKET_PUBLISHER_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String MARKET_PUBLISHER_URL = "market:\/\/search?q=pub:\\"Nubits\\"";$/;"	f	class:Constants
 MAX_ACTIVITY_COUNT_DEFAULT	src/com/actionbarsherlock/widget/ActivityChooserView.java	/^        public static final int MAX_ACTIVITY_COUNT_DEFAULT = 4;$/;"	f	class:ActivityChooserView.ActivityChooserViewAdapter
 MAX_ACTIVITY_COUNT_UNLIMITED	src/com/actionbarsherlock/widget/ActivityChooserView.java	/^        public static final int MAX_ACTIVITY_COUNT_UNLIMITED = Integer.MAX_VALUE;$/;"	f	class:ActivityChooserView.ActivityChooserViewAdapter
 MAX_BLOCKS	src/de/schildbach/wallet/ui/BlockListFragment.java	/^	private static final int MAX_BLOCKS = 32;$/;"	f	class:BlockListFragment	file:
@@ -549,11 +549,11 @@ MAX_LEVEL	src/com/actionbarsherlock/internal/widget/IcsProgressBar.java	/^    pr
 MAX_NUM_CONFIRMATIONS	src/de/schildbach/wallet/Constants.java	/^	public static final int MAX_NUM_CONFIRMATIONS = 7;$/;"	f	class:Constants
 MAX_PREVIEW_PIXELS	src/de/schildbach/wallet/camera/CameraManager.java	/^	private static final int MAX_PREVIEW_PIXELS = 1280 * 720;$/;"	f	class:CameraManager	file:
 MEMORY_CLASS_LOWEND	src/de/schildbach/wallet/Constants.java	/^	public static final int MEMORY_CLASS_LOWEND = 48;$/;"	f	class:Constants
-MIMETYPE_PAYMENT	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENT = "application\/peercoin-payment"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
-MIMETYPE_PAYMENTACK	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENTACK = "application\/peercoin-paymentack"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
-MIMETYPE_PAYMENTREQUEST	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENTREQUEST = "application\/peercoin-paymentrequest"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
+MIMETYPE_PAYMENT	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENT = "application\/nubits-payment"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
+MIMETYPE_PAYMENTACK	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENTACK = "application\/nubits-paymentack"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
+MIMETYPE_PAYMENTREQUEST	src/de/schildbach/wallet/util/PaymentProtocol.java	/^	public static final String MIMETYPE_PAYMENTREQUEST = "application\/nubits-paymentrequest"; \/\/ BIP 71$/;"	f	class:PaymentProtocol
 MIMETYPE_TRANSACTION	src/de/schildbach/wallet/Constants.java	/^	public static final String MIMETYPE_TRANSACTION = "application\/x-rbttx";$/;"	f	class:Constants
-MIMETYPE_WALLET_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String MIMETYPE_WALLET_BACKUP = "application\/x-peercoin-wallet-backup";$/;"	f	class:Constants
+MIMETYPE_WALLET_BACKUP	src/de/schildbach/wallet/Constants.java	/^	public static final String MIMETYPE_WALLET_BACKUP = "application\/x-nubits-wallet-backup";$/;"	f	class:Constants
 MIN_CELL_SIZE	src/com/actionbarsherlock/internal/view/menu/ActionMenuView.java	/^    static final int MIN_CELL_SIZE = 56; \/\/ dips$/;"	f	class:ActionMenuView
 MIN_COLLECT_HISTORY	src/de/schildbach/wallet/service/BlockchainServiceImpl.java	/^	private static final int MIN_COLLECT_HISTORY = 2;$/;"	f	class:BlockchainServiceImpl	file:
 MIN_FRAME_SIZE	src/de/schildbach/wallet/camera/CameraManager.java	/^	private static final int MIN_FRAME_SIZE = 240;$/;"	f	class:CameraManager	file:
@@ -671,7 +671,7 @@ OverflowPopup	src/com/actionbarsherlock/internal/view/menu/ActionMenuPresenter.j
 PARAM_TYPES	src/com/actionbarsherlock/view/MenuInflater.java	/^        private static final Class<?>[] PARAM_TYPES = new Class[] { MenuItem.class };$/;"	f	class:MenuInflater.InflatedOnMenuItemClickListener	file:
 PASSWORD	test/de/schildbach/wallet/util/CryptoTest.java	/^	private static final char[] PASSWORD = "password".toCharArray();$/;"	f	class:CryptoTest	file:
 PATTERN_PRIVATE_KEY	src/de/schildbach/wallet/ui/InputParser.java	/^	private static final Pattern PATTERN_PRIVATE_KEY = Pattern$/;"	f	class:InputParser	file:
-PATTERN_Peercoin_ADDRESS	src/de/schildbach/wallet/ui/InputParser.java	/^	private static final Pattern PATTERN_Peercoin_ADDRESS = Pattern.compile("[" + new String(Base58.ALPHABET) + "]{20,40}");$/;"	f	class:InputParser	file:
+PATTERN_Nubits_ADDRESS	src/de/schildbach/wallet/ui/InputParser.java	/^	private static final Pattern PATTERN_Nubits_ADDRESS = Pattern.compile("[" + new String(Base58.ALPHABET) + "]{20,40}");$/;"	f	class:InputParser	file:
 PATTERN_TRANSACTION	src/de/schildbach/wallet/ui/InputParser.java	/^	private static final Pattern PATTERN_TRANSACTION = Pattern.compile("[0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$\\\\*\\\\+\\\\-\\\\.\\\\\/\\\\:]{100,}");$/;"	f	class:InputParser	file:
 PLAIN_BYTES	test/de/schildbach/wallet/util/CryptoTest.java	/^	private static final byte[] PLAIN_BYTES = PLAIN_TEXT.getBytes();$/;"	f	class:CryptoTest	file:
 PLAIN_TEXT	test/de/schildbach/wallet/util/CryptoTest.java	/^	private static final String PLAIN_TEXT = "plain text";$/;"	f	class:CryptoTest	file:
@@ -752,7 +752,7 @@ RBTValue	src/de/schildbach/wallet/util/WalletUtils.java	/^	public static BigInte
 RBT_MAX_PRECISION	src/de/schildbach/wallet/Constants.java	/^	public static final int RBT_MAX_PRECISION = 6;$/;"	f	class:Constants
 RECEIVED	src/de/schildbach/wallet/ui/TransactionsListFragment.java	/^		RECEIVED, SENT$/;"	e	enum:TransactionsListFragment.Direction	file:
 REFRESH_MS	src/de/schildbach/wallet/ui/PeerListFragment.java	/^	private static final long REFRESH_MS = DateUtils.SECOND_IN_MILLIS;$/;"	f	class:PeerListFragment	file:
-REPORT_EMAIL	src/de/schildbach/wallet/Constants.java	/^	public static final String REPORT_EMAIL = "support@peercoin.com";$/;"	f	class:Constants
+REPORT_EMAIL	src/de/schildbach/wallet/Constants.java	/^	public static final String REPORT_EMAIL = "support@nubits.com";$/;"	f	class:Constants
 REPORT_SUBJECT_CRASH	src/de/schildbach/wallet/Constants.java	/^	public static final String REPORT_SUBJECT_CRASH = "Crash report";$/;"	f	class:Constants
 REPORT_SUBJECT_ISSUE	src/de/schildbach/wallet/Constants.java	/^	public static final String REPORT_SUBJECT_ISSUE = "Reported issue";$/;"	f	class:Constants
 REQUEST_CODE_ENABLE_BLUETOOTH	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^	private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 0;$/;"	f	class:RequestCoinsFragment	file:
@@ -790,9 +790,9 @@ ResultCallback	src/de/schildbach/wallet/offline/DirectPaymentTask.java	/^	public
 ResultCallback	src/de/schildbach/wallet/ui/RequestPaymentRequestTask.java	/^	public interface ResultCallback$/;"	i	class:RequestPaymentRequestTask
 ReverseDnsLoader	src/de/schildbach/wallet/ui/PeerListFragment.java	/^		public ReverseDnsLoader(final Context context, @Nonnull final InetAddress address)$/;"	m	class:PeerListFragment.ReverseDnsLoader
 ReverseDnsLoader	src/de/schildbach/wallet/ui/PeerListFragment.java	/^	private static class ReverseDnsLoader extends AsyncTaskLoader<String>$/;"	c	class:PeerListFragment
-PeercoinAVERAGE_FIELDS	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String[] PeercoinAVERAGE_FIELDS = new String[] { "24h_avg", "last" };$/;"	f	class:ExchangeRatesProvider	file:
-PeercoinAVERAGE_SOURCE	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String PeercoinAVERAGE_SOURCE = "PeercoinAverage.com";$/;"	f	class:ExchangeRatesProvider	file:
-PeercoinAVERAGE_URL	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final URL PeercoinAVERAGE_URL;$/;"	f	class:ExchangeRatesProvider	file:
+NubitsAVERAGE_FIELDS	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String[] NubitsAVERAGE_FIELDS = new String[] { "24h_avg", "last" };$/;"	f	class:ExchangeRatesProvider	file:
+NubitsAVERAGE_SOURCE	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final String NubitsAVERAGE_SOURCE = "NubitsAverage.com";$/;"	f	class:ExchangeRatesProvider	file:
+NubitsAVERAGE_URL	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final URL NubitsAVERAGE_URL;$/;"	f	class:ExchangeRatesProvider	file:
 SALT_LENGTH	src/de/schildbach/wallet/util/Crypto.java	/^	private static final int SALT_LENGTH = 8;$/;"	f	class:Crypto	file:
 SANS_ICE_CREAM	src/com/actionbarsherlock/internal/widget/CapitalizingButton.java	/^    private static final boolean SANS_ICE_CREAM = Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH;$/;"	f	class:CapitalizingButton	file:
 SANS_ICE_CREAM	src/com/actionbarsherlock/internal/widget/CapitalizingTextView.java	/^    private static final boolean SANS_ICE_CREAM = Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH;$/;"	f	class:CapitalizingTextView	file:
@@ -819,7 +819,7 @@ SHOW_DIVIDER_MIDDLE	src/com/actionbarsherlock/internal/widget/IcsLinearLayout.ja
 SHOW_DIVIDER_NONE	src/com/actionbarsherlock/internal/widget/IcsLinearLayout.java	/^    public static final int SHOW_DIVIDER_NONE = 0;$/;"	f	class:IcsLinearLayout
 SIGNIFICANT_SPAN	src/de/schildbach/wallet/util/WalletUtils.java	/^	private static final Object SIGNIFICANT_SPAN = new StyleSpan(Typeface.BOLD);$/;"	f	class:WalletUtils	file:
 SMALLER_SPAN	src/de/schildbach/wallet/util/WalletUtils.java	/^	public static final RelativeSizeSpan SMALLER_SPAN = new RelativeSizeSpan(0.85f);$/;"	f	class:WalletUtils
-SOURCE_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String SOURCE_URL = "https:\/\/github.com\/Peercoin\/AndroidWallet";$/;"	f	class:Constants
+SOURCE_URL	src/de/schildbach/wallet/Constants.java	/^	public static final String SOURCE_URL = "https:\/\/github.com\/Nubits\/AndroidWallet";$/;"	f	class:Constants
 STOPPED	src/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator.java	/^    static final int STOPPED    = 0; \/\/ Not yet playing$/;"	f	class:ValueAnimator
 SYNC_FIRST_POSITION	src/com/actionbarsherlock/internal/widget/IcsAdapterView.java	/^    static final int SYNC_FIRST_POSITION = 1;$/;"	f	class:IcsAdapterView
 SYNC_MAX_DURATION_MILLIS	src/com/actionbarsherlock/internal/widget/IcsAdapterView.java	/^    static final int SYNC_MAX_DURATION_MILLIS = 100;$/;"	f	class:IcsAdapterView
@@ -1091,7 +1091,7 @@ TwoFragmentAdapter	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^	priva
 TypeEvaluator	src/com/actionbarsherlock/internal/nineoldandroids/animation/TypeEvaluator.java	/^public interface TypeEvaluator<T> {$/;"	i
 UPDATE_FREQ_MS	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^	private static final long UPDATE_FREQ_MS = 10 * DateUtils.MINUTE_IN_MILLIS;$/;"	f	class:ExchangeRatesProvider	file:
 URBT_MAX_PRECISION	src/de/schildbach/wallet/Constants.java	/^	public static final int URBT_MAX_PRECISION = 0;$/;"	f	class:Constants
-USER_AGENT	src/de/schildbach/wallet/Constants.java	/^	public static final String USER_AGENT = "Peercoin Wallet";$/;"	f	class:Constants
+USER_AGENT	src/de/schildbach/wallet/Constants.java	/^	public static final String USER_AGENT = "Nubits Wallet";$/;"	f	class:Constants
 USER_MASK	src/com/actionbarsherlock/view/Menu.java	/^    static final int USER_MASK = 0x0000ffff;$/;"	f	interface:Menu
 USER_SHIFT	src/com/actionbarsherlock/view/Menu.java	/^    static final int USER_SHIFT = 0;$/;"	f	interface:Menu
 US_ASCII	src/de/schildbach/wallet/Constants.java	/^	public static final Charset US_ASCII = Charset.forName("US-ASCII");$/;"	f	class:Constants
@@ -1194,7 +1194,7 @@ about_community_googleplus_title	gen/de/schildbach/wallet_test/R.java	/^        
 about_copyright_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_copyright_title=0x7f0b00cf;$/;"	f	class:R.string
 about_credits_icon_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_credits_icon_title=0x7f0b00d4;$/;"	f	class:R.string
 about_credits_market_publisher_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_credits_market_publisher_title=0x7f0b00d9;$/;"	f	class:R.string
-about_credits_peercoinj_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_credits_peercoinj_title=0x7f0b00d2;$/;"	f	class:R.string
+about_credits_nubitsj_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_credits_nubitsj_title=0x7f0b00d2;$/;"	f	class:R.string
 about_credits_zxing_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_credits_zxing_title=0x7f0b00d3;$/;"	f	class:R.string
 about_license_title	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_license_title=0x7f0b00d0;$/;"	f	class:R.string
 about_market_app_summary	gen/de/schildbach/wallet_test/R.java	/^        public static final int about_market_app_summary=0x7f0b00d8;$/;"	f	class:R.string
@@ -2005,84 +2005,84 @@ de.schildbach.wallet	src/de/schildbach/wallet/Constants.java	/^package de.schild
 de.schildbach.wallet	src/de/schildbach/wallet/ExchangeRatesProvider.java	/^package de.schildbach.wallet;$/;"	p
 de.schildbach.wallet	src/de/schildbach/wallet/WalletApplication.java	/^package de.schildbach.wallet;$/;"	p
 de.schildbach.wallet	src/de/schildbach/wallet/WalletBalanceWidgetProvider.java	/^package de.schildbach.wallet;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.camera	src/de/schildbach/wallet/camera/CameraManager.java	/^package com.matthewmitchell.peercoin_android_wallet.camera;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.data	src/de/schildbach/wallet/data/PaymentIntent.java	/^package com.matthewmitchell.peercoin_android_wallet.data;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.offline	src/de/schildbach/wallet/offline/AcceptBluetoothService.java	/^package com.matthewmitchell.peercoin_android_wallet.offline;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.offline	src/de/schildbach/wallet/offline/AcceptBluetoothThread.java	/^package com.matthewmitchell.peercoin_android_wallet.offline;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.offline	src/de/schildbach/wallet/offline/DirectPaymentTask.java	/^package com.matthewmitchell.peercoin_android_wallet.offline;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.service	src/de/schildbach/wallet/service/AutosyncReceiver.java	/^package com.matthewmitchell.peercoin_android_wallet.service;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.service	src/de/schildbach/wallet/service/BlockchainService.java	/^package com.matthewmitchell.peercoin_android_wallet.service;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.service	src/de/schildbach/wallet/service/BlockchainServiceImpl.java	/^package com.matthewmitchell.peercoin_android_wallet.service;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AboutActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractBindServiceActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractOnDemandServiceActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractWalletActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AddressAndLabel.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/BlockListFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyAmountView.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyCalculatorLink.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencySymbolDrawable.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyTextView.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/DialogBuilder.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/EditAddressBookEntryFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRateLoader.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRatesActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRatesFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/FileAdapter.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/HelpDialogFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ImportDialogButtonEnablerListener.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ImportKeysActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/InputParser.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/NetworkMonitorActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/PeerListFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/PreferencesActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ProgressDialogFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ReportIssueDialogBuilder.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/RequestCoinsActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/RequestPaymentRequestTask.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ScanActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ScannerView.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsOfflineTask.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsQrActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/SendingAddressesFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/ShowPasswordCheckListener.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/TransactionsListAdapter.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/TransactionsListFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletActionsFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletActivity.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressesAdapter.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressesFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletBalanceFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletBalanceLoader.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletDisclaimerFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.ui	src/de/schildbach/wallet/ui/WalletTransactionsFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.ui;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Base43.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/BitmapFragment.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Bluetooth.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/CircularProgressView.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/CrashReporter.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Crypto.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/GenericUtils.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/HttpGetThread.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Io.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Iso8601Format.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/LinuxSecureRandom.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Nfc.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/PaymentProtocol.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/Qr.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/ThrottlingWalletChangeListener.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/ViewPagerTabs.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/WalletUtils.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	src/de/schildbach/wallet/util/WholeStringBuilder.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	test/de/schildbach/wallet/util/Base43Test.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	test/de/schildbach/wallet/util/BluetoothTest.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	test/de/schildbach/wallet/util/CryptoTest.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
-com.matthewmitchell.peercoin_android_wallet.util	test/de/schildbach/wallet/util/GenericUtilsTest.java	/^package com.matthewmitchell.peercoin_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.camera	src/de/schildbach/wallet/camera/CameraManager.java	/^package com.matthewmitchell.nubits_android_wallet.camera;$/;"	p
+com.matthewmitchell.nubits_android_wallet.data	src/de/schildbach/wallet/data/PaymentIntent.java	/^package com.matthewmitchell.nubits_android_wallet.data;$/;"	p
+com.matthewmitchell.nubits_android_wallet.offline	src/de/schildbach/wallet/offline/AcceptBluetoothService.java	/^package com.matthewmitchell.nubits_android_wallet.offline;$/;"	p
+com.matthewmitchell.nubits_android_wallet.offline	src/de/schildbach/wallet/offline/AcceptBluetoothThread.java	/^package com.matthewmitchell.nubits_android_wallet.offline;$/;"	p
+com.matthewmitchell.nubits_android_wallet.offline	src/de/schildbach/wallet/offline/DirectPaymentTask.java	/^package com.matthewmitchell.nubits_android_wallet.offline;$/;"	p
+com.matthewmitchell.nubits_android_wallet.service	src/de/schildbach/wallet/service/AutosyncReceiver.java	/^package com.matthewmitchell.nubits_android_wallet.service;$/;"	p
+com.matthewmitchell.nubits_android_wallet.service	src/de/schildbach/wallet/service/BlockchainService.java	/^package com.matthewmitchell.nubits_android_wallet.service;$/;"	p
+com.matthewmitchell.nubits_android_wallet.service	src/de/schildbach/wallet/service/BlockchainServiceImpl.java	/^package com.matthewmitchell.nubits_android_wallet.service;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AboutActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractBindServiceActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractOnDemandServiceActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AbstractWalletActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AddressAndLabel.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/BlockListFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyAmountView.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyCalculatorLink.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencySymbolDrawable.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/CurrencyTextView.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/DialogBuilder.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/EditAddressBookEntryFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRateLoader.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRatesActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ExchangeRatesFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/FileAdapter.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/HelpDialogFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ImportDialogButtonEnablerListener.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ImportKeysActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/InputParser.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/NetworkMonitorActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/PeerListFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/PreferencesActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ProgressDialogFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ReportIssueDialogBuilder.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/RequestCoinsActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/RequestPaymentRequestTask.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ScanActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ScannerView.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsOfflineTask.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/SendCoinsQrActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/SendingAddressesFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/ShowPasswordCheckListener.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/TransactionsListAdapter.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/TransactionsListFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletActionsFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletActivity.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressesAdapter.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletAddressesFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletBalanceFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletBalanceLoader.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletDisclaimerFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.ui	src/de/schildbach/wallet/ui/WalletTransactionsFragment.java	/^package com.matthewmitchell.nubits_android_wallet.ui;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Base43.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/BitmapFragment.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Bluetooth.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/CircularProgressView.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/CrashReporter.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Crypto.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/GenericUtils.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/HttpGetThread.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Io.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Iso8601Format.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/LinuxSecureRandom.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Nfc.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/PaymentProtocol.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/Qr.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/ThrottlingWalletChangeListener.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/ViewPagerTabs.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/WalletUtils.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	src/de/schildbach/wallet/util/WholeStringBuilder.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	test/de/schildbach/wallet/util/Base43Test.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	test/de/schildbach/wallet/util/BluetoothTest.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	test/de/schildbach/wallet/util/CryptoTest.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
+com.matthewmitchell.nubits_android_wallet.util	test/de/schildbach/wallet/util/GenericUtilsTest.java	/^package com.matthewmitchell.nubits_android_wallet.util;$/;"	p
 de.schildbach.wallet_test	gen/de/schildbach/wallet_test/BuildConfig.java	/^package de.schildbach.wallet_test;$/;"	p
 de.schildbach.wallet_test	gen/de/schildbach/wallet_test/R.java	/^package de.schildbach.wallet_test;$/;"	p
 decode	src/de/schildbach/wallet/util/Base43.java	/^	public static byte[] decode(@Nonnull final String input) throws IllegalArgumentException$/;"	m	class:Base43
@@ -2118,7 +2118,7 @@ describeContents	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public int 
 describeContents	src/de/schildbach/wallet/ui/AddressAndLabel.java	/^	public int describeContents()$/;"	m	class:AddressAndLabel
 destroyItem	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^		public void destroyItem(final ViewGroup container, final int position, final Object object)$/;"	m	class:AddressBookActivity.TwoFragmentAdapter
 determinePaymentRequest	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^	private byte[] determinePaymentRequest(final boolean includeBluetoothMac)$/;"	m	class:RequestCoinsFragment	file:
-determinePeercoinRequestStr	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^	private String determinePeercoinRequestStr(final boolean includeBluetoothMac)$/;"	m	class:RequestCoinsFragment	file:
+determineNubitsRequestStr	src/de/schildbach/wallet/ui/RequestCoinsFragment.java	/^	private String determineNubitsRequestStr(final boolean includeBluetoothMac)$/;"	m	class:RequestCoinsFragment	file:
 determineSelectedAddress	src/de/schildbach/wallet/WalletApplication.java	/^	public Address determineSelectedAddress()$/;"	m	class:WalletApplication
 dialog	src/de/schildbach/wallet/ui/ImportDialogButtonEnablerListener.java	/^	private final AlertDialog dialog;$/;"	f	class:ImportDialogButtonEnablerListener	file:
 dialog	src/de/schildbach/wallet/ui/InputParser.java	/^	protected void dialog(final Context context, @Nullable final OnClickListener dismissListener, final int titleResId, final int messageResId,$/;"	m	class:InputParser
@@ -2400,7 +2400,7 @@ framePreview	src/de/schildbach/wallet/camera/CameraManager.java	/^	private Rect 
 framePreview	src/de/schildbach/wallet/ui/ScannerView.java	/^	private Rect frame, framePreview;$/;"	f	class:ScannerView	file:
 fromAddress	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public static PaymentIntent fromAddress(@Nonnull final Address address, @Nullable final String addressLabel)$/;"	m	class:PaymentIntent
 fromAddress	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public static PaymentIntent fromAddress(@Nonnull final String address, @Nullable final String addressLabel) throws WrongNetworkException,$/;"	m	class:PaymentIntent
-fromPeercoinUri	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public static PaymentIntent fromPeercoinUri(@Nonnull final PeercoinURI peercoinUri)$/;"	m	class:PaymentIntent
+fromNubitsUri	src/de/schildbach/wallet/data/PaymentIntent.java	/^	public static PaymentIntent fromNubitsUri(@Nonnull final NubitsURI nubitsUri)$/;"	m	class:PaymentIntent
 generateDefaultLayoutParams	src/com/actionbarsherlock/internal/view/menu/ActionMenuView.java	/^    protected LayoutParams generateDefaultLayoutParams() {$/;"	m	class:ActionMenuView
 generateDefaultLayoutParams	src/com/actionbarsherlock/internal/widget/ActionBarContextView.java	/^    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {$/;"	m	class:ActionBarContextView
 generateDefaultLayoutParams	src/com/actionbarsherlock/internal/widget/ActionBarView.java	/^    protected ViewGroup.LayoutParams generateDefaultLayoutParams() {$/;"	m	class:ActionBarView
@@ -3020,9 +3020,9 @@ initLogging	src/de/schildbach/wallet/WalletApplication.java	/^	private void init
 initProgress	src/com/actionbarsherlock/internal/widget/ActionBarView.java	/^    public void initProgress() {$/;"	m	class:ActionBarView
 initProgressBar	src/com/actionbarsherlock/internal/widget/IcsProgressBar.java	/^    private void initProgressBar() {$/;"	m	class:IcsProgressBar	file:
 initStateFromIntentExtras	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromIntentExtras(@Nonnull final Bundle extras)$/;"	m	class:SendCoinsFragment	file:
-initStateFromIntentUri	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromIntentUri(@Nonnull final String mimeType, @Nonnull final Uri peercoinUri)$/;"	m	class:SendCoinsFragment	file:
+initStateFromIntentUri	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromIntentUri(@Nonnull final String mimeType, @Nonnull final Uri nubitsUri)$/;"	m	class:SendCoinsFragment	file:
 initStateFromPaymentRequest	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromPaymentRequest(@Nonnull final String mimeType, @Nonnull final byte[] input)$/;"	m	class:SendCoinsFragment	file:
-initStateFromPeercoinUri	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromPeercoinUri(@Nonnull final Uri peercoinUri)$/;"	m	class:SendCoinsFragment	file:
+initStateFromNubitsUri	src/de/schildbach/wallet/ui/SendCoinsFragment.java	/^	private void initStateFromNubitsUri(@Nonnull final Uri nubitsUri)$/;"	m	class:SendCoinsFragment	file:
 initTitle	src/com/actionbarsherlock/internal/widget/ActionBarContextView.java	/^    private void initTitle() {$/;"	m	class:ActionBarContextView	file:
 initTitle	src/com/actionbarsherlock/internal/widget/ActionBarView.java	/^    private void initTitle() {$/;"	m	class:ActionBarView	file:
 initialActivityCount	gen/de/schildbach/wallet_test/R.java	/^        public static final int initialActivityCount=0x7f01004f;$/;"	f	class:R.attr
@@ -3041,7 +3041,7 @@ inputType	src/de/schildbach/wallet/ui/InputParser.java	/^		private final String 
 input_parser_cannot_classify	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_cannot_classify=0x7f0b00a7;$/;"	f	class:R.string
 input_parser_invalid_address	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_invalid_address=0x7f0b00a9;$/;"	f	class:R.string
 input_parser_invalid_paymentrequest	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_invalid_paymentrequest=0x7f0b00ab;$/;"	f	class:R.string
-input_parser_invalid_peercoin_uri	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_invalid_peercoin_uri=0x7f0b00a8;$/;"	f	class:R.string
+input_parser_invalid_nubits_uri	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_invalid_nubits_uri=0x7f0b00a8;$/;"	f	class:R.string
 input_parser_invalid_transaction	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_invalid_transaction=0x7f0b00ac;$/;"	f	class:R.string
 input_parser_io_error	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_io_error=0x7f0b00a6;$/;"	f	class:R.string
 input_parser_unverifyable_paymentrequest	gen/de/schildbach/wallet_test/R.java	/^        public static final int input_parser_unverifyable_paymentrequest=0x7f0b00aa;$/;"	f	class:R.string
@@ -4836,12 +4836,12 @@ resultColor	src/de/schildbach/wallet/ui/ScannerView.java	/^	private final int re
 reverse	src/com/actionbarsherlock/internal/nineoldandroids/animation/ValueAnimator.java	/^    public void reverse() {$/;"	m	class:ValueAnimator
 reverseDnsLoaderCallbacks	src/de/schildbach/wallet/ui/PeerListFragment.java	/^	private final LoaderCallbacks<String> reverseDnsLoaderCallbacks = new LoaderCallbacks<String>()$/;"	f	class:PeerListFragment	file:
 right	src/de/schildbach/wallet/ui/AddressBookActivity.java	/^		private final Fragment right;$/;"	f	class:AddressBookActivity.TwoFragmentAdapter	file:
-peercoinAddressButton	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private View peercoinAddressButton;$/;"	f	class:WalletAddressFragment	file:
-peercoinAddressLabel	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private TextView peercoinAddressLabel;$/;"	f	class:WalletAddressFragment	file:
-peercoinAddressQrView	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private ImageView peercoinAddressQrView;$/;"	f	class:WalletAddressFragment	file:
-peercoin_address_button	gen/de/schildbach/wallet_test/R.java	/^        public static final int peercoin_address_button=0x7f060082;$/;"	f	class:R.id
-peercoin_address_label	gen/de/schildbach/wallet_test/R.java	/^        public static final int peercoin_address_label=0x7f060083;$/;"	f	class:R.id
-peercoin_address_qr	gen/de/schildbach/wallet_test/R.java	/^        public static final int peercoin_address_qr=0x7f060084;$/;"	f	class:R.id
+nubitsAddressButton	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private View nubitsAddressButton;$/;"	f	class:WalletAddressFragment	file:
+nubitsAddressLabel	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private TextView nubitsAddressLabel;$/;"	f	class:WalletAddressFragment	file:
+nubitsAddressQrView	src/de/schildbach/wallet/ui/WalletAddressFragment.java	/^	private ImageView nubitsAddressQrView;$/;"	f	class:WalletAddressFragment	file:
+nubits_address_button	gen/de/schildbach/wallet_test/R.java	/^        public static final int nubits_address_button=0x7f060082;$/;"	f	class:R.id
+nubits_address_label	gen/de/schildbach/wallet_test/R.java	/^        public static final int nubits_address_label=0x7f060083;$/;"	f	class:R.id
+nubits_address_qr	gen/de/schildbach/wallet_test/R.java	/^        public static final int nubits_address_qr=0x7f060084;$/;"	f	class:R.id
 roundtripBytes	test/de/schildbach/wallet/util/CryptoTest.java	/^	public void roundtripBytes() throws Exception$/;"	m	class:CryptoTest
 roundtripDifferentByteSizes	test/de/schildbach/wallet/util/CryptoTest.java	/^	public void roundtripDifferentByteSizes() throws Exception$/;"	m	class:CryptoTest
 roundtripDifferentPasswordSizes	test/de/schildbach/wallet/util/CryptoTest.java	/^	public void roundtripDifferentPasswordSizes() throws Exception$/;"	m	class:CryptoTest

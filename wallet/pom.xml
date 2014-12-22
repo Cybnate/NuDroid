@@ -6,13 +6,13 @@
 
 	<artifactId>wallet</artifactId>
 	<packaging>apk</packaging>
-	<version>1.2</version>
-	<name>Peercoin Wallet</name>
+	<version>1.0</version>
+	<name>Nubits Wallet</name>
 
 	<parent>
-		<groupId>com.matthewmitchell.peercoin_android_wallet</groupId>
+		<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 		<artifactId>base</artifactId>
-		<version>1.2</version>
+		<version>1.0</version>
 	</parent>
 
 	<licenses>
@@ -26,7 +26,7 @@
 	<repositories>
 	  <repository>
 	    <id>local</id>
-	    <url>file://${project.basedir}/../../peercoinj/core/target/</url>
+	    <url>file://${project.basedir}/../../nubitsj/core/target/</url>
 	  </repository>
 	</repositories>
 
@@ -56,16 +56,16 @@
 			<version>r7</version>
 		</dependency>
 
-		<!-- com.matthewmitchell.peercoinj.* -->
+		<!-- com.matthewmitchell.nubitsj.* -->
 		<dependency>
 			<groupId>com.matthewmitchell</groupId>
-			<artifactId>peercoinj</artifactId>
+			<artifactId>nubitsj</artifactId>
 			<version>0.11.3</version>
 		</dependency> 
 
-		<!-- com.matthewmitchell.peercoin_android_wallet.integration.android.* -->
+		<!-- com.matthewmitchell.nubits_android_wallet.integration.android.* -->
 		<dependency>
-			<groupId>com.matthewmitchell.peercoin_android_wallet</groupId>
+			<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 			<artifactId>integration-android</artifactId>
 			<version>2.0</version>
 			<scope>system</scope>
@@ -189,7 +189,7 @@
 					                <keystore>${keystore}</keystore>
 					                <storepass>${password}</storepass>
 					                <keypass>${password}</keypass>
-					                <alias>peercoin</alias>
+					                <alias>nubits</alias>
 					                <arguments>
 					                  <argument>-sigalg</argument><argument>SHA1withRSA</argument>
 					                  <argument>-digestalg</argument><argument>SHA1</argument>
@@ -270,7 +270,7 @@
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>2.5.2</version>
 				<configuration>
-					<onlyAnalyze>com.matthewmitchell.peercoin_android_wallet.-</onlyAnalyze>
+					<onlyAnalyze>com.matthewmitchell.nubits_android_wallet.-</onlyAnalyze>
 				</configuration>
 			</plugin>
 		</plugins>

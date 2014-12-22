@@ -3,7 +3,7 @@ package com.actionbarsherlock.internal;
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import com.matthewmitchell.peercoin_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.R;
 
 public final class ResourcesCompat {
     //No instances

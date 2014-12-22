@@ -38,25 +38,25 @@ The only added feature seems to be a sliding menu, but it fails to show any scre
 Litecoin Wallet (old)
 Forked in March 2013 in order to replace Bitcoin by Litecoin.
  Source:  https://github.com/hank/litecoin-wallet
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.litecoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.litecoin
 
 
 Feathercoin Wallet
 Forked in March 2013 in order to replace Bitcoin by Feathercoin.
  Source:  https://github.com/hank/feathercoin-wallet
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.feathercoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.feathercoin
 
 
 DigiByte Wallet
 Forked in November 2013 in order to replace Bitcoin by DigiByte.
  Source:  https://github.com/digibyte/DigiByteAndroid
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.digibyte
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.digibyte
 
 
 GoldCoin Wallet
 Forked in December 2013 in order to replace Bitcoin by GoldCoin.
  Source:  https://github.com/goldcoin/goldcoin-android/
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.goldcoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.goldcoin
 
 
 Dogecoin Wallet
@@ -86,13 +86,13 @@ Forked in January 2014 in order to replace Bitcoin by Digitalcoin.
 Megacoin Wallet
 Forked in January 2014 in order to replace Bitcoin by Megacoin.
  Source:  https://github.com/HashEngineering/Megacoin-wallet
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.megacoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.megacoin
 
 
 Infinitecoin Wallet
 Forked in January 2014 in order to replace Bitcoin by Infinitecoin.
  Source:  https://github.com/HashEngineering/infinitecoin-wallet
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.infinitecoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.infinitecoin
 
 
 Quark Wallet
@@ -128,7 +128,7 @@ Forked in January 2014 in order to replace Bitcoin by Fedoracoin.
 Earthcoin Wallet
 Forked in January 2014 in order to replace Bitcoin by Earthcoin.
  Source:  https://github.com/l0rdicon/EarthcoinAndroid
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.earthcoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.earthcoin
 
 
 Reddcoin Wallet
@@ -146,7 +146,7 @@ Forked in March 2014 in order to replace Bitcoin by Dopecoin.
 Vertcoin Wallet
 Forked in January 2014 in order to replace Bitcoin by Vertcoin.
  Source:  https://github.com/dayreiner/vertcoin-wallet
- Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet.vertcoin
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet.vertcoin
 
 
 Zetacoin Wallet
@@ -160,6 +160,11 @@ Forked in July 2014 in order to replace Bitcoin by Rimbit, and support PoS coins
  Install: https://play.google.com/store/apps/details?id=com.rimbit.android_wallet
  
  Peercoin Wallet
-Forked in September 2014 in order to replace Rimbit by Peercoin.
+Forked in September 2014 in order to replace Rimbit by Nubits.
  Source:  https://github.com/MatthewLM/peercoin-android-wallet
  Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.peercoin_android_wallet
+
+ Nubits Wallet
+Forked in December 2014 in order to replace Peercoin by Nubits.
+ Source:  https://github.com/Cybnate/Nubits-Android-wallet
+ Install: https://play.google.com/store/apps/details?id=com.matthewmitchell.nubits_android_wallet

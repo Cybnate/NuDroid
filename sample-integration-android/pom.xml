@@ -7,7 +7,7 @@
 	<artifactId>sample-integration-android</artifactId>
 	<packaging>apk</packaging>
 	<version>1.0</version>
-	<name>Sample for Peercoin Integration for Android</name>
+	<name>Sample for Nubits Integration for Android</name>
 
 	<parent>
 		<groupId>de.schildbach.wallet</groupId>
@@ -26,7 +26,7 @@
 	<repositories>
 	  <repository>
 	    <id>local</id>
-	    <url>file://${project.basedir}/../../peercoinj/core/target/</url>
+	    <url>file://${project.basedir}/../../nubitsj/core/target/</url>
 	  </repository>
 	</repositories>
 
@@ -48,10 +48,10 @@
 			<version>2.0</version>
 		</dependency>
 
-		<!-- com.matthewmitchell.peercoinj.* -->
+		<!-- com.matthewmitchell.nubitsj.* -->
 		<dependency>
 			<groupId>com.matthewmitchell</groupId>
-			<artifactId>peercoinj</artifactId>
+			<artifactId>nubitsj</artifactId>
 			<version>0.11.3</version>
 		</dependency>
 

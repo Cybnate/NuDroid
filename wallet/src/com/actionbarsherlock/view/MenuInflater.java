@@ -32,7 +32,7 @@ import android.util.Xml;
 import android.view.InflateException;
 import android.view.View;
 
-import com.matthewmitchell.peercoin_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.R;
 import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
 
 /**
