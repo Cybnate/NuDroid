@@ -35,8 +35,6 @@
 	<string name="wallet_transactions_fragment_internal">внутренний</string>
 	<string name="wallet_transactions_context_show_qr_title">Показать QR код</string>
 	<string name="wallet_options_safety">Заметки по безопасности</string>
-	<string name="wallet_options_donate">Пожертвовать</string>
-	<string name="wallet_donate_address_label">Пожертвование для Nubits Бумажника</string>
 	<string name="wallet_low_storage_dialog_title">Недостаточно внутренней памяти на устройстве!</string>
 	<string name="wallet_low_storage_dialog_msg">Nubits Кошелёк использует внутреннюю память для хранения транзакций и блоков. Если память закончится, приложение перестанет работать, что поставит под угрозу содержимое Nubits-кошелька!\n\nОткрыть Управление Приложениями, чтобы удалить ненужные программы?</string>
 	<string name="wallet_low_storage_dialog_button_apps">Управление приложениями</string>
@@ -115,7 +113,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Этот платёж должен стать доступным через несколько минут.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Этот платёж нестандартный, ему не следует доверять.</string>
 	<string name="transaction_row_message_received_dead">Этот платёж был отменён отправителем.</string>
-	<string name="transaction_row_message_received_dust">Столь малая сумма, скорее всего, никогда не будет потрачена экономически.</string>
 	<string name="network_monitor_activity_title">Сетевой монитор</string>
 	<string name="network_monitor_peer_list_title">Узлы</string>
 	<string name="network_monitor_block_list_title">Блоки</string>

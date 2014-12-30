@@ -35,8 +35,6 @@
 	<string name="wallet_transactions_fragment_internal">belső</string>
 	<string name="wallet_transactions_context_show_qr_title">QR-kód megtekintése</string>
 	<string name="wallet_options_safety">Biztonsági megjegyzések</string>
-	<string name="wallet_options_donate">Támogatás / Donate</string>
-	<string name="wallet_donate_address_label">Támogasd a Nubits Wallet létrehozóit</string>
 	<string name="wallet_low_storage_dialog_title">Az eszköz tárolókapacitása alacsony!</string>
 	<string name="wallet_low_storage_dialog_msg">A Nubits Wallet alkalmazás belső tárhelyet használ a tranzakciók és blokkok nyilvántartására. Ha a program kifut a rendelkezésre álló szabad kapacitásból, leáll és ezzel a meglévő Nubits érméid is veszélybe kerülhetnek.\n\nSzeretnéd megnyitni az Alkalmazás-kezelőt és eltávolítani a nem szükséges alkalmazásokat, amellyel tárhelyet szabadíthatsz fel az eszközön.</string>
 	<string name="wallet_low_storage_dialog_button_apps">Alkalmazások kezelése</string>
@@ -96,7 +94,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Ez a kifizetés perceken belül hozzáférhetővé válik.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Ez nem egy hagyományos fizetés, nem megbízható.</string>
 	<string name="transaction_row_message_received_dead">A kifizetés visszafordítva a küldő által.</string>
-	<string name="transaction_row_message_received_dust">Ilyen kis összeg felhasználása -valószínűleg- nem történhet meg gazdaságosan.</string>
 	<string name="network_monitor_activity_title">Hálózati állapot</string>
 	<string name="network_monitor_peer_list_title">Kapcsolatok</string>
 	<string name="network_monitor_block_list_title">Blokkok</string>

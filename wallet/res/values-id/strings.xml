@@ -34,8 +34,6 @@
 	<string name="wallet_transactions_fragment_coinbase">ditambang</string>
 	<string name="wallet_transactions_fragment_internal">Internal</string>
 	<string name="wallet_options_safety">Nota keamanan</string>
-	<string name="wallet_options_donate">Tip / Donasi</string>
-	<string name="wallet_donate_address_label">Donasi untuk Nubits Wallet</string>
 	<string name="wallet_low_storage_dialog_title">Penyimpanan Internal tdk cukup!</string>
 	<string name="wallet_low_storage_dialog_msg">Nubits Wallet menggunakan penyimpanan internal untuk meyimpan transaksi dan blok. Jika kekurangan ruang, ia akan berhenti berfungsi dan Nubits Anda dlm bahaya!\n\nApakah Anda ingin buka Manajer Aplikasi untuk menghapus apl tak terpakai?</string>
 	<string name="wallet_low_storage_dialog_button_apps">Mengelola Apl</string>
@@ -95,7 +93,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Pembayaran ini bisa digunakan dalam beberapa menit.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Pembayaran ini tidak standar dan tidak dpt dipercayai.</string>
 	<string name="transaction_row_message_received_dead">Pembayaran ini dibatalkan oleh pengirim.</string>
-	<string name="transaction_row_message_received_dust">Jumlah kecil ini tidak akan pernah bisa digunakan secara ekonomis.</string>
 	<string name="network_monitor_activity_title">Monitor Jaringan</string>
 	<string name="network_monitor_peer_list_title">Peer</string>
 	<string name="network_monitor_block_list_title">Blok</string>

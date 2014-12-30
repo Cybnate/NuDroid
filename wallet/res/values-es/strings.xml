@@ -35,8 +35,6 @@
 	<string name="wallet_transactions_fragment_internal">interno</string>
 	<string name="wallet_transactions_context_show_qr_title">Mostrar código QR</string>
 	<string name="wallet_options_safety">Notas de seguridad</string>
-	<string name="wallet_options_donate">Donaciones</string>
-	<string name="wallet_donate_address_label">Donación para Nubits Wallet</string>
 	<string name="wallet_low_storage_dialog_title">¡Espacio disponible interno del dispositivo bajo!</string>
 	<string name="wallet_low_storage_dialog_msg">Nubits Wallet utiliza el almacenamiento interno para recordar las transacciones y los bloques. Si se queda sin espacio, dejará de funcionar y ¡tus nubitss estarán en peligro!\n\n¿Quieres abrir el administrador de aplicaciones para desinstalar aplicaciones innecesarias?</string>
 	<string name="wallet_low_storage_dialog_button_apps">Gestionar Aplicaciones</string>
@@ -113,7 +111,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Este pago debería estar disponible en unos minutos.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Este pago no es estándar y no ofrece confianza.</string>
 	<string name="transaction_row_message_received_dead">Este pago ha sido anulado por el pagador.</string>
-	<string name="transaction_row_message_received_dust">Esta cantidad pequeña probablemente no pueda gastarse económicamente.</string>
 	<string name="network_monitor_activity_title">Monitor de red</string>
 	<string name="network_monitor_peer_list_title">Pares</string>
 	<string name="network_monitor_block_list_title">Bloques</string>

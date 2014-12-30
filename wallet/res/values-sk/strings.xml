@@ -35,8 +35,6 @@
 	<string name="wallet_transactions_fragment_internal">vnútorné</string>
 	<string name="wallet_transactions_context_show_qr_title">Ukáž QR kód</string>
 	<string name="wallet_options_safety">Bezpečnosť</string>
-	<string name="wallet_options_donate">Prispieť</string>
-	<string name="wallet_donate_address_label">Prispieť na Nubits Wallet</string>
 	<string name="wallet_low_storage_dialog_title">Málo vnútornej pamäte!</string>
 	<string name="wallet_low_storage_dialog_msg">Nubits Wallet používa vnútornú pamäť zariadenia na ukladanie transakcií a blokov. Ak pamäť dôjde, aplikácia prestane fungovať a vaše Nubitsy budú ohrozené!\n\nChcete otvoriť správcu aplikácií pre odinštalovanie nepotrebných aplikácií?</string>
 	<string name="wallet_low_storage_dialog_button_apps">Spravovať aplikácie</string>
@@ -113,7 +111,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Táto platba by mala byť potvrdená za pár minút.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Táto platba je podozrivá.</string>
 	<string name="transaction_row_message_received_dead">Táto platba bola zrušená odosielateľom.</string>
-	<string name="transaction_row_message_received_dust">Takéto malé množstvo zrejme nebude možné minúť.</string>
 	<string name="network_monitor_activity_title">Stav siete</string>
 	<string name="network_monitor_peer_list_title">Uzly</string>
 	<string name="network_monitor_block_list_title">Bloky</string>

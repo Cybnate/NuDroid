@@ -22,10 +22,3 @@ __This project contains several sub-projects:__
 __You can build all sub-projects at once using Maven:__
 
 `mvn clean install`
-
-
-__Donate to support further development:__
-
-You can donate nubitss to support further development of _Nubits Wallet_ at [http://peer4commit.com/projects/129/](http://peer4commit.com/projects/129/)
-Peer4commit will distribute rewards to people that get pull requests merged into the source code.
-[![tip for next commit](http://peer4commit.com/projects/129.svg)](http://peer4commit.com/projects/129)

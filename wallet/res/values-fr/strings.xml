@@ -38,8 +38,6 @@
 	<string name="wallet_transactions_context_show_qr_title">Afficher le code QR</string>
 	<string name="wallet_options_safety_menu">Sécurité</string>
 	<string name="wallet_options_safety">Notes de sécurité</string>
-	<string name="wallet_options_donate">Faire un don</string>
-	<string name="wallet_donate_address_label">Faire un don pour Nubits Wallet</string>
 	<string name="wallet_low_storage_dialog_title">Espace de stockage interne faible !</string>
 	<string name="wallet_low_storage_dialog_msg">Nubits Wallet utilise le stockage interne pour se rappeler des transactions et des blocs. S\'il manque d\'espace, il cessera de fonctionner et vos nubitss seront à risque !\n\nVoulez-vous ouvrir le gestionnaire d\'applications pour désinstaller les applications inutiles ?</string>
 	<string name="wallet_low_storage_dialog_button_apps">Gérer les applis</string>
@@ -118,7 +116,6 @@
 	<string name="transaction_row_message_received_unconfirmed_unlocked">Ce paiement devrait pouvoir être dépensé dans quelques minutes.</string>
 	<string name="transaction_row_message_received_unconfirmed_locked">Ce paiement n\'est pas standard et vous ne devriez pas lui faire confiance.</string>
 	<string name="transaction_row_message_received_dead">Ce paiement a été renversé par son expéditeur.</string>
-	<string name="transaction_row_message_received_dust">Ce faible montant ne pourra probablement jamais être dépensé de façon économique.</string>
 	<string name="network_monitor_activity_title">Surveillance du réseau</string>
 	<string name="network_monitor_peer_list_title">Pairs</string>
 	<string name="network_monitor_block_list_title">Blocs</string>

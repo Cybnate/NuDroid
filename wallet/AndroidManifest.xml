@@ -92,7 +92,8 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.intent.action.VIEW" />
 
-				<data android:scheme="nbtoin" />
+				<data android:scheme="Nu" />
+				<data android:scheme="nu" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
@@ -100,7 +101,8 @@
 			<intent-filter android:label="@string/send_coins_activity_title" >
 				<action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
-				<data android:scheme="nbtoin" />
+				<data android:scheme="Nu" />
+				<data android:scheme="nu" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
