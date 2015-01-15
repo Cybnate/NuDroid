@@ -54,7 +54,7 @@ public class Constants
 	public static final String PEERS_FILENAME = "peers";
 	public static final String CHECKPOINTS_FILENAME = "checkpoints";
 
-	public static final String EXPLORE_BASE_URL = "http://svr1.nubitsexplorer.nu/";
+	public static final String EXPLORE_BASE_URL = "https://svr1.nubitsexplorer.nu/";
 
 	public static final String MIMETYPE_TRANSACTION = "application/x-nbttx";
 	public static final String MIMETYPE_WALLET_BACKUP = "application/x-nubits-wallet-backup";
