@@ -3,6 +3,7 @@
 __What is _Nubits Wallet_?__
 
 It is a standalone Nubits payment app for your Android device!
+Check out the thread in our forum here: https://discuss.nubits.com/t/proposal-to-develop-a-nubits-android-wallet-final-version-now-available/691/70
 
 
 __This project contains several sub-projects:__
