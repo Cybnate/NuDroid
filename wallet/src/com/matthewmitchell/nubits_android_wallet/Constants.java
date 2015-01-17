@@ -60,7 +60,7 @@ public class Constants
 	public static final String MIMETYPE_WALLET_BACKUP = "application/x-nubits-wallet-backup";
 
 	public static final int MAX_NUM_CONFIRMATIONS = 7;
-	public static final String USER_AGENT = "Nubits Wallet";
+	public static final String USER_AGENT = "NuBits Wallet";
 	public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
 	public static final int WALLET_OPERATION_STACK_SIZE = 256 * 1024;
 	public static final long BLOCKCHAIN_STATE_BROADCAST_THROTTLE_MS = DateUtils.SECOND_IN_MILLIS;

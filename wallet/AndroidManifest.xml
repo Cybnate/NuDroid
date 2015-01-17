@@ -187,7 +187,7 @@
 
 		<receiver
 			android:name="com.matthewmitchell.nubits_android_wallet.WalletBalanceWidgetProvider"
-			android:label="Nubits Wallet Balance" >
+			android:label="NuBits Wallet Balance" >
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
 			</intent-filter>

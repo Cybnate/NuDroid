@@ -35,7 +35,7 @@ public final class NubitsIntegration
 	private static final String MIMETYPE_PAYMENTREQUEST = "application/nubits-paymentrequest"; // BIP 71
 
 	/**
-	 * Request any amount of Nubits (probably a donation) from user, without feedback from the app.
+	 * Request any amount of NuBits (probably a donation) from user, without feedback from the app.
 	 * 
 	 * @param context
 	 *            Android context
@@ -55,9 +55,9 @@ public final class NubitsIntegration
 	 * @param context
 	 *            Android context
 	 * @param address
-	 *            Nubits address
+	 *            NuBits address
 	 * @param amount
-	 *            Nubits amount in nanocoins
+	 *            NuBits amount in nanocoins
 	 */
 	public static void request(final Context context, final String address, final long amount)
 	{
@@ -82,12 +82,12 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Request any amount of Nubits (probably a donation) from user, with feedback from the app. Result intent can be
+	 * Request any amount of NuBits (probably a donation) from user, with feedback from the app. Result intent can be
 	 * received by overriding {@link android.app.Activity#onActivityResult()}. Result indicates either
 	 * {@link Activity#RESULT_OK} or {@link Activity#RESULT_CANCELED}. In the success case, use
 	 * {@link #transactionHashFromResult(Intent)} to read the transaction hash from the intent.
 	 * 
-	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own Nubits
+	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own NuBits
 	 * infrastructure and validate the transaction.
 	 * 
 	 * @param activity
@@ -95,7 +95,7 @@ public final class NubitsIntegration
 	 * @param requestCode
 	 *            Code identifying the call when {@link android.app.Activity#onActivityResult()} is called back
 	 * @param address
-	 *            Nubits address
+	 *            NuBits address
 	 */
 	public static void requestForResult(final Activity activity, final int requestCode, final String address)
 	{
@@ -105,12 +105,12 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Request specific amount of Nubits from user, with feedback from the app. Result intent can be received by
+	 * Request specific amount of NuBits from user, with feedback from the app. Result intent can be received by
 	 * overriding {@link android.app.Activity#onActivityResult()}. Result indicates either {@link Activity#RESULT_OK} or
 	 * {@link Activity#RESULT_CANCELED}. In the success case, use {@link #transactionHashFromResult(Intent)} to read the
 	 * transaction hash from the intent.
 	 * 
-	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own Nubits
+	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own NuBits
 	 * infrastructure and validate the transaction.
 	 * 
 	 * @param activity
@@ -118,7 +118,7 @@ public final class NubitsIntegration
 	 * @param requestCode
 	 *            Code identifying the call when {@link android.app.Activity#onActivityResult()} is called back
 	 * @param address
-	 *            Nubits address
+	 *            NuBits address
 	 */
 	public static void requestForResult(final Activity activity, final int requestCode, final String address, final long amount)
 	{
@@ -133,7 +133,7 @@ public final class NubitsIntegration
 	 * {@link Activity#RESULT_CANCELED}. In the success case, use {@link #transactionHashFromResult(Intent)} to read the
 	 * transaction hash from the intent.
 	 * 
-	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own Nubits
+	 * Warning: A success indication is no guarantee! To be on the safe side, you must drive your own NuBits
 	 * infrastructure and validate the transaction.
 	 * 
 	 * @param activity
@@ -165,7 +165,7 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Put BIP70 payment message into result intent. Meant for usage by Nubits wallet applications.
+	 * Put BIP70 payment message into result intent. Meant for usage by NuBits wallet applications.
 	 * 
 	 * @param result
 	 *            result intent
@@ -178,10 +178,10 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Get BIP70 payment message from result intent. Meant for usage by applications initiating a Nubits payment.
+	 * Get BIP70 payment message from result intent. Meant for usage by applications initiating a NuBits payment.
 	 * 
 	 * You can use the transactions contained in the payment to validate the payment. For this, you need your own
-	 * Nubits infrastructure though. There is no guarantee that the payment will ever confirm.
+	 * NuBits infrastructure though. There is no guarantee that the payment will ever confirm.
 	 * 
 	 * @param result
 	 *            result intent
@@ -195,7 +195,7 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Put transaction hash into result intent. Meant for usage by Nubits wallet applications.
+	 * Put transaction hash into result intent. Meant for usage by NuBits wallet applications.
 	 * 
 	 * @param result
 	 *            result intent
@@ -208,11 +208,11 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Get transaction hash from result intent. Meant for usage by applications initiating a Nubits payment.
+	 * Get transaction hash from result intent. Meant for usage by applications initiating a NuBits payment.
 	 * 
-	 * You can use this hash to request the transaction from the Nubits network, in order to validate. For this, you
-	 * need your own Nubits infrastructure though. There is no guarantee that the transaction has ever been broadcasted
-	 * to the Nubits network.
+	 * You can use this hash to request the transaction from the NuBits network, in order to validate. For this, you
+	 * need your own NuBits infrastructure though. There is no guarantee that the transaction has ever been broadcasted
+	 * to the NuBits network.
 	 * 
 	 * @param result
 	 *            result intent
@@ -269,7 +269,7 @@ public final class NubitsIntegration
 
 	private static void redirectToDownload(final Context context)
 	{
-		Toast.makeText(context, "No Nubits application found.\nPlease install Nubits Wallet.", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, "No NuBits application found.\nPlease install NuBits Wallet.", Toast.LENGTH_LONG).show();
 
 		final Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.matthewmitchell.nubits_android_wallet"));
 		final Intent binaryIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Cybnate/Nubits-Android-wallet"));

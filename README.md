@@ -1,8 +1,8 @@
-## Welcome to _Nubits Wallet_
+## Welcome to _NuBits Wallet_
 
-__What is _Nubits Wallet_?__
+__What is _NuBits Wallet_?__
 
-It is a standalone Nubits payment app for your Android device!
+It is a standalone NuBits payment app for your Android device!
 Check out the thread in our forum here: https://discuss.nubits.com/t/proposal-to-develop-a-nubits-android-wallet-final-version-now-available/691/70
 
 
@@ -13,10 +13,10 @@ __This project contains several sub-projects:__
  * __market__:
      App description and promo material for the Google Play app store.
  * __integration-android__:
-     A tiny library for integrating Nubits payments into your own Android app
+     A tiny library for integrating NuBits payments into your own Android app
      (e.g. donations, in-app purchases).
  * __sample-integration-android__:
-     A minimal example app to demonstrate integration of Nubits payments into
+     A minimal example app to demonstrate integration of NuBits payments into
      your Android app.
 
 

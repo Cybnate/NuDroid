@@ -68,11 +68,11 @@ and unpack it to your workspace directory. Switch to that Android SDK directory,
 
 to download the necessary API level.
 
-Finally, you can build Nubits Wallet and sign it with your development key. Again in your workspace,
+Finally, you can build NuBits Wallet and sign it with your development key. Again in your workspace,
 use
 
 	# first time only
-	git clone -b master https://github.com/Cybnate/Nubits-Android-wallet nubits-wallet
+	git clone -b master https://github.com/Cybnate/NuBits-Android-wallet nubits-wallet
 
 	# each time
 	cd nubits-wallet
@@ -111,7 +111,7 @@ Make sure you've got Eclipse 3.7 (Indigo) with ADT 20 installed.
 
 Use Git to check out the project and an Android library dependency to your workspace:
 
-	# clone Nubits Wallet project
+	# clone NuBits Wallet project
 	git clone -b master https://github.Com.matthewmitchell/AndroidWallet.git nubits-wallet
 
 	# clone ActionBarSherlock library project
@@ -135,7 +135,7 @@ Java Compiler -> Errors/Warnings -> Annotations -> Missing @Override annotation 
 
 NFC (Near field communication)
 
-Nubits Wallet supports reading Nubits requests via NFC, either from a passive NFC tag or from
+NuBits Wallet supports reading NuBits requests via NFC, either from a passive NFC tag or from
 another NFC capable Android device that is requesting coins.
 
 For this to work, just enable NFC in your phone and hold your phone to the tag or device (with
@@ -149,19 +149,19 @@ Instructions for preparing an NFC tag with your address:
 
 - Some tags have less than 50 bytes capacity, those won't work. 1 KB tags recommended.
 
-- The tag needs to contain a Nubits URI. You can construct one with the "Request coins" dialog,
+- The tag needs to contain a NuBits URI. You can construct one with the "Request coins" dialog,
   then share with messaging or email. You can also construct the URI manually. Example for Mainnet:
   nubits:1G2Y2jP5YFZ5RGk2PXaeWwbeA5y1ZtFhoL
 
 - The type of the message needs to be URI or URL (not Text).
 
 - If you put your tag at a public place, don't forget to enable write protect. Otherwise, someone
-  could overwrite the tag with his own Nubits address.
+  could overwrite the tag with his own NuBits address.
 
 
 EXCHANGE RATES
 
-Nubits Wallet reads this feed from "nubits charts" for getting exchange rates:
+NuBits Wallet reads this feed from "nubits charts" for getting exchange rates:
 
 	http://nubitscharts.com/t/weighted_prices.json
 
@@ -173,7 +173,7 @@ I chose this feed because it is not dependent on a single exchange. However, you
 mind it's always a 24h average (falling back to 7d or even 30d if no trade occurred for a long
 time).
 
-If Nubitscharts is not available, the feed from "Blockchain" is fetched instead:
+If NuBitscharts is not available, the feed from "Blockchain" is fetched instead:
 
 	https://blockchain.info/ticker
 
@@ -182,8 +182,8 @@ The feed is described here:
 	https://blockchain.info/api/exchange_rates_api
 
 
-NubitsJ
+NuBitsJ
 
-Nubits Wallet uses nubitsj for Nubits specific logic:
+NuBits Wallet uses nubitsj for NuBits specific logic:
 
-https://github.Com.matthewmitchell.nubitsjj
+https://github.com/Cybnate/Nubitsj

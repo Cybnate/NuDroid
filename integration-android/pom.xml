@@ -6,7 +6,7 @@
 
 	<artifactId>integration-android</artifactId>
 	<version>2.0</version>
-	<name>Nubits Integration for Android</name>
+	<name>NuBits Integration for Android</name>
 
 	<parent>
 		<groupId>com.matthewmitchell.nubits_android_wallet</groupId>

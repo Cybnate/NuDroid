@@ -4,11 +4,11 @@
   <string name="help_wallet">
 <![CDATA[
     <p>
-      Den øvre venstre delen av skjermen viser din valgte Nubits-adresse, som andre folk trenger å vite for å sende deg nubitss.
+      Den øvre venstre delen av skjermen viser din valgte NuBits-adresse, som andre folk trenger å vite for å sende deg nubitss.
       Trykk for å endre adressen.
     </p>
     <p>
-      QR-koden til høyre inneholder din Nubits-adresse og kan skannes av noen andre.
+      QR-koden til høyre inneholder din NuBits-adresse og kan skannes av noen andre.
       Trykk på QR-koden for å få en større versjon av den.
     </p>
     <p>
@@ -31,7 +31,7 @@
   <string name="help_request_coins">
 <![CDATA[
     <p>
-      Ved å bruke denne dialogen kan du be om mynter fra en annen person (som allerede har installert Nubits Wallet).
+      Ved å bruke denne dialogen kan du be om mynter fra en annen person (som allerede har installert NuBits Wallet).
     </p>
     <p>
       Først kan du legge inn et beløp på antall nubitss som skal forespørres.
@@ -39,7 +39,7 @@
     <p>
       Etterpå får du enten QR-koden skannet av den andre personen, 
       eller så kan du sende en forespørsel til en person langt unna med del-knappen i handlingsfeltet.
-      Den andre personen skal klikke på Nubits-URLen.
+      Den andre personen skal klikke på NuBits-URLen.
     </p>
     <p>
       Den andre personen vil bli presentert en dialog for å sende mynter med alle felt forhåndsutfylt.
@@ -51,12 +51,12 @@
 <![CDATA[
     <p>
       Du har startet prosessen med å sende mynter.
-      Du kom hit enten via hovedskjermen eller ved å klikke på en Nubits-URL i nettleseren på mobilen.
+      Du kom hit enten via hovedskjermen eller ved å klikke på en NuBits-URL i nettleseren på mobilen.
     </p>
     <p>
-      Først skriver du inn den Nubits-adressen du vil betale til.
+      Først skriver du inn den NuBits-adressen du vil betale til.
       Adressen vil automatisk fylles ut fra kjente oppføringer i adresseboken din.
-      Du kan også skanne QR-koder med Nubits-adresser eller Nubits-forespørsler ved å trykke på QR-knappen i handlingsfeltet.
+      Du kan også skanne QR-koder med NuBits-adresser eller NuBits-forespørsler ved å trykke på QR-knappen i handlingsfeltet.
     </p>
     <p>
       Deretter kan du se hvor mange nubitss du kan bruke for øyeblikket.
@@ -67,7 +67,7 @@
     </p>
     <p>
       Du kan legge inn en betaling mens du er offline.
-      Den vil bli sendt når Nubits Wallet startes på nytt.
+      Den vil bli sendt når NuBits Wallet startes på nytt.
       Hvis du ønsker at en betaling går igjennom så raskt som mulig, sørg for at du er godt tilkoblet (dvs. på et WLAN).
     </p>
     <p>
@@ -83,7 +83,7 @@
       <b>Viktige sikkerhetsmerknader:</b>
     </p>
     <p>
-      Nubits er lagret på enheten.
+      NuBits er lagret på enheten.
       <b>Hvis du mister den, mister du dine nubitss.</b>
     </p>
     <p>

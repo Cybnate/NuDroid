@@ -4,11 +4,11 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			Ekranın üst sol köşesi diğer kişilerin size Nubits yollayabilmek için bilmeleri seçilen sizin Nubits adresinizi gösterir.
+			Ekranın üst sol köşesi diğer kişilerin size NuBits yollayabilmek için bilmeleri seçilen sizin NuBits adresinizi gösterir.
 			Adresi değiştirmek için dokunmak yeterlidir.
 		</p>
 		<p>
-			Sağdaki QR code Nubits adresinizi içerir ve diğer kişiler tarafından taranmak için kullanılabilir.
+			Sağdaki QR code NuBits adresinizi içerir ve diğer kişiler tarafından taranmak için kullanılabilir.
 			Daha büyük bir QR code görüntülemek için koda dokununuz.
 		</p>
 		<p>
@@ -23,7 +23,7 @@
 			Listeye filtre uygulamak için sağa ya da sola kaydırabilirsiniz.
 		</p>
 		<p>
-			Nubits yollamak ya da talep etmek için etkinlik çubuğunda düğmelere dokunabilirsiniz.
+			NuBits yollamak ya da talep etmek için etkinlik çubuğunda düğmelere dokunabilirsiniz.
 			Tercihler menüsünde daha fazla seçenek bulabilirsiniz.
 		</p>
 	]]>
@@ -31,18 +31,18 @@
 	<string name="help_request_coins">
 <![CDATA[
 		<p>
-			Bu diyaloğu kullanarak başka bir kişiden Nubits talep edebilirsiniz (bu kişinin Nubits Wallet uygulamasını cihazında kurmuş olması gerekir).
+			Bu diyaloğu kullanarak başka bir kişiden NuBits talep edebilirsiniz (bu kişinin NuBits Wallet uygulamasını cihazında kurmuş olması gerekir).
 		</p>
 		<p>
-			İlk olarak talep edilen Nubits miktarını girebilirsiniz.
+			İlk olarak talep edilen NuBits miktarını girebilirsiniz.
 		</p>
 		<p>
 			Ardından ya diğer kişi tarafından taranacak bir QR code oluşturmanız,
 			ya da uzaktaki bir kişiye etkinlik çubuğunda paylaş düğmesiyle talebinizi göndermeniz gerekir.
-			Bu kişinin Nubits bağlantısını tıklaması gerekecektir.
+			Bu kişinin NuBits bağlantısını tıklaması gerekecektir.
 		</p>
 		<p>
-			Her durumda diğer kişiye Nubits göndermesi için tüm seçenekleri doldurulmuş bir diyalog gösterilecektir.
+			Her durumda diğer kişiye NuBits göndermesi için tüm seçenekleri doldurulmuş bir diyalog gösterilecektir.
 			Kabul ederse tüm yapması gereken muameleyi yollamaktır.
 		</p>
 	]]>
@@ -50,16 +50,16 @@
 	<string name="help_send_coins">
 <![CDATA[
 		<p>
-			Nubits gönderme prosedürünü başlattınız.
-			Buraya ya ana ekrandan ya da mobil ağ tarayıcınızda bir Nubits bağlantısına tıklayarak geldiniz.
+			NuBits gönderme prosedürünü başlattınız.
+			Buraya ya ana ekrandan ya da mobil ağ tarayıcınızda bir NuBits bağlantısına tıklayarak geldiniz.
 		</p>
 		<p>
-			İlk olarak ödeme yapacağınız Nubits adresini girmelisiniz.
+			İlk olarak ödeme yapacağınız NuBits adresini girmelisiniz.
 			Adres defterinizde bilinen adreslere dayanılarak adres otomatik olarak tamamlanacaktır.
-			Ayrıca etkinlik çubuğunda QR düğmesine dokunarak Nubits adresi ya da talebi içeren QR kodlarını tarayabilirsiniz.
+			Ayrıca etkinlik çubuğunda QR düğmesine dokunarak NuBits adresi ya da talebi içeren QR kodlarını tarayabilirsiniz.
 		</p>
 		<p>
-			Bunun ardından o anda ne kadar Nubits harcayabileceğinizi görüntüleyebilirsiniz.
+			Bunun ardından o anda ne kadar NuBits harcayabileceğinizi görüntüleyebilirsiniz.
 			Varsa ana ekrandaki bakiye ile farklılıklar henüz teyit edilmemiştir ve dolayısıyla henüz harcanamaz.
 		</p>
 		<p>
@@ -67,7 +67,7 @@
 		</p>
 		<p>
 			Çevrimdışı olduğunuz sırada bir muamele girebilirsiniz.
-			Nubits Wallet uygulamasının sonraki açılışında gönderilir.
+			NuBits Wallet uygulamasının sonraki açılışında gönderilir.
 			Bir muamelenin mümkün olduğu kadar çabuk işlenmesini istiyorsanız bağlantınızın iyi olduğundan (mesela WLAN ile).
 		</p>
 		<p>
@@ -80,20 +80,20 @@
 	<string name="help_safety">
 <![CDATA[
 		<p>
-			<b>Nubitslerinizin güvenliği hakkında önemli noktalar:</b>
+			<b>NuBitslerinizin güvenliği hakkında önemli noktalar:</b>
 		</p>
 		<p>
-			Nubits cüzdanınızdaki Nubitsler cihazınızda saklanır.
-			<b>Cihazınızı kaybederseniz Nubitslerinizi de kaybedersiniz.</b>
+			NuBits cüzdanınızdaki NuBitsler cihazınızda saklanır.
+			<b>Cihazınızı kaybederseniz NuBitslerinizi de kaybedersiniz.</b>
 			Tıpkı fiziki cüzdanınızdaki para gibi.
 		</p>
 		<p>
-			<b>Nubits Wallet</b> uygulamasını kaldırmadan önce (ya da uygulama verilerini/cihazınızı sıfırlamadan önce) <b>tüm Nubitslerinizi başka bir cüzdana aktarınız</b>.
-			Kalan tüm Nubitsler kaybolacaktır.
+			<b>NuBits Wallet</b> uygulamasını kaldırmadan önce (ya da uygulama verilerini/cihazınızı sıfırlamadan önce) <b>tüm NuBitslerinizi başka bir cüzdana aktarınız</b>.
+			Kalan tüm NuBitsler kaybolacaktır.
 		</p>
 		<p>
 			<b>Muameleler geri alınamaz</b>.
-			Nubitslerinizi yanlış bir adrese yollarsanız, bunları geri almak için alıcıyı tanımanız ve onun geri yollamayı kabul etmeniz dışında hiçbir yol yoktur.
+			NuBitslerinizi yanlış bir adrese yollarsanız, bunları geri almak için alıcıyı tanımanız ve onun geri yollamayı kabul etmeniz dışında hiçbir yol yoktur.
 		</p>
 		<p>
 			<b>Android cihazınızı güvenli kullanın!</b>
@@ -102,7 +102,7 @@
 		</p>
 		<p>
 			Riski sınırlayın!
-			<b>Nubits Wallet uygulamasını sadece küçük tutarlar için kullanınız</b>.
+			<b>NuBits Wallet uygulamasını sadece küçük tutarlar için kullanınız</b>.
 		</p>
 	]]>
 	</string>
