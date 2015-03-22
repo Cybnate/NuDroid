@@ -23,26 +23,28 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.ClipboardManager;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.matthewmitchell.nubitsj.core.AbstractWalletEventListener;
 import com.matthewmitchell.nubitsj.core.Address;
 import com.matthewmitchell.nubitsj.core.ECKey;
@@ -58,20 +60,23 @@ import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.util.BitmapFragment;
 import com.matthewmitchell.nubits_android_wallet.util.Qr;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
+import com.matthewmitchell.nubits_android_wallet.util.WholeStringBuilder;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
  * @author Andreas Schildbach
  */
-public final class WalletAddressesFragment extends SherlockListFragment
+public final class WalletAddressesFragment extends FancyListFragment
 {
 	private AddressBookActivity activity;
 	private WalletApplication application;
-	private Configuration config;
 	private Wallet wallet;
+	private ClipboardManager clipboardManager;
 	private ContentResolver contentResolver;
 
 	private WalletAddressesAdapter adapter;
+
+	private static final Logger log = LoggerFactory.getLogger(WalletAddressesFragment.class);
 
 	@Override
 	public void onAttach(final Activity activity)
@@ -80,9 +85,18 @@ public final class WalletAddressesFragment extends SherlockListFragment
 
 		this.activity = (AddressBookActivity) activity;
 		this.application = (WalletApplication) activity.getApplication();
-		this.config = application.getConfiguration();
-		this.wallet = application.getWallet();
+		this.clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
 		this.contentResolver = activity.getContentResolver();
+		
+		this.activity.runAfterLoad(new Runnable() {
+
+			@Override
+			public void run() {
+				WalletAddressesFragment.this.wallet = application.getWallet();
+			}
+			
+		});
+		
 	}
 
 	@Override
@@ -92,12 +106,24 @@ public final class WalletAddressesFragment extends SherlockListFragment
 
 		setHasOptionsMenu(true);
 
-		adapter = new WalletAddressesAdapter(activity, wallet);
+		this.activity.runAfterLoad(new Runnable() {
 
-		final Address selectedAddress = application.determineSelectedAddress();
-		adapter.setSelectedAddress(selectedAddress.toString());
+			@Override
+			public void run() {
+				adapter = new WalletAddressesAdapter(activity, wallet);
+				setListAdapter(adapter);
+			}
+			
+		});
+		
+	}
 
-		setListAdapter(adapter);
+	@Override
+	public void onViewCreated(final View view, final Bundle savedInstanceState)
+	{
+		super.onViewCreated(view, savedInstanceState);
+
+		setEmptyText(WholeStringBuilder.bold(getString(R.string.address_book_empty_text)));
 	}
 
 	@Override
@@ -107,8 +133,15 @@ public final class WalletAddressesFragment extends SherlockListFragment
 
 		contentResolver.registerContentObserver(AddressBookProvider.contentUri(activity.getPackageName()), true, contentObserver);
 
-		wallet.addEventListener(walletListener, Threading.SAME_THREAD);
-		walletListener.onKeysAdded(null, null); // trigger initial load of keys
+		activity.runAfterLoad(new Runnable() {
+
+			@Override
+			public void run() {
+				wallet.addEventListener(walletListener, Threading.SAME_THREAD);
+				walletListener.onKeysAdded(null); // trigger initial load of keys
+			}
+			
+		});
 
 		updateView();
 	}
@@ -129,38 +162,6 @@ public final class WalletAddressesFragment extends SherlockListFragment
 		inflater.inflate(R.menu.wallet_addresses_fragment_options, menu);
 
 		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case R.id.wallet_addresses_options_add:
-				handleAddAddress();
-				return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	private void handleAddAddress()
-	{
-		final DialogBuilder dialog = new DialogBuilder(activity);
-		dialog.setTitle(R.string.wallet_addresses_fragment_add_dialog_title);
-		dialog.setMessage(R.string.wallet_addresses_fragment_add_dialog_message);
-		dialog.setPositiveButton(R.string.button_add, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(final DialogInterface dialog, final int which)
-			{
-				application.addNewKeyToWallet();
-
-				activity.updateFragments();
-			}
-		});
-		dialog.setNegativeButton(R.string.button_cancel, null);
-		dialog.show();
 	}
 
 	@Override
@@ -212,12 +213,6 @@ public final class WalletAddressesFragment extends SherlockListFragment
 						mode.finish();
 						return true;
 
-					case R.id.wallet_addresses_context_default:
-						handleDefault(getAddress(position));
-
-						mode.finish();
-						return true;
-
 					case R.id.wallet_addresses_context_browse:
 						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL + "address/"
 								+ getAddress(position).toString())));
@@ -252,23 +247,17 @@ public final class WalletAddressesFragment extends SherlockListFragment
 			private void handleShowQr(@Nonnull final Address address)
 			{
 				final String uri = NubitsURI.convertToNubitsURI(address, null, null, null);
-				final int size = (int) (256 * getResources().getDisplayMetrics().density);
+				final int size = getResources().getDimensionPixelSize(R.dimen.bitmap_dialog_qr_size);
 				BitmapFragment.show(getFragmentManager(), Qr.bitmap(uri, size));
 			}
 
 			private void handleCopyToClipboard(@Nonnull final Address address)
 			{
-				final ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-				clipboardManager.setText(address.toString());
+				clipboardManager.setPrimaryClip(ClipData.newPlainText("NuBits address", address.toString()));
+				log.info("address copied to clipboard: {}", address.toString());
 				activity.toast(R.string.wallet_address_fragment_clipboard_msg);
 			}
 
-			private void handleDefault(@Nonnull final Address address)
-			{
-				final String addressStr = address.toString();
-				config.setSelectedAddress(addressStr);
-				adapter.setSelectedAddress(addressStr);
-			}
 		});
 	}
 
@@ -293,9 +282,9 @@ public final class WalletAddressesFragment extends SherlockListFragment
 	private final WalletEventListener walletListener = new AbstractWalletEventListener()
 	{
 		@Override
-		public void onKeysAdded(final Wallet w, final List<ECKey> keysAdded)
+		public void onKeysAdded(final List<ECKey> keysAdded)
 		{
-			final List<ECKey> keys = wallet.getKeys();
+			final List<ECKey> keys = wallet.getImportedKeys();
 
 			Collections.sort(keys, new Comparator<ECKey>()
 			{

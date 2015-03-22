@@ -1,43 +1,37 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-
   <string name="help_wallet">
 <![CDATA[
-    <p>
-      Den øvre venstre delen av skjermen viser din valgte NuBits-adresse, som andre folk trenger å vite for å sende deg nubitss.
-      Trykk for å endre adressen.
-    </p>
-    <p>
-      QR-koden til høyre inneholder din NuBits-adresse og kan skannes av noen andre.
-      Trykk på QR-koden for å få en større versjon av den.
-    </p>
-    <p>
-      I midten av skjermen kan du se saldoen din.
-      Saldoen i lommeboken vises også i en valgt lokal valuta.
-      Trykk på saldoen for å vise listen over alle lokale valutaer, og trykk på en av valutaene for å velge den som standard.
-    </p>
-    <p>
-      Bunnen av skjermen inneholder din transaksjonsliste, som er tom i begynnelsen.
-      Ventende transaksjoner er grå til de er bekreftet.
-      Trykk på en oppføring for å legge til avsenderens eller mottakerens adresse i adresseboken.
-      Sveip til venstre eller høyre for å bruke filtre på listen.
-    </p>
-    <p>
-      Du kan sende eller be om mynter ved å trykke på knappene i handlingsfeltet.
-      Flere alternativer er tilgjengelige i menyen for alternativer.
-    </p>
-  ]]>
-  </string>
+		<p>
+			Den øvre venstre delen av skjermen viser balansen i NuBits og en valgt nasjonal valuta.
+			Trykk for å gå til listen over nasjonale valutaer, og trykk på en av valutaene for å velge den som standard.
+		</p>
+		<p>
+			QR-koden til høyre inneholder din NuBits-adresse og kan brukes til skanning av noen andre.
+			Trykk på QR-koden for å få en større versjon av den.
+		</p>
+		<p>
+			Bunnen av skjermen inneholder din transaksjonsliste, som er tom til å begynne med.
+			Ventende transaksjoner er i grått til de er bekreftet.
+			Trykk på en oppføring for å legge til avsenderen eller mottakeren i adresseboken.
+			Sveip til venstre eller høyre for å bruke filtre på listen.
+		</p>
+		<p>
+			Du kan sende eller be om mynter ved å trykke på knappene i handlingsfeltet.
+			Flere alternativer er tilgjengelige i menyen for alternativer.
+		</p>
+	]]>
+	</string>
   <string name="help_request_coins">
 <![CDATA[
     <p>
       Ved å bruke denne dialogen kan du be om mynter fra en annen person (som allerede har installert NuBits Wallet).
     </p>
     <p>
-      Først kan du legge inn et beløp på antall nubitss som skal forespørres.
+      Først kan du legge inn et beløp på antall NuBits som skal forespørres.
     </p>
     <p>
-      Etterpå får du enten QR-koden skannet av den andre personen, 
+      Etterpå får du enten QR-koden skannet av den andre personen,
       eller så kan du sende en forespørsel til en person langt unna med del-knappen i handlingsfeltet.
       Den andre personen skal klikke på NuBits-URLen.
     </p>
@@ -59,7 +53,7 @@
       Du kan også skanne QR-koder med NuBits-adresser eller NuBits-forespørsler ved å trykke på QR-knappen i handlingsfeltet.
     </p>
     <p>
-      Deretter kan du se hvor mange nubitss du kan bruke for øyeblikket.
+      Deretter kan du se hvor mange NuBits du kan bruke for øyeblikket.
       En eventuell forskjell i saldoen fra hovedskjermen er fortsatt ubekreftet, og kan dermed ikke brukes.
     </p>
     <p>
@@ -84,7 +78,7 @@
     </p>
     <p>
       NuBits er lagret på enheten.
-      <b>Hvis du mister den, mister du dine nubitss.</b>
+      <b>Hvis du mister den, mister du dine NuBits.</b>
     </p>
     <p>
       Dette betyr at du må <b>sikkerhetskopiere lommeboken din</b>!
@@ -92,12 +86,12 @@
       Oppbevar sikkerhetskopien sikkert og husk passordet.
     </p>
     <p>
-      <b>Før avinstallering</b> (eller sletting av appdata/nullstilling av enheten til fabrikkinnstillinger), <b>overfør dine nubitss til en annen lommebok</b>.
-      Resterende nubitss vil gå tapt.
+      <b>Før avinstallering</b> (eller sletting av appdata/nullstilling av enheten til fabrikkinnstillinger), <b>overfør dine NuBits til en annen lommebok</b>.
+      Resterende NuBits vil gå tapt.
     </p>
     <p>
       <b>Betalinger er irreversible</b>.
-      Hvis du sender dine nubitss ut i det blå, er det stort sett ikke mulig å få dem tilbake.
+      Hvis du sender dine NuBits ut i det blå, er det stort sett ikke mulig å få dem tilbake.
     </p>
     <p>
       <b>Oppbevar din mobile enhet sikkert!</b>

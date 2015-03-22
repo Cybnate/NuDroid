@@ -17,15 +17,18 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
+import java.util.Set;
+
+import javax.annotation.CheckForNull;
+
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.app.Fragment;
+import android.app.LoaderManager;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
@@ -37,7 +40,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.matthewmitchell.nubits_android_wallet.Configuration;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
-import com.matthewmitchell.nubits_android_wallet.service.BlockchainService;
+import com.matthewmitchell.nubits_android_wallet.service.BlockchainState;
+import com.matthewmitchell.nubits_android_wallet.service.BlockchainState.Impediment;
+import com.matthewmitchell.nubits_android_wallet.service.BlockchainStateLoader;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -45,12 +50,16 @@ import com.matthewmitchell.nubits_android_wallet.R;
  */
 public final class WalletDisclaimerFragment extends Fragment implements OnSharedPreferenceChangeListener
 {
-	private Activity activity;
-	private Configuration config;
+	private WalletActivity activity;
+	private WalletApplication application;
+	private LoaderManager loaderManager;
 
-	private int download;
+	@CheckForNull
+	private BlockchainState blockchainState = null;
 
 	private TextView messageView;
+
+	private static final int ID_BLOCKCHAIN_STATE_LOADER = 0;
 
 	@Override
 	public void onAttach(final Activity activity)
@@ -58,8 +67,8 @@ public final class WalletDisclaimerFragment extends Fragment implements OnShared
 		super.onAttach(activity);
 
 		this.activity = (WalletActivity) activity;
-		final WalletApplication application = (WalletApplication) activity.getApplication();
-		this.config = application.getConfiguration();
+		application = (WalletApplication) activity.getApplication();
+		loaderManager = getLoaderManager();
 	}
 
 	@Override
@@ -72,9 +81,9 @@ public final class WalletDisclaimerFragment extends Fragment implements OnShared
 			@Override
 			public void onClick(final View v)
 			{
-				final boolean showBackup = config.remindBackup();
+				final boolean showBackup = application.getConfiguration().remindBackup();
 				if (showBackup)
-					((WalletActivity) activity).handleExportKeys();
+					((WalletActivity) activity).handleBackupWallet();
 				else
 					HelpDialogFragment.page(getFragmentManager(), R.string.help_safety);
 			}
@@ -84,25 +93,37 @@ public final class WalletDisclaimerFragment extends Fragment implements OnShared
 	}
 
 	@Override
-	public void onResume()
-	{
-		super.onResume();
+	public void onResume() {
+	    super.onResume();
 
-		config.registerOnSharedPreferenceChangeListener(this);
+	    activity.runAfterLoad(new Runnable() {
 
-		activity.registerReceiver(broadcastReceiver, new IntentFilter(BlockchainService.ACTION_BLOCKCHAIN_STATE));
+		@Override
+		public void run() {
+		    loaderManager.initLoader(ID_BLOCKCHAIN_STATE_LOADER, null, blockchainStateLoaderCallbacks);
+		    application.getConfiguration().registerOnSharedPreferenceChangeListener(WalletDisclaimerFragment.this);
+		    updateView();
+		}
 
-		updateView();
+	    });
+		
 	}
 
 	@Override
-	public void onPause()
-	{
-		activity.unregisterReceiver(broadcastReceiver);
+	public void onPause() {
+	    
+	    activity.runAfterLoad(new Runnable() {
 
-		config.unregisterOnSharedPreferenceChangeListener(this);
+		@Override
+		public void run() {
+		    loaderManager.destroyLoader(ID_BLOCKCHAIN_STATE_LOADER);
+		    application.getConfiguration().unregisterOnSharedPreferenceChangeListener(WalletDisclaimerFragment.this);
+		}
+		
+	    });
 
-		super.onPause();
+	    super.onPause();
+	    
 	}
 
 	@Override
@@ -117,18 +138,19 @@ public final class WalletDisclaimerFragment extends Fragment implements OnShared
 		if (!isResumed())
 			return;
 
+		final Configuration config = application.getConfiguration();
 		final boolean showBackup = config.remindBackup();
 		final boolean showDisclaimer = config.getDisclaimerEnabled();
 
-		final int progressResId;
-		if (download == BlockchainService.ACTION_BLOCKCHAIN_STATE_DOWNLOAD_OK)
-			progressResId = 0;
-		else if ((download & BlockchainService.ACTION_BLOCKCHAIN_STATE_DOWNLOAD_STORAGE_PROBLEM) != 0)
-			progressResId = R.string.blockchain_state_progress_problem_storage;
-		else if ((download & BlockchainService.ACTION_BLOCKCHAIN_STATE_DOWNLOAD_NETWORK_PROBLEM) != 0)
-			progressResId = R.string.blockchain_state_progress_problem_network;
-		else
-			throw new IllegalStateException("download=" + download);
+		int progressResId = 0;
+		if (blockchainState != null && blockchainState.loaded)
+		{
+			final Set<Impediment> impediments = blockchainState.impediments;
+			if (impediments.contains(Impediment.STORAGE))
+				progressResId = R.string.blockchain_state_progress_problem_storage;
+			else if (impediments.contains(Impediment.NETWORK))
+				progressResId = R.string.blockchain_state_progress_problem_network;
+		}
 
 		final SpannableStringBuilder text = new SpannableStringBuilder();
 		if (progressResId != 0)
@@ -149,16 +171,25 @@ public final class WalletDisclaimerFragment extends Fragment implements OnShared
 		fragment.setVisibility(text.length() > 0 ? View.VISIBLE : View.GONE);
 	}
 
-	private final BlockchainBroadcastReceiver broadcastReceiver = new BlockchainBroadcastReceiver();
-
-	private final class BlockchainBroadcastReceiver extends BroadcastReceiver
+	private final LoaderCallbacks<BlockchainState> blockchainStateLoaderCallbacks = new LoaderManager.LoaderCallbacks<BlockchainState>()
 	{
 		@Override
-		public void onReceive(final Context context, final Intent intent)
+		public Loader<BlockchainState> onCreateLoader(final int id, final Bundle args)
 		{
-			download = intent.getIntExtra(BlockchainService.ACTION_BLOCKCHAIN_STATE_DOWNLOAD, BlockchainService.ACTION_BLOCKCHAIN_STATE_DOWNLOAD_OK);
+			return new BlockchainStateLoader(activity);
+		}
+
+		@Override
+		public void onLoadFinished(final Loader<BlockchainState> loader, final BlockchainState blockchainState)
+		{
+			WalletDisclaimerFragment.this.blockchainState = blockchainState;
 
 			updateView();
 		}
-	}
+
+		@Override
+		public void onLoaderReset(final Loader<BlockchainState> loader)
+		{
+		}
+	};
 }

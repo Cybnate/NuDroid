@@ -40,7 +40,7 @@ public final class NubitsIntegration
 	 * @param context
 	 *            Android context
 	 * @param address
-	 *            Nubits address
+	 *            NuBits address
 	 */
 	public static void request(final Context context, final String address)
 	{
@@ -50,7 +50,7 @@ public final class NubitsIntegration
 	}
 
 	/**
-	 * Request specific amount of Nubits from user, without feedback from the app.
+	 * Request specific amount of NuBits from user, without feedback from the app.
 	 * 
 	 * @param context
 	 *            Android context
@@ -225,7 +225,7 @@ public final class NubitsIntegration
 		return txHash;
 	}
 
-	private static final int NANOCOINS_PER_COIN = 100000000;
+	private static final int SATOSHIS_PER_COIN = 1000000;
 
 	private static Intent makeNubitsUriIntent(final String address, final Long amount)
 	{
@@ -233,7 +233,7 @@ public final class NubitsIntegration
 		if (address != null)
 			uri.append(address);
 		if (amount != null)
-			uri.append("?amount=").append(String.format("%d.%08d", amount / NANOCOINS_PER_COIN, amount % NANOCOINS_PER_COIN));
+			uri.append("?amount=").append(String.format("%d.%08d", amount / SATOSHIS_PER_COIN, amount % SATOSHIS_PER_COIN));
 
 		final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri.toString()));
 

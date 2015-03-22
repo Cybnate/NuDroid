@@ -17,16 +17,16 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import java.math.BigInteger;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.matthewmitchell.nubitsj.core.Coin;
+import com.matthewmitchell.nubitsj.utils.ExchangeRate;
+import com.matthewmitchell.nubitsj.utils.Fiat;
+
 import android.view.View;
-import com.matthewmitchell.nubits_android_wallet.ExchangeRatesProvider.ExchangeRate;
 import com.matthewmitchell.nubits_android_wallet.ui.CurrencyAmountView.Listener;
-import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 
 /**
  * @author Andreas Schildbach
@@ -116,16 +116,23 @@ public final class CurrencyCalculatorLink
 	}
 
 	@CheckForNull
-	public BigInteger getAmount()
+	public Coin getAmount()
 	{
 		if (exchangeDirection)
 		{
-			return NBTAmountView.getAmount();
+			return (Coin) NBTAmountView.getAmount();
 		}
 		else if (exchangeRate != null)
 		{
-			final BigInteger localAmount = localAmountView.getAmount();
-			return localAmount != null ? WalletUtils.NBTValue(localAmount, exchangeRate.rate) : null;
+			final Fiat localAmount = (Fiat) localAmountView.getAmount();
+			try
+			{
+				return localAmount != null ? exchangeRate.fiatToCoin(localAmount) : null;
+			}
+			catch (ArithmeticException x)
+			{
+				return null;
+			}
 		}
 		else
 		{
@@ -145,26 +152,33 @@ public final class CurrencyCalculatorLink
 		if (exchangeRate != null)
 		{
 			localAmountView.setEnabled(enabled);
-			localAmountView.setCurrencySymbol(exchangeRate.currencyCode);
+			localAmountView.setCurrencySymbol(exchangeRate.fiat.currencyCode);
 
 			if (exchangeDirection)
 			{
-				final BigInteger NBTAmount = NBTAmountView.getAmount();
+				final Coin NBTAmount = (Coin) NBTAmountView.getAmount();
 				if (NBTAmount != null)
 				{
 					localAmountView.setAmount(null, false);
-					localAmountView.setHint(WalletUtils.localValue(NBTAmount, exchangeRate.rate));
+					localAmountView.setHint(exchangeRate.coinToFiat(NBTAmount));
 					NBTAmountView.setHint(null);
 				}
 			}
 			else
 			{
-				final BigInteger localAmount = localAmountView.getAmount();
+				final Fiat localAmount = (Fiat) localAmountView.getAmount();
 				if (localAmount != null)
 				{
-					NBTAmountView.setAmount(null, false);
-					NBTAmountView.setHint(WalletUtils.NBTValue(localAmount, exchangeRate.rate));
 					localAmountView.setHint(null);
+					NBTAmountView.setAmount(null, false);
+					try
+					{
+						NBTAmountView.setHint(exchangeRate.fiatToCoin(localAmount));
+					}
+					catch (final ArithmeticException x)
+					{
+						NBTAmountView.setHint(null);
+					}
 				}
 			}
 		}
@@ -201,7 +215,7 @@ public final class CurrencyCalculatorLink
 		activeTextView().requestFocus();
 	}
 
-	public void setNBTAmount(@Nonnull final BigInteger amount)
+	public void setNBTAmount(@Nonnull final Coin amount)
 	{
 		final Listener listener = this.listener;
 		this.listener = null;

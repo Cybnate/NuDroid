@@ -26,9 +26,15 @@ import javax.annotation.Nonnull;
  */
 public class Bluetooth
 {
-	public static final UUID BLUETOOTH_UUID_PAYMENT_REQUESTS = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51b");
-	public static final UUID BLUETOOTH_UUID_PAYMENT_PROTOCOL = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51c");
-	public static final UUID BLUETOOTH_UUID_CLASSIC = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51d");
+	/** Used for local fetching of BIP70 payment requests. */
+	public static final UUID PAYMENT_REQUESTS_UUID = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51b");
+	/** Used for talking BIP70 payment messages and payment acks locally. */
+	public static final UUID BIP70_PAYMENT_PROTOCOL_UUID = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51c");
+	public static final String BIP70_PAYMENT_PROTOCOL_NAME = "NuBits BIP70 payment protocol";
+	/** Used for talking the deprecated pre-BIP70 payment protocol. */
+	public static final UUID CLASSIC_PAYMENT_PROTOCOL_UUID = UUID.fromString("792da720-8b7f-11e4-9900-0002a5d5c51d");
+	public static final String CLASSIC_PAYMENT_PROTOCOL_NAME = "NuBits classic payment protocol (deprecated)";
+	/** This URI parameter holds the MAC address for the deprecated pre-BIP70 payment protocol. */
 	public static final String MAC_URI_PARAM = "bt";
 
 	public static String compressMac(@Nonnull final String mac)

@@ -25,8 +25,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 
-import org.nubits.protocols.payments.Protos;
-import org.nubits.protocols.payments.Protos.PaymentACK;
+import com.matthewmitchell.nubitsj.protocols.payments.Protos;
+import com.matthewmitchell.nubitsj.protocols.payments.Protos.PaymentACK;
+import com.matthewmitchell.nubitsj.protocols.payments.PaymentProtocol;
+import com.matthewmitchell.nubitsj.core.ProtocolException;
+import com.matthewmitchell.nubitsj.core.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +37,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 
-import com.matthewmitchell.nubitsj.core.ProtocolException;
-import com.matthewmitchell.nubitsj.core.Transaction;
-
 import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.util.Bluetooth;
-import com.matthewmitchell.nubits_android_wallet.util.PaymentProtocol;
 
 /**
  * @author Shahar Livne
@@ -61,7 +60,7 @@ public abstract class AcceptBluetoothThread extends Thread
 	{
 		public ClassicBluetoothThread(@Nonnull final BluetoothAdapter adapter)
 		{
-			super(listen(adapter, Bluetooth.BLUETOOTH_UUID_CLASSIC));
+			super(listen(adapter, Bluetooth.CLASSIC_PAYMENT_PROTOCOL_NAME, Bluetooth.CLASSIC_PAYMENT_PROTOCOL_UUID));
 		}
 
 		@Override
@@ -159,7 +158,7 @@ public abstract class AcceptBluetoothThread extends Thread
 	{
 		public PaymentProtocolThread(@Nonnull final BluetoothAdapter adapter)
 		{
-			super(listen(adapter, Bluetooth.BLUETOOTH_UUID_PAYMENT_PROTOCOL));
+			super(listen(adapter, Bluetooth.BIP70_PAYMENT_PROTOCOL_NAME, Bluetooth.BIP70_PAYMENT_PROTOCOL_UUID));
 		}
 
 		@Override
@@ -187,7 +186,7 @@ public abstract class AcceptBluetoothThread extends Thread
 
 					log.debug("got payment message");
 
-					for (final Transaction tx : PaymentProtocol.parsePaymentMessage(payment))
+					for (final Transaction tx : PaymentProtocol.parseTransactionsFromPaymentMessage(Constants.NETWORK_PARAMETERS, payment))
 					{
 						if (!handleTx(tx))
 							ack = false;
@@ -260,11 +259,11 @@ public abstract class AcceptBluetoothThread extends Thread
 		}
 	}
 
-	protected static BluetoothServerSocket listen(final BluetoothAdapter adapter, final UUID uuid)
+	protected static BluetoothServerSocket listen(final BluetoothAdapter adapter, final String serviceName, final UUID serviceUuid)
 	{
 		try
 		{
-			return adapter.listenUsingInsecureRfcommWithServiceRecord("Nubits Transaction Submission", uuid);
+			return adapter.listenUsingInsecureRfcommWithServiceRecord(serviceName, serviceUuid);
 		}
 		catch (final IOException x)
 		{

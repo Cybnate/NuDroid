@@ -17,8 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import java.math.BigInteger;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +30,6 @@ import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -42,11 +39,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.matthewmitchell.nubitsj.core.Transaction;
+import com.matthewmitchell.nubitsj.core.Coin;
+import com.matthewmitchell.nubitsj.core.Monetary;
+import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
 
-import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.util.GenericUtils;
-import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
+import com.matthewmitchell.nubits_android_wallet.util.MonetarySpannable;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -64,9 +62,10 @@ public final class CurrencyAmountView extends FrameLayout
 	private int significantColor, lessSignificantColor, errorColor;
 	private Drawable deleteButtonDrawable, contextButtonDrawable;
 	private Drawable currencySymbolDrawable;
-	private int inputPrecision = 2;
-	private int hintPrecision = 2;
-	private int shift = 0;
+	private String localCurrencyCode = null;
+	private MonetaryFormat inputFormat;
+	private Monetary hint = null;
+	private MonetaryFormat hintFormat = new MonetaryFormat().noCode();
 	private boolean amountSigned = false;
 	private boolean validateAmount = true;
 
@@ -108,7 +107,6 @@ public final class CurrencyAmountView extends FrameLayout
 		textView.setHintTextColor(lessSignificantColor);
 		textView.setHorizontalFadingEdgeEnabled(true);
 		textView.setSingleLine();
-		setHint(null);
 		setValidateAmount(textView instanceof EditText);
 		textView.addTextChangedListener(textViewListener);
 		textView.setOnFocusChangeListener(textViewListener);
@@ -131,38 +129,43 @@ public final class CurrencyAmountView extends FrameLayout
 
 	public void setCurrencySymbol(@Nullable final String currencyCode)
 	{
-		if (Constants.CURRENCY_CODE_NBT.equals(currencyCode))
+		if (MonetaryFormat.CODE_NBT.equals(currencyCode))
 		{
-			currencySymbolDrawable = getResources().getDrawable(R.drawable.currency_symbol_btc);
+			currencySymbolDrawable = getResources().getDrawable(R.drawable.currency_symbol_nbt);
+			localCurrencyCode = null;
 		}
-		else if (currencyCode != null)
+		else if (currencyCode != null) // fiat
 		{
 			final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
 			final float textSize = textView.getTextSize();
 			final float smallerTextSize = textSize * (20f / 24f);
 			currencySymbolDrawable = new CurrencySymbolDrawable(currencySymbol, smallerTextSize, lessSignificantColor, textSize * 0.37f);
+			localCurrencyCode = currencyCode;
 		}
 		else
 		{
 			currencySymbolDrawable = null;
+			localCurrencyCode = null;
 		}
 
 		updateAppearance();
 	}
 
-	public void setInputPrecision(final int inputPrecision)
+	public void setInputFormat(final MonetaryFormat inputFormat)
 	{
-		this.inputPrecision = inputPrecision;
+		this.inputFormat = inputFormat.noCode();
 	}
 
-	public void setHintPrecision(final int hintPrecision)
+	public void setHintFormat(final MonetaryFormat hintFormat)
 	{
-		this.hintPrecision = hintPrecision;
+		this.hintFormat = hintFormat.noCode();
+		updateAppearance();
 	}
 
-	public void setShift(final int shift)
+	public void setHint(@Nullable final Monetary hint)
 	{
-		this.shift = shift;
+		this.hint = hint;
+		updateAppearance();
 	}
 
 	public void setAmountSigned(final boolean amountSigned)
@@ -189,34 +192,30 @@ public final class CurrencyAmountView extends FrameLayout
 	}
 
 	@CheckForNull
-	public BigInteger getAmount()
+	public Monetary getAmount()
 	{
-		if (isValidAmount(false))
-			return GenericUtils.parseCoin(textView.getText().toString().trim(), shift);
-		else
+		if (!isValidAmount(false))
 			return null;
+
+		final String amountStr = textView.getText().toString().trim();
+		if (localCurrencyCode == null)
+			return inputFormat.parse(amountStr);
+		else
+			return inputFormat.parseFiat(localCurrencyCode, amountStr);
 	}
 
-	public void setAmount(@Nullable final BigInteger amount, final boolean fireListener)
+	public void setAmount(@Nullable final Monetary amount, final boolean fireListener)
 	{
 		if (!fireListener)
 			textViewListener.setFire(false);
 
 		if (amount != null)
-			textView.setText(amountSigned ? GenericUtils.formatValue(amount, Constants.CURRENCY_PLUS_SIGN, Constants.CURRENCY_MINUS_SIGN,
-					inputPrecision, shift) : GenericUtils.formatValue(amount, inputPrecision, shift));
+			textView.setText(new MonetarySpannable(inputFormat, amountSigned, amount));
 		else
 			textView.setText(null);
 
 		if (!fireListener)
 			textViewListener.setFire(true);
-	}
-
-	public void setHint(@Nullable final BigInteger amount)
-	{
-		final Spannable hint = new SpannableString(GenericUtils.formatValue(amount != null ? amount : BigInteger.ZERO, hintPrecision, shift));
-		WalletUtils.formatSignificant(hint, WalletUtils.SMALLER_SPAN);
-		textView.setHint(hint);
 	}
 
 	@Override
@@ -252,7 +251,7 @@ public final class CurrencyAmountView extends FrameLayout
 	public void setNextFocusId(final int nextFocusId)
 	{
 		textView.setNextFocusDownId(nextFocusId);
-		GenericUtils.setNextFocusForwardId(textView, nextFocusId);
+		textView.setNextFocusForwardId(nextFocusId);
 	}
 
 	private boolean isValidAmount(final boolean zeroIsValid)
@@ -263,17 +262,14 @@ public final class CurrencyAmountView extends FrameLayout
 		{
 			if (!str.isEmpty())
 			{
-				final BigInteger coin = GenericUtils.parseCoin(str, shift);
+				final Monetary amount;
+				if (localCurrencyCode == null)
+					amount = inputFormat.parse(str);
+				else
+					amount = inputFormat.parseFiat(localCurrencyCode, str);
 
 				// exactly zero
-				if (zeroIsValid && coin.signum() == 0)
-					return true;
-
-				// too small
-				if (coin.compareTo(Transaction.MIN_NONDUST_OUTPUT) < 0)
-					return false;
-
-				return true;
+				return zeroIsValid || amount.signum() > 0;
 			}
 		}
 		catch (final Exception x)
@@ -320,6 +316,10 @@ public final class CurrencyAmountView extends FrameLayout
 		contextButton.requestLayout();
 
 		textView.setTextColor(!validateAmount || isValidAmount(true) ? significantColor : errorColor);
+
+		final Spannable hintSpannable = new MonetarySpannable(hintFormat, hint != null ? hint : Coin.ZERO).applyMarkup(null,
+				MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
+		textView.setHint(hintSpannable);
 	}
 
 	@Override
@@ -340,7 +340,7 @@ public final class CurrencyAmountView extends FrameLayout
 			final Bundle bundle = (Bundle) state;
 			super.onRestoreInstanceState(bundle.getParcelable("super_state"));
 			textView.onRestoreInstanceState(bundle.getParcelable("child_textview"));
-			setAmount((BigInteger) bundle.getSerializable("amount"), false);
+			setAmount((Monetary) bundle.getSerializable("amount"), false);
 		}
 		else
 		{
@@ -371,7 +371,7 @@ public final class CurrencyAmountView extends FrameLayout
 				s.append(replaced);
 			}
 
-			WalletUtils.formatSignificant(s, WalletUtils.SMALLER_SPAN);
+			MonetarySpannable.applyMarkup(s, null, MonetarySpannable.STANDARD_SIGNIFICANT_SPANS, MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
 		}
 
 		@Override
@@ -392,7 +392,7 @@ public final class CurrencyAmountView extends FrameLayout
 		{
 			if (!hasFocus)
 			{
-				final BigInteger amount = getAmount();
+				final Monetary amount = getAmount();
 				if (amount != null)
 					setAmount(amount, false);
 			}

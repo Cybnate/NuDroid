@@ -10,7 +10,7 @@
 	<name>Sample for NuBits Integration for Android</name>
 
 	<parent>
-		<groupId>de.schildbach.wallet</groupId>
+		<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 		<artifactId>base</artifactId>
 		<version>1</version>
 	</parent>
@@ -41,18 +41,18 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- de.schildbach.wallet.integration.android.* -->
+		<!-- com.matthewmitchell.nubits_android_wallet.integration.android.* -->
 		<dependency>
-			<groupId>de.schildbach.wallet</groupId>
+			<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 			<artifactId>integration-android</artifactId>
-			<version>2.0</version>
+			<version>2.2</version>
 		</dependency>
 
 		<!-- com.matthewmitchell.nubitsj.* -->
 		<dependency>
 			<groupId>com.matthewmitchell</groupId>
 			<artifactId>nubitsj</artifactId>
-			<version>0.11.3</version>
+			<version>0.12.3</version>
 		</dependency>
 
 		<dependency>
@@ -67,9 +67,11 @@
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<groupId>com.simpligility.maven.plugins</groupId>
 				<artifactId>android-maven-plugin</artifactId>
 				<configuration>
+					<androidManifestFile>AndroidManifest.xml</androidManifestFile>
+					<resourceDirectory>res</resourceDirectory>
 					<sdk>
 						<platform>10</platform>
 					</sdk>

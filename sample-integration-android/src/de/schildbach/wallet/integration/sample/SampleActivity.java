@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.schildbach.wallet.integration.sample;
+package com.matthewmitchell.nubits_android_wallet.integration.sample;
 
 import org.nubits.protocols.payments.Protos;
 
@@ -37,7 +37,7 @@ import com.matthewmitchell.nubitsj.core.NetworkParameters;
 import com.matthewmitchell.nubitsj.script.ScriptBuilder;
 import com.google.protobuf.ByteString;
 
-import de.schildbach.wallet.integration.android.NubitsIntegration;
+import com.matthewmitchell.nubits_android_wallet.integration.android.NubitsIntegration;
 
 /**
  * @author Andreas Schildbach
