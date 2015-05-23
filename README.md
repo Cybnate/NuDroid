@@ -1,4 +1,4 @@
-## Welcome to _NuDroid_ the Android NuBits wallet
+## Welcome to _NuDroid_
 
 __What is _NuDroid_?__
 
