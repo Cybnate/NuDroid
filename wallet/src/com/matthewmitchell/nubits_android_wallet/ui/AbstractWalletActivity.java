@@ -49,99 +49,100 @@ import java.io.InputStreamReader;
  */
 public abstract class AbstractWalletActivity extends LoaderActivity
 {
-	protected static final int DIALOG_RESTORE_WALLET = 0;
-	private WalletApplication application;
-	
-	protected RestoreWalletTask restoreTask = null;
+    protected static final int DIALOG_RESTORE_WALLET = 0;
+    private WalletApplication application;
 
-	protected static final Logger log = LoggerFactory.getLogger(AbstractWalletActivity.class);
+    protected RestoreWalletTask restoreTask = null;
+    public TransactionsListAdapter txListAdapter = null;
 
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-		application = (WalletApplication) getApplication();
+    protected static final Logger log = LoggerFactory.getLogger(AbstractWalletActivity.class);
 
-		super.onCreate(savedInstanceState);
-	}
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        application = (WalletApplication) getApplication();
 
-	protected WalletApplication getWalletApplication()
-	{
-		return application;
-	}
+        super.onCreate(savedInstanceState);
+    }
 
-	protected final void toast(@Nonnull final String text, final Object... formatArgs)
-	{
-		toast(text, 0, Toast.LENGTH_SHORT, formatArgs);
-	}
+    protected WalletApplication getWalletApplication()
+    {
+        return application;
+    }
 
-	protected final void longToast(@Nonnull final String text, final Object... formatArgs)
-	{
-		toast(text, 0, Toast.LENGTH_LONG, formatArgs);
-	}
+    protected final void toast(@Nonnull final String text, final Object... formatArgs)
+    {
+        toast(text, 0, Toast.LENGTH_SHORT, formatArgs);
+    }
 
-	protected final void toast(@Nonnull final String text, final int imageResId, final int duration, final Object... formatArgs)
-	{
-		final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
-		TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
-		tv.setText(String.format(text, formatArgs));
-		tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
+    protected final void longToast(@Nonnull final String text, final Object... formatArgs)
+    {
+        toast(text, 0, Toast.LENGTH_LONG, formatArgs);
+    }
 
-		final Toast toast = new Toast(this);
-		toast.setView(view);
-		toast.setDuration(duration);
-		toast.show();
-	}
+    protected final void toast(@Nonnull final String text, final int imageResId, final int duration, final Object... formatArgs)
+    {
+        final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
+        TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
+        tv.setText(String.format(text, formatArgs));
+        tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
 
-	protected final void toast(final int textResId, final Object... formatArgs)
-	{
-		toast(textResId, 0, Toast.LENGTH_SHORT, formatArgs);
-	}
+        final Toast toast = new Toast(this);
+        toast.setView(view);
+        toast.setDuration(duration);
+        toast.show();
+    }
 
-	protected final void longToast(final int textResId, final Object... formatArgs)
-	{
-		toast(textResId, 0, Toast.LENGTH_LONG, formatArgs);
-	}
+    protected final void toast(final int textResId, final Object... formatArgs)
+    {
+        toast(textResId, 0, Toast.LENGTH_SHORT, formatArgs);
+    }
 
-	protected final void toast(final int textResId, final int imageResId, final int duration, final Object... formatArgs)
-	{
-		final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
-		TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
-		tv.setText(getString(textResId, formatArgs));
-		tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
+    protected final void longToast(final int textResId, final Object... formatArgs)
+    {
+        toast(textResId, 0, Toast.LENGTH_LONG, formatArgs);
+    }
 
-		final Toast toast = new Toast(this);
-		toast.setView(view);
-		toast.setDuration(duration);
-		toast.show();
-	}
-	
-	protected void restoreWalletFromEncrypted(@Nonnull final InputStream cipher, @Nonnull final String password) {
-		restoreTask = new RestoreWalletTask();
-		restoreTask.restoreWalletFromEncrypted(cipher, password, this);
-	}
-	
-	protected void restoreWalletFromEncrypted(@Nonnull final File file, @Nonnull final String password) {
-		restoreTask = new RestoreWalletTask();
-		restoreTask.restoreWalletFromEncrypted(file, password, this);
-	}
+    protected final void toast(final int textResId, final int imageResId, final int duration, final Object... formatArgs)
+    {
+        final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
+        TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
+        tv.setText(getString(textResId, formatArgs));
+        tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
 
-	protected void restoreWalletFromProtobuf(@Nonnull final File file) {
-		restoreTask = new RestoreWalletTask();
-		restoreTask.restoreWalletFromProtobuf(file, this);
-	}
+        final Toast toast = new Toast(this);
+        toast.setView(view);
+        toast.setDuration(duration);
+        toast.show();
+    }
 
-	protected void restorePrivateKeysFromBase58(@Nonnull final File file) {
-		restoreTask = new RestoreWalletTask();
-		restoreTask.restorePrivateKeysFromBase58(file, this);
-	}
-	
-	@Override
-	protected void onStop() {
-		if (restoreTask != null) { 
-			restoreTask.cancel(false);
-			restoreTask = null;
-		}
-		super.onStop();
-	}
+    protected void restoreWalletFromEncrypted(@Nonnull final InputStream cipher, @Nonnull final String password) {
+        restoreTask = new RestoreWalletTask();
+        restoreTask.restoreWalletFromEncrypted(cipher, password, this);
+    }
+
+    protected void restoreWalletFromEncrypted(@Nonnull final File file, @Nonnull final String password) {
+        restoreTask = new RestoreWalletTask();
+        restoreTask.restoreWalletFromEncrypted(file, password, this);
+    }
+
+    protected void restoreWalletFromProtobuf(@Nonnull final File file) {
+        restoreTask = new RestoreWalletTask();
+        restoreTask.restoreWalletFromProtobuf(file, this);
+    }
+
+    protected void restorePrivateKeysFromBase58(@Nonnull final File file) {
+        restoreTask = new RestoreWalletTask();
+        restoreTask.restorePrivateKeysFromBase58(file, this);
+    }
+
+    @Override
+    protected void onStop() {
+        if (restoreTask != null) { 
+            restoreTask.cancel(false);
+            restoreTask = null;
+        }
+        super.onStop();
+    }
 
 }

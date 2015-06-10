@@ -17,20 +17,16 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.matthewmitchell.nubitsj.protocols.payments.Protos;
+import android.content.Context;
+import android.content.DialogInterface.OnClickListener;
+import com.google.common.hash.Hashing;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.UninitializedMessageException;
+import com.matthewmitchell.nubits_android_wallet.Constants;
+import com.matthewmitchell.nubits_android_wallet.R;
+import com.matthewmitchell.nubits_android_wallet.data.PaymentIntent;
+import com.matthewmitchell.nubits_android_wallet.util.Io;
+import com.matthewmitchell.nubits_android_wallet.util.Qr;
 import com.matthewmitchell.nubitsj.core.Address;
 import com.matthewmitchell.nubitsj.core.AddressFormatException;
 import com.matthewmitchell.nubitsj.core.Base58;
@@ -42,27 +38,28 @@ import com.matthewmitchell.nubitsj.core.VerificationException;
 import com.matthewmitchell.nubitsj.core.VersionedChecksummedBytes;
 import com.matthewmitchell.nubitsj.crypto.BIP38PrivateKey;
 import com.matthewmitchell.nubitsj.crypto.TrustStoreLoader;
+import com.matthewmitchell.nubitsj.params.MainNetParams;
 import com.matthewmitchell.nubitsj.protocols.payments.PaymentProtocol;
 import com.matthewmitchell.nubitsj.protocols.payments.PaymentProtocol.PkiVerificationData;
 import com.matthewmitchell.nubitsj.protocols.payments.PaymentProtocolException;
 import com.matthewmitchell.nubitsj.protocols.payments.PaymentSession;
+import com.matthewmitchell.nubitsj.protocols.payments.Protos;
 import com.matthewmitchell.nubitsj.uri.NubitsURI;
 import com.matthewmitchell.nubitsj.uri.NubitsURIParseException;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.content.Context;
-import android.content.DialogInterface.OnClickListener;
-
-import com.google.common.hash.Hashing;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.UninitializedMessageException;
-
-import com.matthewmitchell.nubits_android_wallet.Constants;
-import com.matthewmitchell.nubits_android_wallet.data.PaymentIntent;
-import com.matthewmitchell.nubits_android_wallet.util.Io;
-import com.matthewmitchell.nubits_android_wallet.util.Qr;
-import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
  * @author Andreas Schildbach
@@ -130,18 +127,14 @@ public abstract class InputParser
 			}
 			else if (PATTERN_NuBits_ADDRESS.matcher(input).matches())
 			{
-				try
-				{
-					final Address address = new Address(Constants.NETWORK_PARAMETERS, input);
+				PaymentIntent pi = PaymentIntent.fromAddress(input);
 
-					handlePaymentIntent(PaymentIntent.fromAddress(address, null));
-				}
-				catch (final AddressFormatException x)
-				{
-					log.info("got invalid address", x);
-
+				if (pi == null) {
+					log.info("got invalid address");
 					error(R.string.input_parser_invalid_address);
-				}
+				}else
+					handlePaymentIntent(pi);
+
 			}
 			else if (PATTERN_DUMPED_PRIVATE_KEY_UNCOMPRESSED.matcher(input).matches()
 					|| PATTERN_DUMPED_PRIVATE_KEY_COMPRESSED.matcher(input).matches())
@@ -194,10 +187,12 @@ public abstract class InputParser
 
 					error(R.string.input_parser_invalid_transaction, x.getMessage());
 				}
-			}
-			else
-			{
-				cannotClassify(input);
+			}else{
+				PaymentIntent pi = PaymentIntent.fromShapeShiftURI(input);
+				if (pi == null)
+					cannotClassify(input);
+				else
+					handlePaymentIntent(pi);
 			}
 		}
 
@@ -399,7 +394,7 @@ public abstract class InputParser
 			final byte[] paymentRequestHash = Hashing.sha256().hashBytes(serializedPaymentRequest).asBytes();
 
 			final PaymentIntent paymentIntent = new PaymentIntent(PaymentIntent.Standard.BIP70, pkiName, pkiCaName,
-					outputs.toArray(new PaymentIntent.Output[0]), memo, paymentUrl, merchantData, null, paymentRequestHash);
+					outputs.toArray(new PaymentIntent.Output[0]), memo, paymentUrl, merchantData, null, paymentRequestHash, Arrays.asList((NetworkParameters) MainNetParams.get()));
 
 			if (paymentIntent.hasPaymentUrl() && !paymentIntent.isSupportedPaymentUrl())
 				throw new PaymentProtocolException.InvalidPaymentURL("cannot handle payment url: " + paymentIntent.paymentUrl);

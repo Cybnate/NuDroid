@@ -34,101 +34,107 @@ import com.matthewmitchell.nubits_android_wallet.R;
  */
 public final class Constants
 {
-	public static final boolean TEST = R.class.getPackage().getName().contains("_test");
+    public static final boolean TEST = R.class.getPackage().getName().contains("_test");
 
-	public static final NetworkParameters NETWORK_PARAMETERS = MainNetParams.get();
+    public static final NetworkParameters NETWORK_PARAMETERS = MainNetParams.get();
 
-	public final static class Files
-	{
-	    
-		/** Filename of the wallet. */
-		public static final String WALLET_FILENAME_PROTOBUF = "nubits-wallet-protobuf";
+    public final static class Files
+    {
 
-		/** Filename of the automatic key backup (old format, can only be read). */
-		public static final String WALLET_KEY_BACKUP_BASE58 = "nubits-key-backup-base58";
+        /** Filename of the wallet. */
+        public static final String WALLET_FILENAME_PROTOBUF = "nubits-wallet-protobuf";
 
-		/** Filename of the automatic wallet backup. */
-		public static final String WALLET_KEY_BACKUP_PROTOBUF = "nubits-key-backup-protobuf";
+        /** Filename of the automatic key backup (old format, can only be read). */
+        public static final String WALLET_KEY_BACKUP_BASE58 = "nubits-key-backup-base58";
 
-		/** Manual backups go here. */
-		public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        /** Filename of the automatic wallet backup. */
+        public static final String WALLET_KEY_BACKUP_PROTOBUF = "nubits-key-backup-protobuf";
 
-		/** Filename of the manual key backup (old format, can only be read). */
-		public static final String EXTERNAL_WALLET_KEY_BACKUP = "nubits-wallet-keys";
+        /** Manual backups go here. */
+        public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
-		/** Filename of the manual wallet backup. */
-		public static final String EXTERNAL_WALLET_BACKUP = "nubits-wallet-backup";
+        /** Filename of the manual key backup (old format, can only be read). */
+        public static final String EXTERNAL_WALLET_KEY_BACKUP = "nubits-wallet-keys";
 
-		/** Filename of the block store for storing the chain. */
-		public static final String BLOCKCHAIN_FILENAME = "blockchain";
+        /** Filename of the manual wallet backup. */
+        public static final String EXTERNAL_WALLET_BACKUP = "nubits-wallet-backup";
+
+        /** Filename of exported transactions. */
+        public static final String TX_EXPORT_NAME = "nubits-transactions";
+
+        /** Filename of the block store for storing the chain. */
+        public static final String BLOCKCHAIN_FILENAME = "blockchain";
 
         public static final String VALID_HASHES_FILENAME = "validhashes";
         public static final String PEERS_FILENAME = "peers";
-	}
+    }
 
-	/** Maximum size of backups. Files larger will be rejected. */
-	public static final long BACKUP_MAX_CHARS = 10000000;
+    /** Maximum size of backups. Files larger will be rejected. */
+    public static final long BACKUP_MAX_CHARS = 10000000;
 
-	public static final String EXPLORE_BASE_URL = "https://svr1.nubitsexplorer.nu/";
+    public static final String EXPLORE_BASE_URL = "https://svr1.nubitsexplorer.nu/";
 
-	/** URL to fetch version alerts from. */
-	public static final String VERSION_URL = "";
+    /** URL to fetch version alerts from. */
+    public static final String VERSION_URL = "";
 
-	/** MIME type used for transmitting single transactions. */
-	public static final String MIMETYPE_TRANSACTION = "application/x-nbttx";
+    /** MIME type used for transmitting single transactions. */
+    public static final String MIMETYPE_TRANSACTION = "application/x-nbttx";
 
-	/** MIME type used for transmitting wallet backups. */
-	public static final String MIMETYPE_WALLET_BACKUP = "application/x-nubits-wallet-backup";
+    /** MIME type used for transmitting wallet backups. */
+    public static final String MIMETYPE_WALLET_BACKUP = "application/x-nubits-wallet-backup";
 
-	/** Number of confirmations until a transaction is fully confirmed. */
-	public static final int MAX_NUM_CONFIRMATIONS = 7;
+    /** MIME type used for transaction export. */
+    public static final String MIMETYPE_TX_EXPORT = "text/csv";
 
-	/** User-agent to use for network access. */
-	public static final String USER_AGENT = "NuBits Wallet";
+    /** Number of confirmations until a transaction is fully confirmed. */
+    public static final int MAX_NUM_CONFIRMATIONS = 7;
 
-	/** Default currency to use if all default mechanisms fail. */
-	public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
+    /** User-agent to use for network access. */
+    public static final String USER_AGENT = "NuBits Wallet";
 
-	/** Recipient e-mail address for reports. */
-	public static final String REPORT_EMAIL = "matthewmitchell@thelibertyportal.com";
+    /** Default currency to use if all default mechanisms fail. */
+    public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
 
-	/** Subject line for manually reported issues. */
-	public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
+    /** Recipient e-mail address for reports. */
+    public static final String REPORT_EMAIL = "matthewmitchell@thelibertyportal.com";
 
-	/** Subject line for crash reports. */
-	public static final String REPORT_SUBJECT_CRASH = "Crash report";
+    /** Subject line for manually reported issues. */
+    public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 
-	public static final char CHAR_HAIR_SPACE = '\u200a';
-	public static final char CHAR_THIN_SPACE = '\u2009';
-	public static final char CHAR_ALMOST_EQUAL_TO = '\u2248';
-	public static final char CHAR_CHECKMARK = '\u2713';
-	public static final char CURRENCY_PLUS_SIGN = '\uff0b';
-	public static final char CURRENCY_MINUS_SIGN = '\uff0d';
-	public static final String PREFIX_ALMOST_EQUAL_TO = Character.toString(CHAR_ALMOST_EQUAL_TO) + CHAR_THIN_SPACE;
-	public static final int ADDRESS_FORMAT_GROUP_SIZE = 4;
-	public static final int ADDRESS_FORMAT_LINE_SIZE = 12;
+    /** Subject line for crash reports. */
+    public static final String REPORT_SUBJECT_CRASH = "Crash report";
 
-	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
+    public static final char CHAR_HAIR_SPACE = '\u200a';
+    public static final char CHAR_THIN_SPACE = '\u2009';
+    public static final char CHAR_ALMOST_EQUAL_TO = '\u2248';
+    public static final char CHAR_CHECKMARK = '\u2713';
+    public static final char CURRENCY_PLUS_SIGN = '\uff0b';
+    public static final char CURRENCY_MINUS_SIGN = '\uff0d';
+    public static final String PREFIX_ALMOST_EQUAL_TO = Character.toString(CHAR_ALMOST_EQUAL_TO) + CHAR_THIN_SPACE;
+    public static final int ADDRESS_FORMAT_GROUP_SIZE = 4;
+    public static final int ADDRESS_FORMAT_LINE_SIZE = 12;
 
-	public static final String SOURCE_URL = "https://github.com/Cybnate/Nubits-Android-wallet";
-	public static final String BINARY_URL = "https://github.com/Cybnate/Nubits-Android-wallet/releases";
-	public static final String MARKET_APP_URL = "market://details?id=%s";
-	public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
+    public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
 
-	public static final int HTTP_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
-	public static final int PEER_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
+    public static final String SOURCE_URL = "https://github.com/Cybnate/Nubits-Android-wallet";
+    public static final String BINARY_URL = "https://github.com/Cybnate/Nubits-Android-wallet/releases";
+    public static final String MARKET_APP_URL = "market://details?id=%s";
+    public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
 
-	public static final long LAST_USAGE_THRESHOLD_JUST_MS = DateUtils.HOUR_IN_MILLIS;
-	public static final long LAST_USAGE_THRESHOLD_RECENTLY_MS = 2 * DateUtils.DAY_IN_MILLIS;
+    public static final int HTTP_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
+    public static final int PEER_TIMEOUT_MS = 8 * (int) DateUtils.SECOND_IN_MILLIS;
 
-	public static final int SDK_JELLY_BEAN = 16;
-	public static final int SDK_JELLY_BEAN_MR2 = 18;
+    public static final long LAST_USAGE_THRESHOLD_JUST_MS = DateUtils.HOUR_IN_MILLIS;
+    public static final long LAST_USAGE_THRESHOLD_RECENTLY_MS = 2 * DateUtils.DAY_IN_MILLIS;
 
-	public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    public static final int SDK_JELLY_BEAN = 16;
+    public static final int SDK_JELLY_BEAN_MR2 = 18;
 
-	public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Constants.SDK_JELLY_BEAN
-			&& Build.VERSION.RELEASE.startsWith("4.1.1");
+    public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
-	public static final int MEMORY_CLASS_LOWEND = 48;
+    public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Constants.SDK_JELLY_BEAN
+        && Build.VERSION.RELEASE.startsWith("4.1.1");
+
+    public static final int MEMORY_CLASS_LOWEND = 48;
 
 }

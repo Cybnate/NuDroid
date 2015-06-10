@@ -1,6 +1,13 @@
+v3.0
+
+* This release adds Shapeshift API integration. This enables seamless payments in supported 
+foreign coin addresses and URIs from within the App without the use of external plugins by 
+either merchant or customer. 
+
 v2.0
 
-* Update in line with nubitsj 0.12.3 and with version 4.13 of Andreas Schildbach's Bitcoin Android wallet
+* Update in line with nubitsj 0.12.3 and with version 4.13 of Andreas Schildbach's Bitcoin 
+Android wallet
 
 v1.0
 

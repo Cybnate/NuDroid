@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>integration-android</artifactId>
-	<version>2.0</version>
+	<version>3.0</version>
 	<name>NuBits Integration for Android</name>
 
 	<parent>
 		<groupId>com.matthewmitchell.nubits_android_wallet</groupId>
 		<artifactId>base</artifactId>
-		<version>2.0</version>
+		<version>3.0</version>
 	</parent>
 
 	<licenses>

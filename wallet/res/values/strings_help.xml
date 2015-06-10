@@ -49,16 +49,14 @@
 			You came here either through the main screen or by clicking on a NuBits URL in your mobile browser.
 		</p>
 		<p>
-			First, you enter the NuBits address to pay to.
+			First, you specify the NuBits or supported ShapeShift coin address to pay to.
 			The address will autocomplete from known entries in your address book.
-			You can also scan QR codes with NuBits addresses or NuBits requests by pressing the QR button in the action bar.
+			You can also scan QR codes with addresses or requests by pressing the QR button in the action bar.
 		</p>
 		<p>
-			Next, you can see how many NuBits you can spend at the moment.
-			Any difference to the balance from the main screen is still unconfirmed and can thus not yet be spent.
-		</p>
-		<p>
-			Last, you enter the amount to pay.
+			You can specify a destination coin from the dropdown menu. You can specify the amount in NuBits or your 
+			local currency. If the coin is not NuBits, the transfer will be made using ShapeShift. For ShapeShift coins 
+			the rate and foreign amount will be estimated unless you specify an exact foreign amount.
 		</p>
 		<p>
 			You can enter a payment while being offline.
@@ -69,6 +67,8 @@
 			Note:
 			Payments are irreversible!
 			Always check the receiving address.
+			The third-party ShapeShift API is used to send to coins other than NuBits. There is no guarentee that ShapeShift 
+			will function correctly, or at all.
 		</p>
 	]]>
 	</string>

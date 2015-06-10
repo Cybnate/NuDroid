@@ -46,359 +46,457 @@ import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
 import com.matthewmitchell.nubits_android_wallet.util.GenericUtils;
 import com.matthewmitchell.nubits_android_wallet.util.MonetarySpannable;
 import com.matthewmitchell.nubits_android_wallet.R;
+import java.util.Arrays;
 
 /**
  * @author Andreas Schildbach
  */
 public final class CurrencyAmountView extends FrameLayout
 {
-	public static interface Listener
-	{
-		void changed();
+    public static interface Listener
+    {
+        void changed();
 
-		void focusChanged(final boolean hasFocus);
-	}
+        void focusChanged(final boolean hasFocus);
+    }
 
-	private int significantColor, lessSignificantColor, errorColor;
-	private Drawable deleteButtonDrawable, contextButtonDrawable;
-	private Drawable currencySymbolDrawable;
-	private String localCurrencyCode = null;
-	private MonetaryFormat inputFormat;
-	private Monetary hint = null;
-	private MonetaryFormat hintFormat = new MonetaryFormat().noCode();
-	private boolean amountSigned = false;
-	private boolean validateAmount = true;
+    private enum CurrencyType {
+        COIN, FIAT, SHAPESHIFT
+    }
 
-	private TextView textView;
-	private View contextButton;
-	private Listener listener;
-	private OnClickListener contextButtonClickListener;
+    private CurrencyType currencyType;
+    private int smallestExponent;
 
-	public CurrencyAmountView(final Context context)
-	{
-		super(context);
-		init(context);
-	}
+    private int significantColor, lessSignificantColor, errorColor;
+    private Drawable deleteButtonDrawable, contextButtonDrawable;
+    private Drawable currencySymbolDrawable;
+    private String localCurrencyCode = null;
+    private MonetaryFormat inputFormat;
+    private Monetary hint = null;
+    private MonetaryFormat hintFormat = new MonetaryFormat().noCode();
+    private boolean amountSigned = false;
+    private boolean validateAmount = true;
 
-	public CurrencyAmountView(final Context context, final AttributeSet attrs)
-	{
-		super(context, attrs);
-		init(context);
-	}
+    private long previousAmount = 0;
 
-	private void init(final Context context)
-	{
-		final Resources resources = context.getResources();
-		significantColor = resources.getColor(R.color.fg_significant);
-		lessSignificantColor = resources.getColor(R.color.fg_less_significant);
-		errorColor = resources.getColor(R.color.fg_error);
-		deleteButtonDrawable = resources.getDrawable(R.drawable.ic_input_delete);
-	}
+    private TextView textView;
+    private View contextButton;
+    private Listener listener;
+    private OnClickListener contextButtonClickListener;
 
-	@Override
-	protected void onFinishInflate()
-	{
-		super.onFinishInflate();
+    public CurrencyAmountView(final Context context)
+    {
+        super(context);
+        init(context);
+    }
 
-		final Context context = getContext();
+    public CurrencyAmountView(final Context context, final AttributeSet attrs)
+    {
+        super(context, attrs);
+        init(context);
+    }
 
-		textView = (TextView) getChildAt(0);
-		textView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		textView.setHintTextColor(lessSignificantColor);
-		textView.setHorizontalFadingEdgeEnabled(true);
-		textView.setSingleLine();
-		setValidateAmount(textView instanceof EditText);
-		textView.addTextChangedListener(textViewListener);
-		textView.setOnFocusChangeListener(textViewListener);
+    private void init(final Context context)
+    {
+        final Resources resources = context.getResources();
+        significantColor = resources.getColor(R.color.fg_significant);
+        lessSignificantColor = resources.getColor(R.color.fg_less_significant);
+        errorColor = resources.getColor(R.color.fg_error);
+        deleteButtonDrawable = resources.getDrawable(R.drawable.ic_input_delete);
+    }
 
-		contextButton = new View(context)
-		{
-			@Override
-			protected void onMeasure(final int wMeasureSpec, final int hMeasureSpec)
-			{
-				setMeasuredDimension(textView.getCompoundPaddingRight(), textView.getMeasuredHeight());
-			}
-		};
-		final LayoutParams chooseViewParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		chooseViewParams.gravity = Gravity.RIGHT;
-		contextButton.setLayoutParams(chooseViewParams);
-		this.addView(contextButton);
+    @Override
+    protected void onFinishInflate()
+    {
+        super.onFinishInflate();
 
-		updateAppearance();
-	}
+        final Context context = getContext();
 
-	public void setCurrencySymbol(@Nullable final String currencyCode)
-	{
-		if (MonetaryFormat.CODE_NBT.equals(currencyCode))
-		{
-			currencySymbolDrawable = getResources().getDrawable(R.drawable.currency_symbol_nbt);
-			localCurrencyCode = null;
-		}
-		else if (currencyCode != null) // fiat
-		{
-			final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
-			final float textSize = textView.getTextSize();
-			final float smallerTextSize = textSize * (20f / 24f);
-			currencySymbolDrawable = new CurrencySymbolDrawable(currencySymbol, smallerTextSize, lessSignificantColor, textSize * 0.37f);
-			localCurrencyCode = currencyCode;
-		}
-		else
-		{
-			currencySymbolDrawable = null;
-			localCurrencyCode = null;
-		}
+        textView = (TextView) getChildAt(0);
+        textView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        textView.setHintTextColor(lessSignificantColor);
+        textView.setHorizontalFadingEdgeEnabled(true);
+        textView.setSingleLine();
+        setValidateAmount(textView instanceof EditText);
+        textView.addTextChangedListener(textViewListener);
+        textView.setOnFocusChangeListener(textViewListener);
 
-		updateAppearance();
-	}
+        contextButton = new View(context)
+        {
+            @Override
+            protected void onMeasure(final int wMeasureSpec, final int hMeasureSpec)
+            {
+                setMeasuredDimension(textView.getCompoundPaddingRight(), textView.getMeasuredHeight());
+            }
+        };
+        final LayoutParams chooseViewParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        chooseViewParams.gravity = Gravity.RIGHT;
+        contextButton.setLayoutParams(chooseViewParams);
+        this.addView(contextButton);
 
-	public void setInputFormat(final MonetaryFormat inputFormat)
-	{
-		this.inputFormat = inputFormat.noCode();
-	}
+        updateAppearance();
+    }
 
-	public void setHintFormat(final MonetaryFormat hintFormat)
-	{
-		this.hintFormat = hintFormat.noCode();
-		updateAppearance();
-	}
+    public void setCurrencySymbol(@Nullable final String currencyCode) {
 
-	public void setHint(@Nullable final Monetary hint)
-	{
-		this.hint = hint;
-		updateAppearance();
-	}
+        int symbol;
 
-	public void setAmountSigned(final boolean amountSigned)
-	{
-		this.amountSigned = amountSigned;
-	}
+        localCurrencyCode = null;
 
-	public void setValidateAmount(final boolean validateAmount)
-	{
-		this.validateAmount = validateAmount;
-	}
+        if (MonetaryFormat.CODE_NBT.equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_nbt;
+            currencyType = CurrencyType.COIN;
+        } else if ("BTC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_btc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("BLK".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_blk;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("XCP".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_xcp;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("DASH".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_dash;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("DGB".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_dgb;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("DOGE".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_doge;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("LTC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_ltc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("MINT".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_mint;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 6;
+        } else if ("NMC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_nmc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("POT".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_pot;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("NVC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_nvc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("PPC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_ppc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 6;
+        } else if ("RDD".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_rdd;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if ("VRC".equals(currencyCode)) {
+            symbol = R.drawable.currency_symbol_vrc;
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+        } else if (Arrays.asList("BTCD", "CLAM", "FTC", "GEMZ", "MSC", "SDC", "START", "SJCX", "SWARM", "USDT", "UNO").contains(currencyCode)) {
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 8;
+            symbol = -1;
+        } else if ("QRK".equals(currencyCode)) {
+            currencyType = CurrencyType.SHAPESHIFT;
+            smallestExponent = 5;
+            symbol = -1;
+        } else if (currencyCode != null) {
+            final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
+            final float textSize = textView.getTextSize();
+            final float smallerTextSize = textSize * (20f / 24f);
+            currencySymbolDrawable = new CurrencySymbolDrawable(currencySymbol, smallerTextSize, lessSignificantColor, textSize * 0.37f);
+            localCurrencyCode = currencyCode;
+            currencyType = CurrencyType.FIAT;
+            updateAppearance();
+            return;	
+        }else
+            symbol = -1;
 
-	public void setContextButton(final int contextButtonResId, @Nonnull final OnClickListener contextButtonClickListener)
-	{
-		this.contextButtonDrawable = getContext().getResources().getDrawable(contextButtonResId);
-		this.contextButtonClickListener = contextButtonClickListener;
+        currencySymbolDrawable = (symbol == -1) ? null : getResources().getDrawable(symbol);
+        updateAppearance();
 
-		updateAppearance();
-	}
+    }
 
-	public void setListener(@Nonnull final Listener listener)
-	{
-		this.listener = listener;
-	}
+    public void setInputFormat(final MonetaryFormat inputFormat)
+    {
+        this.inputFormat = inputFormat.noCode();
+    }
 
-	@CheckForNull
-	public Monetary getAmount()
-	{
-		if (!isValidAmount(false))
-			return null;
+    public void setHintAndFormat(final MonetaryFormat hintFormat, @Nullable final Monetary hint) {
+        this.hintFormat = hintFormat.noCode();
+        this.hint = hint;
+        updateAppearance();
+    }
 
-		final String amountStr = textView.getText().toString().trim();
-		if (localCurrencyCode == null)
-			return inputFormat.parse(amountStr);
-		else
-			return inputFormat.parseFiat(localCurrencyCode, amountStr);
-	}
+    public void setHintFormat(final MonetaryFormat hintFormat)
+    {
+        this.hintFormat = hintFormat.noCode();
+        updateAppearance();
+    }
 
-	public void setAmount(@Nullable final Monetary amount, final boolean fireListener)
-	{
-		if (!fireListener)
-			textViewListener.setFire(false);
+    public void setHint(@Nullable final Monetary hint)
+    {
+        this.hint = hint;
+        updateAppearance();
+    }
 
-		if (amount != null)
-			textView.setText(new MonetarySpannable(inputFormat, amountSigned, amount));
-		else
-			textView.setText(null);
+    public void setAmountSigned(final boolean amountSigned)
+    {
+        this.amountSigned = amountSigned;
+    }
 
-		if (!fireListener)
-			textViewListener.setFire(true);
-	}
+    public void setValidateAmount(final boolean validateAmount)
+    {
+        this.validateAmount = validateAmount;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled)
-	{
-		super.setEnabled(enabled);
+    public void setContextButton(final int contextButtonResId, @Nonnull final OnClickListener contextButtonClickListener)
+    {
+        this.contextButtonDrawable = getContext().getResources().getDrawable(contextButtonResId);
+        this.contextButtonClickListener = contextButtonClickListener;
 
-		textView.setEnabled(enabled);
+        updateAppearance();
+    }
 
-		updateAppearance();
-	}
+    public void setListener(@Nonnull final Listener listener)
+    {
+        this.listener = listener;
+    }
 
-	public void setTextColor(final int color)
-	{
-		significantColor = color;
+    @CheckForNull
+    public Monetary getAmount()
+    {
+        if (!isValidAmount(false))
+            return null;
 
-		updateAppearance();
-	}
+        final String amountStr = textView.getText().toString().trim();
+        if (currencyType == CurrencyType.COIN)
+            return inputFormat.parse(amountStr);
+        else if (currencyType == CurrencyType.FIAT)
+            return inputFormat.parseFiat(localCurrencyCode, amountStr);
+        else
+            return inputFormat.parseShapeShiftCoin(amountStr, smallestExponent);
+    }
 
-	public void setStrikeThru(final boolean strikeThru)
-	{
-		if (strikeThru)
-			textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-		else
-			textView.setPaintFlags(textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-	}
+    private long monetaryToValue(Monetary monetary) {
+        return monetary == null ? 0 : monetary.getValue();
+    }
 
-	public TextView getTextView()
-	{
-		return textView;
-	}
+    public void setAmount(@Nullable final Monetary amount, final boolean fireListener) {
 
-	public void setNextFocusId(final int nextFocusId)
-	{
-		textView.setNextFocusDownId(nextFocusId);
-		textView.setNextFocusForwardId(nextFocusId);
-	}
+        if (!fireListener)
+            textViewListener.setFire(false);
 
-	private boolean isValidAmount(final boolean zeroIsValid)
-	{
-		final String str = textView.getText().toString().trim();
+        if (amount != null)
+            textView.setText(new MonetarySpannable(inputFormat, amountSigned, amount));
+        else
+            textView.setText(null);
 
-		try
-		{
-			if (!str.isEmpty())
-			{
-				final Monetary amount;
-				if (localCurrencyCode == null)
-					amount = inputFormat.parse(str);
-				else
-					amount = inputFormat.parseFiat(localCurrencyCode, str);
+        if (!fireListener)
+            textViewListener.setFire(true);
 
-				// exactly zero
-				return zeroIsValid || amount.signum() > 0;
-			}
-		}
-		catch (final Exception x)
-		{
-		}
+        previousAmount = monetaryToValue(amount);
 
-		return false;
-	}
+    }
 
-	private final OnClickListener deleteClickListener = new OnClickListener()
-	{
-		@Override
-		public void onClick(final View v)
-		{
-			setAmount(null, true);
-			textView.requestFocus();
-		}
-	};
+    @Override
+    public void setEnabled(final boolean enabled)
+    {
+        super.setEnabled(enabled);
 
-	private void updateAppearance()
-	{
-		final boolean enabled = textView.isEnabled();
+        textView.setEnabled(enabled);
 
-		contextButton.setEnabled(enabled);
+        updateAppearance();
+    }
 
-		final String amount = textView.getText().toString().trim();
+    public void setTextColor(final int color)
+    {
+        significantColor = color;
 
-		if (enabled && !amount.isEmpty())
-		{
-			textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, deleteButtonDrawable, null);
-			contextButton.setOnClickListener(deleteClickListener);
-		}
-		else if (enabled && contextButtonDrawable != null)
-		{
-			textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, contextButtonDrawable, null);
-			contextButton.setOnClickListener(contextButtonClickListener);
-		}
-		else
-		{
-			textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, null, null);
-			contextButton.setOnClickListener(null);
-		}
+        updateAppearance();
+    }
 
-		contextButton.requestLayout();
+    public void setStrikeThru(final boolean strikeThru)
+    {
+        if (strikeThru)
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        else
+            textView.setPaintFlags(textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+    }
 
-		textView.setTextColor(!validateAmount || isValidAmount(true) ? significantColor : errorColor);
+    public TextView getTextView()
+    {
+        return textView;
+    }
 
-		final Spannable hintSpannable = new MonetarySpannable(hintFormat, hint != null ? hint : Coin.ZERO).applyMarkup(null,
-				MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
-		textView.setHint(hintSpannable);
-	}
+    public void setNextFocusId(final int nextFocusId)
+    {
+        textView.setNextFocusDownId(nextFocusId);
+        textView.setNextFocusForwardId(nextFocusId);
+    }
 
-	@Override
-	protected Parcelable onSaveInstanceState()
-	{
-		final Bundle state = new Bundle();
-		state.putParcelable("super_state", super.onSaveInstanceState());
-		state.putParcelable("child_textview", textView.onSaveInstanceState());
-		state.putSerializable("amount", getAmount());
-		return state;
-	}
+    private boolean isValidAmount(final boolean zeroIsValid)
+    {
+        final String str = textView.getText().toString().trim();
 
-	@Override
-	protected void onRestoreInstanceState(final Parcelable state)
-	{
-		if (state instanceof Bundle)
-		{
-			final Bundle bundle = (Bundle) state;
-			super.onRestoreInstanceState(bundle.getParcelable("super_state"));
-			textView.onRestoreInstanceState(bundle.getParcelable("child_textview"));
-			setAmount((Monetary) bundle.getSerializable("amount"), false);
-		}
-		else
-		{
-			super.onRestoreInstanceState(state);
-		}
-	}
+        if (inputFormat == null)
+            return false;
 
-	private final TextViewListener textViewListener = new TextViewListener();
+        try
+        {
+            if (!str.isEmpty())
+            {
+                final Monetary amount;
+                if (currencyType == CurrencyType.COIN)
+                    amount = inputFormat.parse(str);
+                else if (currencyType == CurrencyType.FIAT)
+                    amount = inputFormat.parseFiat(localCurrencyCode, str);
+                else
+                    amount = inputFormat.parseShapeShiftCoin(str, smallestExponent);
 
-	private final class TextViewListener implements TextWatcher, OnFocusChangeListener
-	{
-		private boolean fire = true;
+                // exactly zero
+                return zeroIsValid || amount.signum() > 0;
+            }
+        }
+        catch (final NumberFormatException x)
+        {
+        }
 
-		public void setFire(final boolean fire)
-		{
-			this.fire = fire;
-		}
+        return false;
+    }
 
-		@Override
-		public void afterTextChanged(final Editable s)
-		{
-			// workaround for German keyboards
-			final String original = s.toString();
-			final String replaced = original.replace(',', '.');
-			if (!replaced.equals(original))
-			{
-				s.clear();
-				s.append(replaced);
-			}
+    private final OnClickListener deleteClickListener = new OnClickListener()
+    {
+        @Override
+        public void onClick(final View v)
+        {
+            setAmount(null, true);
+            textView.requestFocus();
+        }
+    };
 
-			MonetarySpannable.applyMarkup(s, null, MonetarySpannable.STANDARD_SIGNIFICANT_SPANS, MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
-		}
+    private void updateAppearance()
+    {
+        final boolean enabled = textView.isEnabled();
 
-		@Override
-		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after)
-		{
-		}
+        contextButton.setEnabled(enabled);
 
-		@Override
-		public void onTextChanged(final CharSequence s, final int start, final int before, final int count)
-		{
-			updateAppearance();
-			if (listener != null && fire)
-				listener.changed();
-		}
+        final String amount = textView.getText().toString().trim();
 
-		@Override
-		public void onFocusChange(final View v, final boolean hasFocus)
-		{
-			if (!hasFocus)
-			{
-				final Monetary amount = getAmount();
-				if (amount != null)
-					setAmount(amount, false);
-			}
+        if (enabled && !amount.isEmpty())
+        {
+            textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, deleteButtonDrawable, null);
+            contextButton.setOnClickListener(deleteClickListener);
+        }
+        else if (enabled && contextButtonDrawable != null)
+        {
+            textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, contextButtonDrawable, null);
+            contextButton.setOnClickListener(contextButtonClickListener);
+        }
+        else
+        {
+            textView.setCompoundDrawablesWithIntrinsicBounds(currencySymbolDrawable, null, null, null);
+            contextButton.setOnClickListener(null);
+        }
 
-			if (listener != null && fire)
-				listener.focusChanged(hasFocus);
-		}
-	}
+        contextButton.requestLayout();
+
+        textView.setTextColor(!validateAmount || isValidAmount(true) ? significantColor : errorColor);
+
+        final Spannable hintSpannable = new MonetarySpannable(hintFormat, hint != null ? hint : Coin.ZERO).applyMarkup(null,
+                MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
+        textView.setHint(hintSpannable);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState()
+    {
+        final Bundle state = new Bundle();
+        state.putParcelable("super_state", super.onSaveInstanceState());
+        state.putSerializable("amount", getAmount());
+        return state;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Parcelable state)
+    {
+        if (state instanceof Bundle)
+        {
+            final Bundle bundle = (Bundle) state;
+
+            Monetary amount = (Monetary) bundle.getSerializable("amount");
+            previousAmount = monetaryToValue(amount);
+
+            super.onRestoreInstanceState(bundle.getParcelable("super_state"));
+            setAmount(amount, false);
+
+        }
+        else
+        {
+            super.onRestoreInstanceState(state);
+        }
+    }
+
+    private final TextViewListener textViewListener = new TextViewListener();
+
+    private final class TextViewListener implements TextWatcher, OnFocusChangeListener
+    {
+        private boolean fire = true;
+
+        public void setFire(final boolean fire)
+        {
+            this.fire = fire;
+        }
+
+        @Override
+        public void afterTextChanged(final Editable s)
+        {
+            // workaround for German keyboards
+            final String original = s.toString();
+            final String replaced = original.replace(',', '.');
+            if (!replaced.equals(original))
+            {
+                s.clear();
+                s.append(replaced);
+            }
+
+            MonetarySpannable.applyMarkup(s, null, MonetarySpannable.STANDARD_SIGNIFICANT_SPANS, MonetarySpannable.STANDARD_INSIGNIFICANT_SPANS);
+        }
+
+        @Override
+        public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after)
+        {
+        }
+
+        @Override
+        public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
+            updateAppearance();
+            if (listener != null && fire && monetaryToValue(getAmount()) != previousAmount)
+                listener.changed();
+        }
+
+        @Override
+        public void onFocusChange(final View v, final boolean hasFocus)
+        {
+            if (!hasFocus)
+            {
+                final Monetary amount = getAmount();
+                if (amount != null)
+                    setAmount(amount, false);
+            }
+
+            if (listener != null && fire)
+                listener.focusChanged(hasFocus);
+        }
+    }
 }
