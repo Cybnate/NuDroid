@@ -113,7 +113,7 @@ public abstract class InputParser
 				{
 					final NubitsURI nubitsUri = new NubitsURI(null, input);
 					final Address address = nubitsUri.getAddress();
-					if (address != null && !Constants.NETWORK_PARAMETERS.equals(address.getParameters()))
+					if (address != null && !address.getParameters().contains(Constants.NETWORK_PARAMETERS))
 						throw new NubitsURIParseException("mismatched network");
 
 					handlePaymentIntent(PaymentIntent.fromNubitsUri(nubitsUri));
