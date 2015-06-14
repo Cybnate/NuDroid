@@ -27,6 +27,6 @@ __You can build all sub-projects at once using Maven:__
 
 ### Cybnate/NuDroid now has a Chat Room on Gitter
 
-@Cybnate has just created a chat room. You can visit it here: [https://gitter.im/Cybnate/NuDroid](https://gitter.im/Cybnate/NuDroid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link).
+@Cybnate has created a chat room. You can visit it here: [https://gitter.im/Cybnate/NuDroid](https://gitter.im/Cybnate/NuDroid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link).
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Cybnate/NuDroid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge)
