@@ -111,7 +111,7 @@ public abstract class InputParser
 			{
 				try
 				{
-					final NubitsURI nubitsUri = new NubitsURI(null, input);
+					final NubitsURI nubitsUri = new NubitsURI(MainNetParams.get(), input);
 					final Address address = nubitsUri.getAddress();
 					if (address != null && !address.getParameters().contains(Constants.NETWORK_PARAMETERS))
 						throw new NubitsURIParseException("mismatched network");
