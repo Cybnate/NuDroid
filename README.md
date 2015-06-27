@@ -3,7 +3,7 @@
 __What is _NuDroid_?__
 
 It is a standalone NuBits payment app for your Android device!
-Check out the thread in our forum here: https://discuss.NuBits.com/t/proposal-to-develop-a-NuBits-android-wallet-final-version-now-available/691/70
+Check out the thread in our forum here: https://discuss.nubits.com/t/nudroid-v3-release-candidate-available-for-testing-testing-closed-final-version-now-available-on-google-play/2255
 
 
 __This project contains several sub-projects:__
