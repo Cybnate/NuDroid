@@ -1,3 +1,7 @@
+v3.1
+
+* Bugfix for backwards compatible BIP0072 URIs not working for ShapeShift coins
+
 v3.0
 
 * This release adds Shapeshift API integration. This enables seamless payments in supported 
