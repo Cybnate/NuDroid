@@ -1,3 +1,8 @@
+v4.0
+
+* The release allows one to configure the servers that they wish to trust in a prioritised
+list under the settings.
+
 v3.1
 
 * Bugfix for backwards compatible BIP0072 URIs not working for ShapeShift coins

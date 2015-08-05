@@ -284,5 +284,25 @@
     <string name="error_http">HTTP error %1$s:\n%2$s</string>
     <string name="error_bluetooth">Bluetooth error %1$s</string>
 
+    <!-- Trusted Servers -->
+    <string name="trusted_servers_restore_defaults">Restore Defaults</string>
+    <string name="trusted_servers_restore_defaults_title">Restore Defaults</string>
+    <string name="trusted_servers_restore_defaults_message">Are you sure you wish to restore the default settings? This will remove the current settings.</string>
+    <string name="trusted_servers_new">Add New</string>
+    <string name="preferences_category_trusted_servers">Trusted Servers</string>
+    <string name="trusted_servers_default">Default Server</string>
+    <string name="trusted_server_dialog_equal">Equal priority to previous server</string>
+    <string name="trusted_server_dialog_title_new">New Server</string>
+    <string name="trusted_server_dialog_title_edit">Edit Server</string>
+    <string name="trusted_server_dialog_name">Name</string>
+    <string name="trusted_server_dialog_url">URL</string>
+    <string name="trusted_server_dialog_url_hint">Include http:// or https://</string>
+    <string name="trusted_server_dialog_url_error">Invalid URL!</string>
+    <string name="trusted_servers_context_edit_title">Edit Server</string>
+    <string name="trusted_servers_context_remove_title">Remove Server</string>
+    <string name="trusted_servers_delete_server_title">Delete Server</string>
+    <string name="trusted_servers_delete_server_message">Are you sure you wish to permanently remove "%s"?</string>
+    <string name="failed_all_servers">All trusted servers failed.</string>
+
 </resources>
 

@@ -33,100 +33,102 @@ import com.matthewmitchell.nubitsj.store.ValidHashStore;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
+import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServersDatabaseHelper;
 
 public class BlockchainLoader extends AsyncTaskLoader<BlockchainData> {
-	
-	WalletApplication application;
-	Context context;
-	BlockchainData bcd;
-        
-        boolean resetBlockchain;
-	
-	private static final Logger log = LoggerFactory.getLogger(BlockchainLoader.class);
-	
-	public BlockchainLoader(Context context, WalletApplication application) {
-		super(context);
-		this.context = context;
-		this.application = application;
-	}
-	
-	@Override
-	protected void onStartLoading() {
-		super.onStartLoading();
-		bcd = new BlockchainData(context);
-		forceLoad();
-	}
 
-	@Override
-	public BlockchainData loadInBackground() {
-		
-		final Wallet wallet = application.getWallet();
-		final boolean blockChainFileExists = bcd.blockChainFile.exists();
+    WalletApplication application;
+    Context context;
+    BlockchainData bcd;
 
-		if (!blockChainFileExists) {
-			log.info("blockchain does not exist, resetting wallet");
+    boolean resetBlockchain;
 
-			wallet.clearTransactions(0);
-			wallet.setLastBlockSeenHeight(-1); // magic value
-			wallet.setLastBlockSeenHash(null);
-		}
-		
-		if(!isStarted())
-			return null;
+    private static final Logger log = LoggerFactory.getLogger(BlockchainLoader.class);
 
-		try {
-			bcd.blockStore = new SPVBlockStore(Constants.NETWORK_PARAMETERS, bcd.blockChainFile);
-			bcd.blockStore.getChainHead(); // detect corruptions as early as possible
-		}catch (final BlockStoreException x) {
-			bcd.blockChainFile.delete();
+    public BlockchainLoader(Context context, WalletApplication application) {
+        super(context);
+        this.context = context;
+        this.application = application;
+    }
 
-			final String msg = "blockstore cannot be created";
-			log.error(msg, x);
-			throw new Error(msg, x);
-		}
-		
-		if(!isStarted())
-			return null;
+    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+        bcd = new BlockchainData(context);
+        forceLoad();
+    }
 
-		log.info("using " + bcd.blockStore.getClass().getName());
-		
-		try{
-			bcd.validHashStore = new ValidHashStore(bcd.validHashStoreFile);
-		}catch (IOException x){
-			bcd.validHashStoreFile.delete();
-			final String msg = "validhashstore cannot be created";
-			log.error(msg, x);
-			throw new Error(msg, x);
-		}
-		
-		if(!isStarted())
-			return null;
+    @Override
+    public BlockchainData loadInBackground() {
 
-		try {
-			bcd.blockChain = new BlockChain(Constants.NETWORK_PARAMETERS, wallet, bcd.blockStore, bcd.validHashStore);
-		}catch (final BlockStoreException x) {
-			throw new Error("blockchain cannot be created", x);
-		}
-		
-		return bcd;
-		
-	}
-        
-        public void stopLoading(boolean resetBlockchain) {
-		this.resetBlockchain = resetBlockchain;
-		super.stopLoading();
+        final Wallet wallet = application.getWallet();
+        final boolean blockChainFileExists = bcd.blockChainFile.exists();
+
+        if (!blockChainFileExists) {
+            log.info("blockchain does not exist, resetting wallet");
+
+            wallet.clearTransactions(0);
+            wallet.setLastBlockSeenHeight(-1); // magic value
+            wallet.setLastBlockSeenHash(null);
         }
-	
-	@Override
-	protected void onStopLoading() {
-		cancelLoad();
-	}
-	
-	@Override 
-	public void onCanceled(BlockchainData data) {
-		super.onCanceled(data);
-		if (data != null)
-		    data.delete(resetBlockchain);
-	}
-	
+
+        if(!isStarted())
+            return null;
+
+        try {
+            bcd.blockStore = new SPVBlockStore(Constants.NETWORK_PARAMETERS, bcd.blockChainFile);
+            bcd.blockStore.getChainHead(); // detect corruptions as early as possible
+        }catch (final BlockStoreException x) {
+            bcd.blockChainFile.delete();
+
+            final String msg = "blockstore cannot be created";
+            log.error(msg, x);
+            throw new Error(msg, x);
+        }
+
+        if(!isStarted())
+            return null;
+
+        log.info("using " + bcd.blockStore.getClass().getName());
+
+        try {
+            bcd.validHashStore = new ValidHashStore(bcd.validHashStoreFile, TrustedServerList.getInstance(context));
+        } catch (IOException x) {
+            bcd.validHashStoreFile.delete();
+            final String msg = "validhashstore cannot be created";
+            log.error(msg, x);
+            throw new Error(msg, x);
+        }
+
+        if(!isStarted())
+            return null;
+
+        try {
+            bcd.blockChain = new BlockChain(Constants.NETWORK_PARAMETERS, wallet, bcd.blockStore, bcd.validHashStore);
+        }catch (final BlockStoreException x) {
+            throw new Error("blockchain cannot be created", x);
+        }
+
+        return bcd;
+
+    }
+
+    public void stopLoading(boolean resetBlockchain) {
+        this.resetBlockchain = resetBlockchain;
+        super.stopLoading();
+    }
+
+    @Override
+    protected void onStopLoading() {
+        cancelLoad();
+    }
+
+    @Override 
+    public void onCanceled(BlockchainData data) {
+        super.onCanceled(data);
+        if (data != null)
+            data.delete(resetBlockchain);
+    }
+
 }

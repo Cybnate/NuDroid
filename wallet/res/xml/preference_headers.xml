@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<header
-		android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.SettingsFragment"
-		android:title="@string/preferences_activity_title" />
-	<header
-		android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.DiagnosticsFragment"
-		android:title="@string/preferences_category_diagnostics" />
-	<header
-		android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.AboutFragment"
-		android:title="@string/about_title" />
+    <header
+        android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.SettingsFragment"
+        android:title="@string/preferences_activity_title" />
+    <header
+        android:title="@string/preferences_category_trusted_servers">
+
+        <intent android:targetPackage="com.matthewmitchell.nubits_android_wallet"
+            android:targetClass="com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServersActivity" />
+
+    </header>
+    <header
+        android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.DiagnosticsFragment"
+        android:title="@string/preferences_category_diagnostics" />
+    <header
+        android:fragment="com.matthewmitchell.nubits_android_wallet.ui.preference.AboutFragment"
+        android:title="@string/about_title" />
 
 </preference-headers>

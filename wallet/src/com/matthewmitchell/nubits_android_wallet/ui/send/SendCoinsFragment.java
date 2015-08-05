@@ -330,7 +330,7 @@ public final class SendCoinsFragment extends Fragment
 
         private void handleEditAddress()
         {
-            EditAddressBookEntryFragment.edit(fragmentManager, address.toString());
+            EditAddressBookEntryFragment.edit(fragmentManager, address.toString(), receivingStaticLabelView.getText().toString());
         }
 
         private void handleClear()
