@@ -6,13 +6,13 @@
 
     <artifactId>wallet</artifactId>
     <packaging>apk</packaging>
-    <version>4.0</version>
+    <version>4.1</version>
     <name>NuBits Wallet</name>
 
     <parent>
         <groupId>com.matthewmitchell.nubits_android_wallet</groupId>
         <artifactId>base</artifactId>
-        <version>4.0</version>
+        <version>4.1</version>
     </parent>
 
     <licenses>
@@ -73,16 +73,16 @@
         <dependency>
             <groupId>com.matthewmitchell</groupId>
             <artifactId>nubitsj</artifactId>
-            <version>0.14.0</version>
+            <version>0.14.1</version>
         </dependency> 
 
         <!-- com.matthewmitchell.nubits_android_wallet.integration.android.* -->
         <dependency>
             <groupId>com.matthewmitchell.nubits_android_wallet</groupId>
             <artifactId>integration-android</artifactId>
-            <version>4.0</version>
+            <version>4.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../integration-android/target/integration-android-4.0.jar</systemPath>
+            <systemPath>${project.basedir}/../integration-android/target/integration-android-4.1.jar</systemPath>
         </dependency>
 
         <!-- com.google.protobuf.* -->
