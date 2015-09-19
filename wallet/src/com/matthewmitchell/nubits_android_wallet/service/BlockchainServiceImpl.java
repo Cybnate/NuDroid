@@ -112,19 +112,6 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
     @CheckForNull
     private PeerGroup peerGroup;
 
-    private final static int PORT = Constants.NETWORK_PARAMETERS.getPort();
-
-    private final static InetSocketAddress hardcodedPeers[] = {
-        new InetSocketAddress("198.52.160.71", PORT),
-        new InetSocketAddress("198.52.217.4", PORT),
-        new InetSocketAddress("198.52.199.75", PORT),
-        new InetSocketAddress("198.52.199.46", PORT),
-        new InetSocketAddress("162.242.208.43", PORT),
-        new InetSocketAddress("192.237.200.146", PORT),
-        new InetSocketAddress("119.9.75.189", PORT),
-        new InetSocketAddress("119.9.12.63", PORT),
-    };
-
     private final Handler handler = new Handler();
     private final Handler delayHandler = new Handler();
     private WakeLock wakeLock;
@@ -408,8 +395,9 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
                 peerGroup.addPeerDiscovery(backup, true);
             }
 
-            peerGroup.addPeerDiscovery(new PeerDiscovery()
-                    {
+            peerGroup.addPeerDiscovery(new PeerDiscovery() {
+
+                        private final PeerDiscovery normalPeerDiscovery = new DnsDiscovery(Constants.NETWORK_PARAMETERS);
 
                         @Override
                         public InetSocketAddress[] getPeers(final long timeoutValue, final TimeUnit timeoutUnit) throws PeerDiscoveryException
@@ -431,7 +419,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
                             }
 
                             if (!connectTrustedPeerOnly)
-                                peers.addAll(Arrays.asList(hardcodedPeers));
+                                peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(timeoutValue, timeoutUnit)));
 
                             // workaround because PeerGroup will shuffle peers
                             if (needsTrimPeersWorkaround)
@@ -617,10 +605,6 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
 
         application = (WalletApplication) getApplication();
-
-        // Sometimes the application is not loaded for some reason, even though assertions of config != null do not fail.
-        // Only solution here then is to work around the problem by only using the configuration when the application is loaded
-        // Maybe it's because Android is stupid, or am I?
 
         application.setOnLoadedCallback(new Runnable () {
 
