@@ -274,8 +274,7 @@ public final class CurrencyAmountView extends FrameLayout
     }
 
     @CheckForNull
-    public Monetary getAmount()
-    {
+    public Monetary getAmount() {
         if (!isValidAmount(false))
             return null;
 
@@ -345,17 +344,14 @@ public final class CurrencyAmountView extends FrameLayout
         textView.setNextFocusForwardId(nextFocusId);
     }
 
-    private boolean isValidAmount(final boolean zeroIsValid)
-    {
+    private boolean isValidAmount(final boolean zeroIsValid) {
         final String str = textView.getText().toString().trim();
 
         if (inputFormat == null)
             return false;
 
-        try
-        {
-            if (!str.isEmpty())
-            {
+        try {
+            if (!str.isEmpty()) {
                 final Monetary amount;
                 if (currencyType == CurrencyType.COIN)
                     amount = inputFormat.parse(str);
@@ -367,9 +363,7 @@ public final class CurrencyAmountView extends FrameLayout
                 // exactly zero
                 return zeroIsValid || amount.signum() > 0;
             }
-        }
-        catch (final NumberFormatException x)
-        {
+        } catch (final NumberFormatException x) {
         }
 
         return false;
@@ -428,10 +422,9 @@ public final class CurrencyAmountView extends FrameLayout
     }
 
     @Override
-    protected void onRestoreInstanceState(final Parcelable state)
-    {
-        if (state instanceof Bundle)
-        {
+    protected void onRestoreInstanceState(final Parcelable state) {
+
+        if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
 
             Monetary amount = (Monetary) bundle.getSerializable("amount");
@@ -440,11 +433,8 @@ public final class CurrencyAmountView extends FrameLayout
             super.onRestoreInstanceState(bundle.getParcelable("super_state"));
             setAmount(amount, false);
 
-        }
-        else
-        {
+        } else 
             super.onRestoreInstanceState(state);
-        }
     }
 
     private final TextViewListener textViewListener = new TextViewListener();

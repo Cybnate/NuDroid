@@ -249,8 +249,8 @@ public final class WalletActivity extends AbstractWalletActivity
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(final Menu menu)
-    {
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+
         super.onPrepareOptionsMenu(menu);
 
         if (!application.isLoaded())
@@ -367,7 +367,7 @@ public final class WalletActivity extends AbstractWalletActivity
         try {
 
             final BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.append("Date,Label,Amount (NBT),Fee (NBT),Address,Transaction Hash,Confirmations\n");
+            writer.append("Date,Label,Amount (" + MonetaryFormat.CODE_NBT + "),Fee (" + MonetaryFormat.CODE_NBT + "),Address,Transaction Hash,Confirmations\n");
 
             if (txListAdapter == null || txListAdapter.transactions.isEmpty()) {
                 longToast(R.string.export_transactions_mail_intent_failed);
@@ -383,12 +383,13 @@ public final class WalletActivity extends AbstractWalletActivity
                 TransactionsListAdapter.TransactionCacheEntry txCache = txListAdapter.getTxCache(tx);
                 String memo = tx.getMemo() == null ? "" : StringEscapeUtils.escapeCsv(tx.getMemo());
                 String fee = tx.getFee() == null ? "" : tx.getFee().toPlainString();
+                String address = txCache.address == null ? getString(R.string.export_transactions_unknown) : txCache.address.toString();
 
                 writer.append(dateFormat.format(tx.getUpdateTime()) + ",");
                 writer.append(memo + ",");
-                writer.append( txCache.value.toPlainString() + ",");
+                writer.append(txCache.value.toPlainString() + ",");
                 writer.append(fee + ",");
-                writer.append(txCache.address.toString() + ",");
+                writer.append(address + ",");
                 writer.append(tx.getHash().toString() + ",");
                 writer.append(tx.getConfidence().getDepthInBlocks() + "\n");
 
@@ -459,14 +460,6 @@ public final class WalletActivity extends AbstractWalletActivity
     @Override
     protected void onPrepareDialog(final int id, final Dialog dialog) {
 
-        if (!application.isLoaded()) {
-            // It's possible that the dialogs may be restored when the application initially starts.
-            // This behaviour would cause a crash, so dismiss the dialogs.
-            dismissDialog(DIALOG_RESTORE_WALLET);
-            dismissDialog(DIALOG_BACKUP_WALLET);
-            return;
-        }
-
         if (id == DIALOG_RESTORE_WALLET)
             prepareRestoreWalletDialog(dialog);
         else if (id == DIALOG_BACKUP_WALLET)
@@ -493,11 +486,11 @@ public final class WalletActivity extends AbstractWalletActivity
                         passwordView.setText(null); // get rid of it asap
 
                         if (WalletUtils.BACKUP_FILE_FILTER.accept(file))
-                            restoreWalletFromProtobuf(file);
+                            restoreWalletFromProtobuf(file, CloseAction.CLOSE_RECREATE);
                         else if (WalletUtils.KEYS_FILE_FILTER.accept(file))
-                            restorePrivateKeysFromBase58(file);
+                            restorePrivateKeysFromBase58(file, CloseAction.CLOSE_RECREATE);
                         else if (Crypto.OPENSSL_FILE_FILTER.accept(file))
-                            restoreWalletFromEncrypted(file, password);
+                            restoreWalletFromEncrypted(file, password, CloseAction.CLOSE_RECREATE);
                     }
                 });
         dialog.setNegativeButton(R.string.button_cancel, new OnClickListener()
@@ -916,8 +909,7 @@ public final class WalletActivity extends AbstractWalletActivity
         return dateFormat.format(new Date());
     }
 
-    private void backupWallet(@Nonnull final String password)
-    {
+    private void backupWallet(@Nonnull final String password) {
         Constants.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
 
         final File file = new File(Constants.Files.EXTERNAL_WALLET_BACKUP_DIR, Constants.Files.EXTERNAL_WALLET_BACKUP + "-" + getFileDate());

@@ -251,6 +251,11 @@
     <string name="export_transactions_mail_intent_failed">Exporting transactions failed.</string>
     <string name="export_transactions_dialog_success"><![CDATA[<p>Your transactions have been exported to <tt>%s</tt></p><p>If your device has a removable SD card, your transactions <i>should</i> be on that card. Do you want to archive your transactions now?</p>]]></string>
 
+    <string name="export_transactions_unknown">Unknown</string>
+    <string name="load_wallet_title">Loading Wallet</string>
+    <string name="load_wallet_message">Loading the wallet. This may or may not take a while...</string>
+    <string name="reset_blockchain_title">Resetting Blockchain</string>
+    <string name="reset_blockchain_message">Please wait while the blockchain is reset.</string>
 
     <!-- generic buttons -->
     <string name="button_ok">OK</string>

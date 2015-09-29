@@ -34,7 +34,6 @@ import com.matthewmitchell.nubitsj.store.ValidHashStore;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
-import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServersDatabaseHelper;
 
 public class BlockchainLoader extends AsyncTaskLoader<BlockchainData> {
 

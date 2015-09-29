@@ -44,6 +44,12 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 	WalletType type;
 	InputStream cipher;
 	
+	public enum CloseAction {
+		CLOSE_FINISH,
+		CLOSE_RECREATE
+	}; 
+	private CloseAction closeAction;
+
 	protected static final Logger log = LoggerFactory.getLogger(RestoreWalletTask.class);
 	
 	@Override
@@ -128,7 +134,11 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 			dialog.setNeutralButton(R.string.button_ok, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog, final int id) {
-					activity.getWalletApplication().resetBlockchain();
+					dialog.dismiss();
+					
+					if (closeAction == CloseAction.CLOSE_RECREATE)
+						activity.recreate();
+					else
 					activity.finish();
 				}
 			});
@@ -158,31 +168,32 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 		activity.dismissDialog();
 	}
 	
-	private void restoreWallet(final File file, final String password, AbstractWalletActivity activity, WalletType type) {
+	private void restoreWallet(final File file, final String password, AbstractWalletActivity activity, WalletType type, final CloseAction closeAction) {
 		this.activity = activity;
 		this.file = file;
 		this.password = password;
 		this.type = type;
+		this.closeAction = closeAction;
 		activity.progressDialog = ProgressDialog.show(activity, "Restoring Wallet",  
 				"Please wait whilst the backup is loaded and restored...", true, false); 
 		execute();
 	} 
 	
-	public void restoreWalletFromEncrypted(final File file, final String password, AbstractWalletActivity activity) {
-		restoreWallet(file, password, activity, WalletType.WALLET_TYPE_ENCRYPTED_FILE);
+	public void restoreWalletFromEncrypted(final File file, final String password, AbstractWalletActivity activity, final CloseAction closeAction) {
+		restoreWallet(file, password, activity, WalletType.WALLET_TYPE_ENCRYPTED_FILE, closeAction);
 	}
 	
-	public void restoreWalletFromEncrypted(final InputStream cipher, final String password, AbstractWalletActivity activity) {
+	public void restoreWalletFromEncrypted(final InputStream cipher, final String password, AbstractWalletActivity activity, final CloseAction closeAction) {
 		this.cipher = cipher;
-		restoreWallet(null, password, activity, WalletType.WALLET_TYPE_ENCRYPTED_CIPHER);
+		restoreWallet(null, password, activity, WalletType.WALLET_TYPE_ENCRYPTED_CIPHER, closeAction);
 	}
 	
-	public void restoreWalletFromProtobuf(final File file, AbstractWalletActivity activity) {
-		restoreWallet(file, null, activity, WalletType.WALLET_TYPE_PROTOBUF);
+	public void restoreWalletFromProtobuf(final File file, AbstractWalletActivity activity, final CloseAction closeAction) {
+		restoreWallet(file, null, activity, WalletType.WALLET_TYPE_PROTOBUF, closeAction);
 	}
 	
-	public void restorePrivateKeysFromBase58(final File file, AbstractWalletActivity activity) {
-		restoreWallet(file, null, activity, WalletType.WALLET_TYPE_BASE58);
+	public void restorePrivateKeysFromBase58(final File file, AbstractWalletActivity activity, final CloseAction closeAction) {
+		restoreWallet(file, null, activity, WalletType.WALLET_TYPE_BASE58, closeAction);
 	}
 	
 }

@@ -327,14 +327,11 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 		});
 	}
 
-	private void handleSend(final String address, final String label)
-	{
-		try
-		{
+	private void handleSend(final String address, final String label) {
+
+		try {
 			SendCoinsActivity.start(activity, PaymentIntent.fromAddress(address, label));
-		}
-		catch (final AddressFormatException x)
-		{
+		} catch (final AddressFormatException x) {
 			// cannot happen, address was picked from address book
 			throw new RuntimeException(x);
 		}

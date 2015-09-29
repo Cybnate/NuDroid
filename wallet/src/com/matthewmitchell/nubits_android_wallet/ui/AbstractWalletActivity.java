@@ -116,24 +116,24 @@ public abstract class AbstractWalletActivity extends LoaderActivity
         toast.show();
     }
 
-    protected void restoreWalletFromEncrypted(@Nonnull final InputStream cipher, @Nonnull final String password) {
+    protected void restoreWalletFromEncrypted(@Nonnull final InputStream cipher, @Nonnull final String password, final CloseAction closeAction) {
         restoreTask = new RestoreWalletTask();
-        restoreTask.restoreWalletFromEncrypted(cipher, password, this);
+        restoreTask.restoreWalletFromEncrypted(cipher, password, this, closeAction);
     }
 
-    protected void restoreWalletFromEncrypted(@Nonnull final File file, @Nonnull final String password) {
+    protected void restoreWalletFromEncrypted(@Nonnull final File file, @Nonnull final String password, final CloseAction closeAction) {
         restoreTask = new RestoreWalletTask();
-        restoreTask.restoreWalletFromEncrypted(file, password, this);
+        restoreTask.restoreWalletFromEncrypted(file, password, this, closeAction);
     }
 
-    protected void restoreWalletFromProtobuf(@Nonnull final File file) {
+    protected void restoreWalletFromProtobuf(@Nonnull final File file, final CloseAction closeAction) {
         restoreTask = new RestoreWalletTask();
-        restoreTask.restoreWalletFromProtobuf(file, this);
+        restoreTask.restoreWalletFromProtobuf(file, this, closeAction);
     }
 
-    protected void restorePrivateKeysFromBase58(@Nonnull final File file) {
+    protected void restorePrivateKeysFromBase58(@Nonnull final File file, final CloseAction closeAction) {
         restoreTask = new RestoreWalletTask();
-        restoreTask.restorePrivateKeysFromBase58(file, this);
+        restoreTask.restorePrivateKeysFromBase58(file, this, closeAction);
     }
 
     @Override

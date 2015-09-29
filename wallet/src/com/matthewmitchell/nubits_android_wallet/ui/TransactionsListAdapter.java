@@ -254,8 +254,7 @@ public class TransactionsListAdapter extends BaseAdapter
 		
 	}
 
-	public void bindView(@Nonnull final View row, @Nonnull final Transaction tx)
-	{
+	public void bindView(@Nonnull final View row, @Nonnull final Transaction tx) {
 		final TransactionConfidence confidence = tx.getConfidence();
 		final ConfidenceType confidenceType = confidence.getConfidenceType();
 		final boolean isOwn = confidence.getSource().equals(TransactionConfidence.Source.SELF);

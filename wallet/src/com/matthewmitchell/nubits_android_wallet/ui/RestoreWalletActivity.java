@@ -122,7 +122,7 @@ public final class RestoreWalletActivity extends AbstractWalletActivity
 				try
 				{
 					final InputStream is = contentResolver.openInputStream(backupFileUri);
-					restoreWalletFromEncrypted(is, password);
+					restoreWalletFromEncrypted(is, password, CloseAction.CLOSE_FINISH);
 				}
 				catch (final FileNotFoundException x)
 				{

@@ -219,8 +219,7 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 			data.address = wallet.currentReceiveAddress();
 			data.addressStr = NubitsURI.convertToNubitsURI(data.address, null, null, null);
 			data.bitmap = Qr.bitmap(data.addressStr, size);
-			data.label = WalletUtils.formatAddress(data.address, Constants.ADDRESS_FORMAT_GROUP_SIZE,
-						Constants.ADDRESS_FORMAT_LINE_SIZE);
+			data.label = WalletUtils.formatAddress(data.address, Constants.ADDRESS_FORMAT_GROUP_SIZE, Constants.ADDRESS_FORMAT_LINE_SIZE);
 			
 			return data;
 			

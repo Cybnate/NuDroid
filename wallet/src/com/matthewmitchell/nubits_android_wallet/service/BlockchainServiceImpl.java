@@ -342,8 +342,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
     };
 
     @SuppressLint("Wakelock")
-    private void check()
-    {
+    private void check() {
         final Wallet wallet = application.getWallet();
 
         if (impediments.isEmpty() && bcd != null && peerGroup == null)
@@ -397,42 +396,43 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 
             peerGroup.addPeerDiscovery(new PeerDiscovery() {
 
-                        private final PeerDiscovery normalPeerDiscovery = new DnsDiscovery(Constants.NETWORK_PARAMETERS);
+                private final PeerDiscovery normalPeerDiscovery = new DnsDiscovery(Constants.NETWORK_PARAMETERS);
 
-                        @Override
-                        public InetSocketAddress[] getPeers(final long timeoutValue, final TimeUnit timeoutUnit) throws PeerDiscoveryException
+                @Override
+                public InetSocketAddress[] getPeers(final long timeoutValue, final TimeUnit timeoutUnit) throws PeerDiscoveryException
+                {
+                    final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
+
+                    boolean needsTrimPeersWorkaround = false;
+
+                    if (hasTrustedPeer)
+                    {
+                        log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
+
+                        final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
+                        if (addr.getAddress() != null)
                         {
-                            final List<InetSocketAddress> peers = new LinkedList<InetSocketAddress>();
-
-                            boolean needsTrimPeersWorkaround = false;
-
-                            if (hasTrustedPeer)
-                            {
-                                log.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
-
-                                final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, Constants.NETWORK_PARAMETERS.getPort());
-                                if (addr.getAddress() != null)
-                                {
-                                    peers.add(addr);
-                                    needsTrimPeersWorkaround = true;
-                                }
-                            }
-
-                            if (!connectTrustedPeerOnly)
-                                peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(timeoutValue, timeoutUnit)));
-
-                            // workaround because PeerGroup will shuffle peers
-                            if (needsTrimPeersWorkaround)
-                                while (peers.size() >= maxConnectedPeers)
-                                    peers.remove(peers.size() - 1);
-
-                            return peers.toArray(new InetSocketAddress[0]);
+                            peers.add(addr);
+                            needsTrimPeersWorkaround = true;
                         }
+                    }
 
-                        @Override
-                        public void shutdown() {
-                        }
-                    });
+                    if (!connectTrustedPeerOnly)
+                        peers.addAll(Arrays.asList(normalPeerDiscovery.getPeers(timeoutValue, timeoutUnit)));
+
+                    // workaround because PeerGroup will shuffle peers
+                    if (needsTrimPeersWorkaround)
+                        while (peers.size() >= maxConnectedPeers)
+                            peers.remove(peers.size() - 1);
+
+                    return peers.toArray(new InetSocketAddress[0]);
+                }
+
+                @Override
+                public void shutdown() {
+                    normalPeerDiscovery.shutdown();
+                }
+            });
 
             // start peergroup
             peerGroup.startAsync();
@@ -552,8 +552,7 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
                 }
 
                 // if idling, shutdown service
-                if (isIdle)
-                {
+                if (isIdle) {
                     log.info("idling detected, stopping service");
                     stopSelf();
                 }
@@ -574,18 +573,12 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
     private final IBinder mBinder = new LocalBinder();
 
     @Override
-    public IBinder onBind(final Intent intent)
-    {
-        log.debug(".onBind()");
-
+    public IBinder onBind(final Intent intent) {
         return mBinder;
     }
 
     @Override
-    public boolean onUnbind(final Intent intent)
-    {
-        log.debug(".onUnbind()");
-
+    public boolean onUnbind(final Intent intent) {
         return super.onUnbind(intent);
     }
 
@@ -650,35 +643,26 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 
             final String action = intent.getAction();
 
-            if (BlockchainService.ACTION_CANCEL_COINS_RECEIVED.equals(action))
-            {
+            if (BlockchainService.ACTION_CANCEL_COINS_RECEIVED.equals(action)) {
                 notificationCount = 0;
                 notificationAccumulatedAmount = Coin.ZERO;
                 notificationAddresses.clear();
 
                 nm.cancel(NOTIFICATION_ID_COINS_RECEIVED);
-            }
-            else if (BlockchainService.ACTION_RESET_BLOCKCHAIN.equals(action))
-            {
+            } else if (BlockchainService.ACTION_RESET_BLOCKCHAIN.equals(action)) {
                 log.info("will remove blockchain on service shutdown");
 
                 resetBlockchainOnShutdown = true;
                 stopSelf();
-            }
-            else if (BlockchainService.ACTION_BROADCAST_TRANSACTION.equals(action))
-            {
+            } else if (BlockchainService.ACTION_BROADCAST_TRANSACTION.equals(action)) {
                 final Sha256Hash hash = new Sha256Hash(intent.getByteArrayExtra(BlockchainService.ACTION_BROADCAST_TRANSACTION_HASH));
                 final Transaction tx = application.getWallet().getTransaction(hash);
 
-                if (peerGroup != null)
-                {
+                if (peerGroup != null) {
                     log.info("broadcasting transaction " + tx.getHashAsString());
                     peerGroup.broadcastTransaction(tx);
-                }
-                else
-                {
+                } else
                     log.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());
-                }
             }
         }
         else
@@ -690,34 +674,9 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
     }
 
     @Override
-    public void onDestroy()
-    {
-        log.debug(".onDestroy()");
+    public void onDestroy() {
 
-        application.scheduleStartBlockchainService();
-
-        unregisterReceiver(tickReceiver);
-
-        application.getWallet().removeEventListener(walletEventListener);
-
-        unregisterReceiver(connectivityReceiver);
-
-        if (peerGroup != null) {
-
-            if (loadPDB != null)
-                loadPDB.stopLoading();
-
-            peerGroup.removeEventListener(peerConnectivityListener);
-            peerGroup.removeWallet(application.getWallet());
-            peerGroup.stopAsync();
-            peerGroup.awaitTerminated();
-
-            log.info("peergroup stopped");
-        }
-
-        peerConnectivityListener.stop();
-
-        delayHandler.removeCallbacksAndMessages(null);
+        // Stop the loader first, to ensure we are not going to create the information after stopping.
 
         loadBlockchain.unregisterListener(this);
         loadBlockchain.stopLoading(resetBlockchainOnShutdown);
@@ -727,10 +686,40 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
 
         bcd = null;
 
-        application.saveWallet();
+        application.scheduleStartBlockchainService();
+        unregisterReceiver(tickReceiver);
+        unregisterReceiver(connectivityReceiver);
+        application.getWallet().removeEventListener(walletEventListener);
+        delayHandler.removeCallbacksAndMessages(null);
 
-        if (wakeLock.isHeld())
-        {
+        // Use a Thread to do the shutdown which takes some significant time.
+        // As this is used rarely, do not use a Thread pool?
+
+        new Thread() {
+
+            @Override
+            public void run() {
+
+                if (peerGroup != null) {
+
+                    if (loadPDB != null)
+                        loadPDB.stopLoading();
+
+                    peerGroup.removeEventListener(peerConnectivityListener);
+                    peerGroup.removeWallet(application.getWallet());
+                    peerGroup.stopAsync();
+                }
+
+                peerConnectivityListener.stop();
+                application.saveWallet();
+
+                application.blockchainServiceHasStopped();
+
+            }
+
+        }.start();
+
+        if (wakeLock.isHeld()) {
             log.debug("wakelock still held, releasing");
             wakeLock.release();
         }
@@ -741,12 +730,10 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
     }
 
     @Override
-    public void onTrimMemory(final int level)
-    {
+    public void onTrimMemory(final int level) {
         log.info("onTrimMemory({}) called", level);
 
-        if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND)
-        {
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) {
             log.warn("low memory detected, stopping service");
             stopSelf();
         }

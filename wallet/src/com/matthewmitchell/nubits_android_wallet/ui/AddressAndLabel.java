@@ -37,15 +37,13 @@ public class AddressAndLabel implements Parcelable
 	public final String label;
 
 	public AddressAndLabel(@Nonnull final NetworkParameters addressParams, @Nonnull final String address, @Nullable final String label)
-			throws WrongNetworkException, AddressFormatException
-	{
+			throws WrongNetworkException, AddressFormatException {
 		this.address = new Address(addressParams, address);
 		this.label = label;
 	}
 	
 	public AddressAndLabel(@Nonnull final List<NetworkParameters> addressParams, @Nonnull final String address, @Nullable final String label)
-			throws WrongNetworkException, AddressFormatException
-	{
+			throws WrongNetworkException, AddressFormatException {
 		this.address = new Address(addressParams, address);
 		this.label = label;
 	}

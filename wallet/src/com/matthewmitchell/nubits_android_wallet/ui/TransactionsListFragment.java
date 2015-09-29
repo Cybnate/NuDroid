@@ -202,8 +202,8 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
+
         transactionChangeListener.removeCallbacks();
         loaderManager.destroyLoader(0);
         resolver.unregisterContentObserver(addressBookObserver);
@@ -240,8 +240,7 @@ public class TransactionsListFragment extends FancyListFragment implements Loade
             handleTransactionClick(tx);
     }
 
-    private void handleTransactionClick(@Nonnull final Transaction tx)
-    {
+    private void handleTransactionClick(@Nonnull final Transaction tx) {
         activity.startActionMode(new ActionMode.Callback() {
 
                     private Address address;
