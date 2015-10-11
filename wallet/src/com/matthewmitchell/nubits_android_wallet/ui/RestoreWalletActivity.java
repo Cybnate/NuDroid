@@ -49,6 +49,7 @@ import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.util.Crypto;
 import com.matthewmitchell.nubits_android_wallet.util.Io;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
+import com.matthewmitchell.nubits_android_wallet.ui.RestoreWalletTask.CloseAction;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -57,141 +58,141 @@ import com.matthewmitchell.nubits_android_wallet.R;
 public final class RestoreWalletActivity extends AbstractWalletActivity
 {
 
-	private WalletApplication application;
-	private Configuration config;
-	private Wallet wallet;
-	private ContentResolver contentResolver;
+    private WalletApplication application;
+    private Configuration config;
+    private Wallet wallet;
+    private ContentResolver contentResolver;
 
-	private Uri backupFileUri;
+    private Uri backupFileUri;
 
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
-		application = getWalletApplication();
-		
-		runAfterLoad(new Runnable() {
+        application = getWalletApplication();
 
-			@Override
-			public void run() {
-			    config = application.getConfiguration();
-			    wallet = application.getWallet();
-			    contentResolver = getContentResolver();
+        runAfterLoad(new Runnable() {
 
-			    backupFileUri = getIntent().getData();
+            @Override
+            public void run() {
+                config = application.getConfiguration();
+                wallet = application.getWallet();
+                contentResolver = getContentResolver();
 
-			    showDialog(DIALOG_RESTORE_WALLET);
-			}
-			
-		});
-	}
+                backupFileUri = getIntent().getData();
 
-	@Override
-	protected Dialog onCreateDialog(final int id)
-	{
-		if (id == DIALOG_RESTORE_WALLET)
-			return createRestoreWalletDialog();
-		else
-			throw new IllegalArgumentException();
-	}
+                showDialog(DIALOG_RESTORE_WALLET);
+            }
 
-	@Override
-	protected void onPrepareDialog(final int id, final Dialog dialog)
-	{
-		if (id == DIALOG_RESTORE_WALLET)
-			prepareRestoreWalletDialog(dialog);
-	}
+        });
+    }
 
-	private Dialog createRestoreWalletDialog()
-	{
-		final View view = getLayoutInflater().inflate(R.layout.restore_wallet_from_external_dialog, null);
-		final EditText passwordView = (EditText) view.findViewById(R.id.import_keys_from_content_dialog_password);
+    @Override
+    protected Dialog onCreateDialog(final int id)
+    {
+        if (id == DIALOG_RESTORE_WALLET)
+            return createRestoreWalletDialog();
+        else
+            throw new IllegalArgumentException();
+    }
 
-		final DialogBuilder dialog = new DialogBuilder(this);
-		dialog.setTitle(R.string.import_keys_dialog_title);
-		dialog.setView(view);
-		dialog.setPositiveButton(R.string.import_keys_dialog_button_import, new OnClickListener()
-		{
-			@Override
-			public void onClick(final DialogInterface dialog, final int which)
-			{
-				final String password = passwordView.getText().toString().trim();
-				passwordView.setText(null); // get rid of it asap
+    @Override
+    protected void onPrepareDialog(final int id, final Dialog dialog)
+    {
+        if (id == DIALOG_RESTORE_WALLET)
+            prepareRestoreWalletDialog(dialog);
+    }
 
-				try
-				{
-					final InputStream is = contentResolver.openInputStream(backupFileUri);
-					restoreWalletFromEncrypted(is, password, CloseAction.CLOSE_FINISH);
-				}
-				catch (final FileNotFoundException x)
-				{
-					// should not happen
-					throw new RuntimeException(x);
-				}
-			}
-		});
-		dialog.setNegativeButton(R.string.button_cancel, new OnClickListener()
-		{
-			@Override
-			public void onClick(final DialogInterface dialog, final int which)
-			{
-				passwordView.setText(null); // get rid of it asap
-				finish();
-			}
-		});
-		dialog.setOnCancelListener(new OnCancelListener()
-		{
-			@Override
-			public void onCancel(final DialogInterface dialog)
-			{
-				passwordView.setText(null); // get rid of it asap
-				finish();
-			}
-		});
+    private Dialog createRestoreWalletDialog()
+    {
+        final View view = getLayoutInflater().inflate(R.layout.restore_wallet_from_external_dialog, null);
+        final EditText passwordView = (EditText) view.findViewById(R.id.import_keys_from_content_dialog_password);
 
-		return dialog.create();
-	}
+        final DialogBuilder dialog = new DialogBuilder(this);
+        dialog.setTitle(R.string.import_keys_dialog_title);
+        dialog.setView(view);
+        dialog.setPositiveButton(R.string.import_keys_dialog_button_import, new OnClickListener()
+                {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which)
+                    {
+                        final String password = passwordView.getText().toString().trim();
+                        passwordView.setText(null); // get rid of it asap
 
-	private void prepareRestoreWalletDialog(final Dialog dialog)
-	{
-		final AlertDialog alertDialog = (AlertDialog) dialog;
+                        try
+                        {
+                            final InputStream is = contentResolver.openInputStream(backupFileUri);
+                            restoreWalletFromEncrypted(is, password, CloseAction.CLOSE_FINISH);
+                        }
+                        catch (final FileNotFoundException x)
+                        {
+                            // should not happen
+                            throw new RuntimeException(x);
+                        }
+                    }
+                });
+        dialog.setNegativeButton(R.string.button_cancel, new OnClickListener()
+                {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which)
+                    {
+                        passwordView.setText(null); // get rid of it asap
+                        finish();
+                    }
+                });
+        dialog.setOnCancelListener(new OnCancelListener()
+                {
+                    @Override
+                    public void onCancel(final DialogInterface dialog)
+                    {
+                        passwordView.setText(null); // get rid of it asap
+                        finish();
+                    }
+                });
 
-		final View replaceWarningView = alertDialog.findViewById(R.id.restore_wallet_from_content_dialog_replace_warning);
-		final boolean hasCoins = wallet == null ? false : wallet.getBalance(BalanceType.ESTIMATED).signum() > 0;
-		replaceWarningView.setVisibility(hasCoins ? View.VISIBLE : View.GONE);
+        return dialog.create();
+    }
 
-		final EditText passwordView = (EditText) alertDialog.findViewById(R.id.import_keys_from_content_dialog_password);
-		passwordView.setText(null);
+    private void prepareRestoreWalletDialog(final Dialog dialog)
+    {
+        final AlertDialog alertDialog = (AlertDialog) dialog;
 
-		final ImportDialogButtonEnablerListener dialogButtonEnabler = new ImportDialogButtonEnablerListener(passwordView, alertDialog)
-		{
-			@Override
-			protected boolean hasFile()
-			{
-				return true;
-			}
-		};
-		passwordView.addTextChangedListener(dialogButtonEnabler);
+        final View replaceWarningView = alertDialog.findViewById(R.id.restore_wallet_from_content_dialog_replace_warning);
+        final boolean hasCoins = wallet == null ? false : wallet.getBalance(BalanceType.ESTIMATED).signum() > 0;
+        replaceWarningView.setVisibility(hasCoins ? View.VISIBLE : View.GONE);
 
-		final CheckBox showView = (CheckBox) alertDialog.findViewById(R.id.import_keys_from_content_dialog_show);
-		showView.setOnCheckedChangeListener(new ShowPasswordCheckListener(passwordView));
-	}
+        final EditText passwordView = (EditText) alertDialog.findViewById(R.id.import_keys_from_content_dialog_password);
+        passwordView.setText(null);
 
-	private class FinishListener implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener
-	{
-		@Override
-		public void onClick(final DialogInterface dialog, final int which)
-		{
-			finish();
-		}
+        final ImportDialogButtonEnablerListener dialogButtonEnabler = new ImportDialogButtonEnablerListener(passwordView, alertDialog)
+        {
+            @Override
+            protected boolean hasFile()
+            {
+                return true;
+            }
+        };
+        passwordView.addTextChangedListener(dialogButtonEnabler);
 
-		@Override
-		public void onCancel(final DialogInterface dialog)
-		{
-			finish();
-		}
-	}
+        final CheckBox showView = (CheckBox) alertDialog.findViewById(R.id.import_keys_from_content_dialog_show);
+        showView.setOnCheckedChangeListener(new ShowPasswordCheckListener(passwordView));
+    }
 
-	private final FinishListener finishListener = new FinishListener();
+    private class FinishListener implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener
+    {
+        @Override
+        public void onClick(final DialogInterface dialog, final int which)
+        {
+            finish();
+        }
+
+        @Override
+        public void onCancel(final DialogInterface dialog)
+        {
+            finish();
+        }
+    }
+
+    private final FinishListener finishListener = new FinishListener();
 }

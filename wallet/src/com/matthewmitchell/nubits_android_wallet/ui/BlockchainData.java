@@ -27,40 +27,37 @@ import com.matthewmitchell.nubitsj.store.BlockStoreException;
 import com.matthewmitchell.nubitsj.store.ValidHashStore;
 
 public class BlockchainData {
-	
-	public BlockStore blockStore = null;
-	public File blockChainFile = null;
-	public BlockChain blockChain = null;
-	public File validHashStoreFile = null;
-	public ValidHashStore validHashStore = null;
-	
-        public BlockchainData(Context context) {
-            
-            blockChainFile = new File(context.getDir("blockstore", Context.MODE_PRIVATE), Constants.Files.BLOCKCHAIN_FILENAME);
-            validHashStoreFile = new File(context.getDir("validhashes", Context.MODE_PRIVATE), Constants.Files.VALID_HASHES_FILENAME);
-            
-        }
-        
-	public void delete(boolean resetBlockchain) {
-		
-		 if (blockStore != null) {
-	            try
-	            {
-	                blockStore.close();
-	            }
-	            catch (final BlockStoreException x)
-	            {
-	                throw new RuntimeException(x);
-	            }
-	        }
 
-                if (validHashStore != null) validHashStore.close();
-                
-                if (resetBlockchain) {
-                    if (validHashStoreFile != null) validHashStoreFile.delete();
-                    if (blockChainFile != null) blockChainFile.delete();
-                }
-		
-	}
-	
+    public BlockStore blockStore = null;
+    public File blockChainFile = null;
+    public BlockChain blockChain = null;
+    public File validHashStoreFile = null;
+    public ValidHashStore validHashStore = null;
+
+    public BlockchainData(Context context) {
+
+        blockChainFile = new File(context.getDir("blockstore", Context.MODE_PRIVATE), Constants.Files.BLOCKCHAIN_FILENAME);
+        validHashStoreFile = new File(context.getDir("validhashes", Context.MODE_PRIVATE), Constants.Files.VALID_HASHES_FILENAME);
+
+    }
+
+    public void delete(boolean resetBlockchain) {
+
+        if (blockStore != null) {
+            try {
+                blockStore.close();
+            } catch (final BlockStoreException x) {
+                throw new RuntimeException(x);
+            }
+        }
+
+        if (validHashStore != null) validHashStore.close();
+
+        if (resetBlockchain) {
+            if (validHashStoreFile != null) validHashStoreFile.delete();
+            if (blockChainFile != null) blockChainFile.delete();
+        }
+
+    }
+
 }

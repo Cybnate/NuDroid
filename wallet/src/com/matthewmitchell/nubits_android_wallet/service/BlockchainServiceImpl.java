@@ -681,10 +681,14 @@ public class BlockchainServiceImpl extends android.app.Service implements Blockc
         loadBlockchain.unregisterListener(this);
         loadBlockchain.stopLoading(resetBlockchainOnShutdown);
 
-        if (bcd != null)
-            bcd.delete(resetBlockchainOnShutdown);
+        if (bcd == null && resetBlockchainOnShutdown)
+            // Get the files to delete, without loading the blockchain
+            bcd = new BlockchainData(this);
 
-        bcd = null;
+        if (bcd != null) {
+            bcd.delete(resetBlockchainOnShutdown);
+            bcd = null;
+        }
 
         application.scheduleStartBlockchainService();
         unregisterReceiver(tickReceiver);

@@ -1,3 +1,8 @@
+v4.3
+
+* Bugfixes and improvements.
+* Added https://anton.coinerella.com/q/getvalidhashes as default server.
+
 v4.2
 
 * Significantly improved peer discovery with DNS seeder

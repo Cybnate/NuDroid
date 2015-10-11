@@ -291,11 +291,14 @@ public class TrustedServersFragment extends ListFragment
     private void handleRestoreDefaults() {
 
         ConfirmationDialogFragment.create(
-            getString(R.string.trusted_servers_restore_defaults_title),
-            getString(R.string.trusted_servers_restore_defaults_message),
-            this,
-            null
-        );
+                getString(R.string.trusted_servers_restore_defaults_title),
+                getString(R.string.trusted_servers_restore_defaults_message),
+                this,
+                getFragmentManager(),
+                null,
+                getString(R.string.button_ok),
+                getString(R.string.button_cancel)
+                );
 
     }
 
@@ -318,11 +321,14 @@ public class TrustedServersFragment extends ListFragment
     private void handleDelete(TrustedServer server) {
 
         ConfirmationDialogFragment.create(
-            getString(R.string.trusted_servers_delete_server_title),
-            getString(R.string.trusted_servers_delete_server_message, server.name),
-            this,
-            server
-        );
+                getString(R.string.trusted_servers_delete_server_title),
+                getString(R.string.trusted_servers_delete_server_message, server.name),
+                this,
+                getFragmentManager(),
+                server,
+                getString(R.string.button_ok),
+                getString(R.string.button_cancel)
+                );
 
     }
 

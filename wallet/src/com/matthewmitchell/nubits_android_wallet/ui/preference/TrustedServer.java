@@ -60,10 +60,15 @@ public class TrustedServer implements Parcelable {
      * @param equal If true the server will have the same priority as the one above it.
      */
     public TrustedServer(long id, String name, String url, boolean equal) {
+        this(id, name, url, equal, 0);
+    }
+
+    public TrustedServer(long id, String name, String url, boolean equal, int order) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.equal = equal;
+        this.order = order;
     }
 
     @Override

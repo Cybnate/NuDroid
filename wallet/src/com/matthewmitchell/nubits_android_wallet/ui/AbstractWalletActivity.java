@@ -17,32 +17,26 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.common.base.Charsets;
-import com.matthewmitchell.nubits_android_wallet.Constants;
 
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.R;
-import com.matthewmitchell.nubits_android_wallet.util.Crypto;
-import com.matthewmitchell.nubits_android_wallet.util.Io;
-import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
+import com.matthewmitchell.nubits_android_wallet.ui.RestoreWalletTask.CloseAction;
+import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
+
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * @author Andreas Schildbach
@@ -58,11 +52,11 @@ public abstract class AbstractWalletActivity extends LoaderActivity
     protected static final Logger log = LoggerFactory.getLogger(AbstractWalletActivity.class);
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
-        application = (WalletApplication) getApplication();
+    protected void onCreate(final Bundle savedInstanceState) {
 
+        application = (WalletApplication) getApplication();
         super.onCreate(savedInstanceState);
+
     }
 
     protected WalletApplication getWalletApplication()

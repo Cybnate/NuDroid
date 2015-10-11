@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "trusted_servers.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_NAME =  "servers";
 
@@ -45,7 +45,8 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
     private static final String FIELD_URL =   "url";
     private static final String FIELD_EQUAL = "equal";
 
-    public static final String DEFAULT_SERVER = "https://svr1.nubitsexplorer.nu/q/getvalidhashes";
+    public static final String DEFAULT_SERVER_EXPLORER = "https://svr1.nubitsexplorer.nu/q/getvalidhashes";
+    public static final String DEFAULT_SERVER_ANTON = "https://anton.coinerella.com/q/getvalidhashes";
 
     private final Context context;
 
@@ -70,14 +71,20 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private long insertDefaults(SQLiteDatabase db) {
-        return insertServer(db, context.getString(R.string.trusted_servers_default), DEFAULT_SERVER, false, 0);
+    private TrustedServer[] insertDefaults(SQLiteDatabase db) {
+
+        TrustedServer[] servers = {
+            insertServer(db, context.getString(R.string.trusted_servers_default_explorer), DEFAULT_SERVER_EXPLORER, false, 0),
+            insertServer(db, context.getString(R.string.trusted_servers_default_anton), DEFAULT_SERVER_ANTON, true, 1),
+        };
+
+        return servers;
     }
 
     /**
      * Reset the server list to the default in the database.
      */
-    public long restoreDefaults() {
+    public TrustedServer[] restoreDefaults() {
 
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
@@ -85,12 +92,35 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public TrustedServer insertAnton() {
+
+        // Insert Anton Server to top of list
+
+        SQLiteDatabase db = getWritableDatabase();
+        TrustedServer server = insertServerWithDb(db, context.getString(R.string.trusted_servers_default_anton), DEFAULT_SERVER_ANTON, false);
+        updateOrderWithDb(db, server.id, server.order, 0);
+
+        // Now make the server below it equal in priority
+
+        ContentValues values = new ContentValues(3);
+        values.put(FIELD_EQUAL, true);
+        db.update(TABLE_NAME, values, FIELD_ORDER + " = 1", null);
+
+        return server;
+
+    }
+
     /**
      * Insert the information for a new server to be added to the end of the list.
      */
-    public long insertServer(String name, String url, boolean equal) {
+    public TrustedServer insertServer(String name, String url, boolean equal) {
 
         SQLiteDatabase db = getWritableDatabase();
+        return insertServerWithDb(db, name, url, equal);
+
+    }
+
+    public TrustedServer insertServerWithDb(SQLiteDatabase db, String name, String url, boolean equal) {
 
         Cursor cursor = db.query(TABLE_NAME, new String[]{ FIELD_ORDER }, null, null, null, null, FIELD_ORDER + " DESC", "1");
         cursor.moveToFirst();
@@ -105,7 +135,7 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private long insertServer(SQLiteDatabase db, String name, String url, boolean equal, int order) {
+    private TrustedServer insertServer(SQLiteDatabase db, String name, String url, boolean equal, int order) {
 
         ContentValues values = new ContentValues(4);
         values.put(FIELD_ORDER, order);
@@ -113,7 +143,7 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
         values.put(FIELD_URL, url);
         values.put(FIELD_EQUAL, equal);
 
-        return db.insert(TABLE_NAME, null, values);
+        return new TrustedServer(db.insert(TABLE_NAME, null, values), name, url, equal, order);
 
     }
 
@@ -165,6 +195,13 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
      */
     public void updateOrder(long id, int prevOrder, int newOrder) {
 
+        SQLiteDatabase db = getWritableDatabase();
+        updateOrderWithDb(db, id, prevOrder, newOrder);
+
+    }
+
+    public void updateOrderWithDb(SQLiteDatabase db, long id, int prevOrder, int newOrder) {
+
         /* 
          * Given that p is the previous order and n is the new order:
          * If p = n then do nothing
@@ -190,7 +227,6 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
         // Update database in transaction
 
-        SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
 
         try {
@@ -247,7 +283,7 @@ public class TrustedServersDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // No upgrade necessary
+        // Do nothing
     }
 
 }

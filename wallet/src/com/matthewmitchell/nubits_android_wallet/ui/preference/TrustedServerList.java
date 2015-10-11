@@ -34,7 +34,7 @@ import java.util.Random;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides a list of servers for validing block hashes from an SQLite database.
+ * Provides a list of servers for validating block hashes from an SQLite database.
  * @author Matthew Mitchell
  */
 public class TrustedServerList extends ArrayList<TrustedServer> implements TrustedServersInterface {
@@ -220,10 +220,11 @@ public class TrustedServerList extends ArrayList<TrustedServer> implements Trust
             @Override
             public void run() {
 
-                long id = TrustedServersDatabaseHelper.getInstance(context).restoreDefaults();
+                TrustedServer[] servers = TrustedServersDatabaseHelper.getInstance(context).restoreDefaults();
 
                 synchronized (this) {
-                    addServer(new TrustedServer(id, context.getString(R.string.trusted_servers_default), TrustedServersDatabaseHelper.DEFAULT_SERVER, false));
+                    for (TrustedServer server: servers)
+                        addServer(server);
                     invalidated = true;
                 }
 
@@ -237,6 +238,43 @@ public class TrustedServerList extends ArrayList<TrustedServer> implements Trust
     }
 
     /**
+     * Inserts the Anton default server into the list
+     */
+    public void insertAnton() {
+
+        dbExecutor.execute(new Runnable() {
+
+            @Override
+            public void run() {
+
+                final TrustedServer server = TrustedServersDatabaseHelper.getInstance(context).insertAnton();
+
+                synchronized (this) {
+                    add(0, server);
+                    get(1).equal = true;
+                    calculatePriority();
+                }
+
+                if (onChanged != null)
+                    onChanged.run();
+
+            }
+
+        });
+
+    }
+
+    public boolean noAnton() {
+
+        for (TrustedServer server : this)
+            if (server.url.equals(TrustedServersDatabaseHelper.DEFAULT_SERVER_ANTON))
+                return false;
+
+        return true;
+
+    }
+
+    /**
      * Inserts a new server to the end of the list
      */
     public void newServer(final String name, final String url, final boolean equal) {
@@ -246,10 +284,10 @@ public class TrustedServerList extends ArrayList<TrustedServer> implements Trust
             @Override
             public void run() {
 
-                long id = TrustedServersDatabaseHelper.getInstance(context).insertServer(name, url, equal);
+                TrustedServer server = TrustedServersDatabaseHelper.getInstance(context).insertServer(name, url, equal);
 
                 synchronized (this) {
-                    addServer(new TrustedServer(id, name, url, equal));
+                    addServer(server);
                 }
 
                 if (onChanged != null)

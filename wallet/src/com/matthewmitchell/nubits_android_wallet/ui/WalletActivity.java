@@ -20,7 +20,6 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
@@ -60,31 +59,24 @@ import com.matthewmitchell.nubits_android_wallet.ui.send.SendCoinsActivity;
 import com.matthewmitchell.nubits_android_wallet.util.CrashReporter;
 import com.matthewmitchell.nubits_android_wallet.util.Crypto;
 import com.matthewmitchell.nubits_android_wallet.util.HttpGetThread;
-import com.matthewmitchell.nubits_android_wallet.util.Io;
 import com.matthewmitchell.nubits_android_wallet.util.Iso8601Format;
 import com.matthewmitchell.nubits_android_wallet.util.Nfc;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 import com.matthewmitchell.nubits_android_wallet.util.WholeStringBuilder;
-import com.matthewmitchell.nubitsj.core.AddressFormatException;
+import com.matthewmitchell.nubits_android_wallet.ui.RestoreWalletTask.CloseAction;
 import com.matthewmitchell.nubitsj.core.Transaction;
-import com.matthewmitchell.nubitsj.core.TransactionConfidence;
 import com.matthewmitchell.nubitsj.core.VerificationException;
-import com.matthewmitchell.nubitsj.core.VersionedChecksummedBytes;
 import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.core.Wallet.BalanceType;
 import com.matthewmitchell.nubitsj.store.WalletProtobufSerializer;
 import com.matthewmitchell.nubitsj.wallet.Protos;
-import java.io.BufferedReader;
+import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.SocketException;
@@ -98,17 +90,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
-import static junit.framework.Assert.assertTrue;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * @author Andreas Schildbach
  */
-public final class WalletActivity extends AbstractWalletActivity
+public final class WalletActivity extends AfterUpdateActivity
 {
     private static final int DIALOG_BACKUP_WALLET = 1;
     private static final int DIALOG_TIMESKEW_ALERT = 2;

@@ -64,6 +64,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.annotation.Nonnull;
 import static junit.framework.Assert.assertTrue;
 

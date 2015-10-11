@@ -261,6 +261,8 @@
     <string name="button_ok">OK</string>
     <string name="button_dismiss">Dismiss</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
     <string name="button_retry">Retry</string>
     <string name="button_help">Help</string>
     <string name="button_add">Add</string>
@@ -295,7 +297,6 @@
     <string name="trusted_servers_restore_defaults_message">Are you sure you wish to restore the default settings? This will remove the current settings.</string>
     <string name="trusted_servers_new">Add New</string>
     <string name="preferences_category_trusted_servers">Trusted Servers</string>
-    <string name="trusted_servers_default">Default Server</string>
     <string name="trusted_server_dialog_equal">Equal priority to previous server</string>
     <string name="trusted_server_dialog_title_new">New Server</string>
     <string name="trusted_server_dialog_title_edit">Edit Server</string>
@@ -308,6 +309,15 @@
     <string name="trusted_servers_delete_server_title">Delete Server</string>
     <string name="trusted_servers_delete_server_message">Are you sure you wish to permanently remove "%s"?</string>
     <string name="failed_all_servers">All trusted servers failed.</string>
+
+    <string name="trusted_servers_default_explorer">Default - Explorer</string>
+    <string name="trusted_servers_default_anton">Default - Anton</string>
+
+    <string name="trusted_servers_add_anton_title">Update Servers</string>
+    <string name="trusted_servers_add_anton_message">This update comes with a new default trusted server. Would you like to add it to your existing list?</string>
+
+    <string name="trusted_servers_add_anton_done_title">Updated</string>
+    <string name="trusted_servers_add_anton_done_message">The new server has been added. You can go to Settings -> Trusted Servers to view the current server list.</string>
 
 </resources>
 
