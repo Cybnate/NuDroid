@@ -19,6 +19,7 @@ import com.matthewmitchell.nubits_android_wallet.util.Crypto;
 import com.matthewmitchell.nubits_android_wallet.util.Io;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 import com.matthewmitchell.nubitsj.core.Wallet;
+import com.matthewmitchell.nubitsj.store.ValidHashStore;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -56,6 +57,7 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 	protected IOException doInBackground(Void... v) {
 			
 		final Wallet wallet;
+        final ValidHashStore validHashStore = activity.getWalletApplication().validHashStore;
 
 		if (type == WalletType.WALLET_TYPE_ENCRYPTED_FILE
 			|| type == WalletType.WALLET_TYPE_ENCRYPTED_CIPHER) {
@@ -77,7 +79,7 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 				final byte[] plainText = Crypto.decryptBytes(cipherText.toString(), password.toCharArray());
 				final InputStream is = new ByteArrayInputStream(plainText);
 
-				wallet = WalletUtils.restoreWalletFromProtobufOrBase58(is);
+				wallet = WalletUtils.restoreWalletFromProtobufOrBase58(is, validHashStore);
 
 			}catch (final IOException x) {
 				return x;
@@ -92,9 +94,9 @@ public class RestoreWalletTask extends AsyncTask<Void, Void, IOException> {
 				is = new FileInputStream(file);
 				
 				if (type == WalletType.WALLET_TYPE_PROTOBUF)
-					wallet = WalletUtils.restoreWalletFromProtobuf(is);
+					wallet = WalletUtils.restoreWalletFromProtobuf(is, validHashStore);
 				else
-					wallet = WalletUtils.restorePrivateKeysFromBase58(is);
+					wallet = WalletUtils.restorePrivateKeysFromBase58(is, validHashStore);
 
 			}catch (final IOException x) {
 				return x;

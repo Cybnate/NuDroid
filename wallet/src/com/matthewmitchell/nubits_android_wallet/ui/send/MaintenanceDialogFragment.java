@@ -61,6 +61,8 @@ import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.ui.AbstractWalletActivity;
 import com.matthewmitchell.nubits_android_wallet.ui.DialogBuilder;
 import com.matthewmitchell.nubits_android_wallet.R;
+import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * @author Andreas Schildbach
@@ -287,7 +289,23 @@ public class MaintenanceDialogFragment extends DialogFragment
 							log.info("bad spending password");
 						}
 					});
-				}
+                } catch (IOException x) {
+                    
+                    handler.post(new Runnable() {
+						@Override
+						public void run() {
+							badPasswordView.setVisibility(View.VISIBLE);
+
+							state = State.INPUT;
+							updateView();
+
+							passwordView.requestFocus();
+
+							log.info("Failed to get fee from server.");
+						}
+					});
+                    
+                }
 			}
 		});
 	}

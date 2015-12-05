@@ -31,14 +31,9 @@ public class BlockchainData {
     public BlockStore blockStore = null;
     public File blockChainFile = null;
     public BlockChain blockChain = null;
-    public File validHashStoreFile = null;
-    public ValidHashStore validHashStore = null;
 
     public BlockchainData(Context context) {
-
         blockChainFile = new File(context.getDir("blockstore", Context.MODE_PRIVATE), Constants.Files.BLOCKCHAIN_FILENAME);
-        validHashStoreFile = new File(context.getDir("validhashes", Context.MODE_PRIVATE), Constants.Files.VALID_HASHES_FILENAME);
-
     }
 
     public void delete(boolean resetBlockchain) {
@@ -50,13 +45,9 @@ public class BlockchainData {
                 throw new RuntimeException(x);
             }
         }
-
-        if (validHashStore != null) validHashStore.close();
-
-        if (resetBlockchain) {
-            if (validHashStoreFile != null) validHashStoreFile.delete();
+        
+        if (resetBlockchain)
             if (blockChainFile != null) blockChainFile.delete();
-        }
 
     }
 

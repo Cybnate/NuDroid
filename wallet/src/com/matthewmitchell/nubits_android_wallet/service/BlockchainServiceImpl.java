@@ -102,8 +102,8 @@ import static junit.framework.Assert.assertTrue;
 /**
  * @author Andreas Schildbach
  */
-public class BlockchainServiceImpl extends android.app.Service implements BlockchainService, OnLoadCompleteListener<BlockchainData>
-{
+public class BlockchainServiceImpl extends android.app.Service implements BlockchainService, OnLoadCompleteListener<BlockchainData> {
+    
     private WalletApplication application;
     private Configuration config = null;
 

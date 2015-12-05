@@ -61,6 +61,7 @@ import android.text.style.TypefaceSpan;
 import com.google.common.base.Charsets;
 
 import com.matthewmitchell.nubits_android_wallet.Constants;
+import com.matthewmitchell.nubitsj.store.ValidHashStore;
 
 /**
  * @author Andreas Schildbach
@@ -157,20 +158,20 @@ public class WalletUtils
 		}
 	}
 
-	public static Wallet restoreWalletFromProtobufOrBase58(final InputStream is) throws IOException
+	public static Wallet restoreWalletFromProtobufOrBase58(final InputStream is, final ValidHashStore validHashStore) throws IOException
 	{
 		is.mark((int) Constants.BACKUP_MAX_CHARS);
 
 		try
 		{
-			return restoreWalletFromProtobuf(is);
+			return restoreWalletFromProtobuf(is, validHashStore);
 		}
 		catch (final IOException x)
 		{
 			try
 			{
 				is.reset();
-				return restorePrivateKeysFromBase58(is);
+				return restorePrivateKeysFromBase58(is, validHashStore);
 			}
 			catch (final IOException x2)
 			{
@@ -179,11 +180,11 @@ public class WalletUtils
 		}
 	}
 
-	public static Wallet restoreWalletFromProtobuf(final InputStream is) throws IOException
+	public static Wallet restoreWalletFromProtobuf(final InputStream is, final ValidHashStore validHashStore) throws IOException
 	{
 		try
 		{
-			final Wallet wallet = new WalletProtobufSerializer().readWallet(is);
+			final Wallet wallet = new WalletProtobufSerializer().readWallet(is, validHashStore);
 
 			if (!wallet.getParams().equals(Constants.NETWORK_PARAMETERS))
 				throw new IOException("bad wallet network parameters: " + wallet.getParams().getId());
@@ -196,14 +197,14 @@ public class WalletUtils
 		}
 	}
 
-	public static Wallet restorePrivateKeysFromBase58(final InputStream is) throws IOException
+	public static Wallet restorePrivateKeysFromBase58(final InputStream is, final ValidHashStore validHashStore) throws IOException
 	{
 		final BufferedReader keyReader = new BufferedReader(new InputStreamReader(is, Charsets.UTF_8));
 
 		// create non-HD wallet
 		final KeyChainGroup group = new KeyChainGroup(Constants.NETWORK_PARAMETERS);
 		group.importKeys(WalletUtils.readKeys(keyReader));
-		return new Wallet(Constants.NETWORK_PARAMETERS, group);
+		return new Wallet(Constants.NETWORK_PARAMETERS, group, validHashStore);
 	}
 
 	public static void writeKeys(@Nonnull final Writer out, @Nonnull final List<ECKey> keys) throws IOException
@@ -347,12 +348,10 @@ public class WalletUtils
 		}
 	}
 
-	public static Wallet walletFromByteArray(@Nonnull final byte[] walletBytes)
-	{
-		try
-		{
+	public static Wallet walletFromByteArray(@Nonnull final byte[] walletBytes, final ValidHashStore validHashStore) {
+		try {
 			final ByteArrayInputStream is = new ByteArrayInputStream(walletBytes);
-			final Wallet wallet = new WalletProtobufSerializer().readWallet(is);
+			final Wallet wallet = new WalletProtobufSerializer().readWallet(is, validHashStore);
 			is.close();
 			return wallet;
 		}

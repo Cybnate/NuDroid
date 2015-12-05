@@ -17,9 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +26,9 @@ import com.matthewmitchell.nubitsj.core.BlockChain;
 import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.store.BlockStoreException;
 import com.matthewmitchell.nubitsj.store.SPVBlockStore;
-import com.matthewmitchell.nubitsj.store.ValidHashStore;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
 
 public class BlockchainLoader extends AsyncTaskLoader<BlockchainData> {
 
@@ -91,20 +86,11 @@ public class BlockchainLoader extends AsyncTaskLoader<BlockchainData> {
 
         log.info("using " + bcd.blockStore.getClass().getName());
 
-        try {
-            bcd.validHashStore = new ValidHashStore(bcd.validHashStoreFile, TrustedServerList.getInstance(context));
-        } catch (IOException x) {
-            bcd.validHashStoreFile.delete();
-            final String msg = "validhashstore cannot be created";
-            log.error(msg, x);
-            throw new Error(msg, x);
-        }
-
         if(!isStarted())
             return null;
 
         try {
-            bcd.blockChain = new BlockChain(Constants.NETWORK_PARAMETERS, wallet, bcd.blockStore, bcd.validHashStore);
+            bcd.blockChain = new BlockChain(Constants.NETWORK_PARAMETERS, wallet, bcd.blockStore, application.validHashStore);
         }catch (final BlockStoreException x) {
             throw new Error("blockchain cannot be created", x);
         }

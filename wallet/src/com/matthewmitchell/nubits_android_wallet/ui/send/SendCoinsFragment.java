@@ -37,6 +37,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -152,6 +153,10 @@ public final class SendCoinsFragment extends Fragment
     private final Handler handler = new Handler();
     private HandlerThread backgroundThread;
     private Handler backgroundHandler;
+    
+    private HandlerThread dryRunThread;
+    private Handler dryRunHandler;
+    private DryRunTask dryRunTask;
 
     private TextView payeeNameView;
     private TextView payeeVerifiedByView;
@@ -354,7 +359,7 @@ public final class SendCoinsFragment extends Fragment
             updateShapeShift(false);
 
             updateView();
-            handler.post(dryrunRunnable);
+            doDryRun();
 
         }
 
@@ -630,6 +635,23 @@ public final class SendCoinsFragment extends Fragment
         backgroundThread = new HandlerThread("backgroundThread", Process.THREAD_PRIORITY_BACKGROUND);
         backgroundThread.start();
         backgroundHandler = new Handler(backgroundThread.getLooper());
+        
+        dryRunThread = new HandlerThread("dryRunThread", Process.THREAD_PRIORITY_BACKGROUND);
+        dryRunThread.start();
+        dryRunHandler = new Handler(dryRunThread.getLooper());
+        
+        dryRunTask = new DryRunTask(dryRunHandler) {
+
+            @Override
+            protected void onSuccess(Coin amount, Transaction dryRunTransaction, Exception dryRunException) {
+                if (amount != null && !amount.equals(amountCalculatorLink.getAmount()))
+                    amountCalculatorLink.setNBTAmount(amount);
+                dryrunException = dryRunException;
+                dryrunTransaction = dryRunTransaction;
+                updateView();
+            }
+
+        };
 
     }
 
@@ -812,7 +834,7 @@ public final class SendCoinsFragment extends Fragment
                 loaderManager.initLoader(ID_RECEIVING_ADDRESS_LOADER, null, receivingAddressLoaderCallbacks);
 
                 updateView();
-                handler.post(dryrunRunnable);
+                doDryRun();
 
             }
 
@@ -1130,7 +1152,7 @@ public final class SendCoinsFragment extends Fragment
                     if (maybeUpdateShapeShift())
                         return;
 
-                    handler.post(dryrunRunnable);
+                    doDryRun();
                     handleShapeShiftError(networkCode, text);
                     futureUpdate(SHAPESHIFT_ERROR_DELAY);
 
@@ -1207,7 +1229,7 @@ public final class SendCoinsFragment extends Fragment
                             depositAddress = deposit;
                             lastSendAmountUpdate = System.currentTimeMillis();
 
-                            handler.post(dryrunRunnable);
+                            doDryRun();
 
                             long delay = expiry - System.currentTimeMillis() - SHAPESHIFT_SEND_AMOUNT_GAP;
                             shapeShiftStatus = ShapeShiftStatus.NONE;
@@ -1661,14 +1683,15 @@ public final class SendCoinsFragment extends Fragment
             }
 
             @Override
-            protected void onFailure(@Nonnull Exception exception)
-            {
+            protected void onFailure(@Nonnull Exception exception) {
+                
                 setState(State.FAILED);
 
                 final DialogBuilder dialog = DialogBuilder.warn(activity, R.string.send_coins_error_msg);
                 dialog.setMessage(exception.toString());
                 dialog.setNeutralButton(R.string.button_dismiss, null);
                 dialog.show();
+                
             }
         }.sendCoinsOffline(sendRequest); // send asynchronously
     }
@@ -1685,45 +1708,22 @@ public final class SendCoinsFragment extends Fragment
         updateShapeShift(false);
 
         updateView();
-        handler.post(dryrunRunnable);
+        doDryRun();
     }
-
-    private Runnable dryrunRunnable = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            if (state == State.INPUT)
-                executeDryrun();
-
-            updateView();
-        }
-
-        private void executeDryrun()
-        {
-            dryrunTransaction = null;
-            dryrunException = null;
-
-            final Coin amount = amountCalculatorLink.getAmount();
-            if (amount != null)
-            {
-                try
-                {
-                    final Address dummy = wallet.currentReceiveAddress(); // won't be used, tx is never committed
-                    final SendRequest sendRequest = paymentIntent.mergeWithEditedValues(amount, dummy).toSendRequest();
-                    sendRequest.signInputs = false;
-                    sendRequest.emptyWallet = paymentIntent.mayEditAmount() && amount.equals(wallet.getBalance(BalanceType.ESTMINUSFEE));
-                    sendRequest.feePerKb = SendRequest.DEFAULT_FEE_PER_KB;
-                    wallet.completeTx(sendRequest);
-                    dryrunTransaction = sendRequest.tx;
-                }
-                catch (final Exception x)
-                {
-                    dryrunException = x;
-                }
-            }
-        }
-    };
+    
+    private void doDryRun() {
+        
+        if (state != State.INPUT)
+            return;
+        
+        dryrunTransaction = null;
+        dryrunException = null;
+        
+        updateView();
+        
+        dryRunTask.execute(paymentIntent, amountCalculatorLink, wallet);
+      
+    }
 
     private void returnToInputAndUpdate() {
 
@@ -2089,7 +2089,7 @@ public final class SendCoinsFragment extends Fragment
 
                     requestFocusFirst();
                     updateView();
-                    handler.post(dryrunRunnable);
+                    doDryRun();
                 }
 
                 if (paymentIntent.hasPaymentRequestUrl())
@@ -2134,7 +2134,7 @@ public final class SendCoinsFragment extends Fragment
                     // success
                     updateStateFrom(paymentIntent);
                     updateView();
-                    handler.post(dryrunRunnable);
+                    doDryRun();
                 }
                 else
                 {

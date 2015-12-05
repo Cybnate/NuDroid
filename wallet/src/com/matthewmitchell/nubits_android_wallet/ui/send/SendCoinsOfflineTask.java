@@ -30,101 +30,113 @@ import com.matthewmitchell.nubitsj.crypto.KeyCrypterException;
 
 import android.os.Handler;
 import android.os.Looper;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Andreas Schildbach
  */
 public abstract class SendCoinsOfflineTask
 {
-	private final Wallet wallet;
-	private final Handler backgroundHandler;
-	private final Handler callbackHandler;
+    private final Wallet wallet;
+    private final Handler backgroundHandler;
+    private final Handler callbackHandler;
 
-	public SendCoinsOfflineTask(@Nonnull final Wallet wallet, @Nonnull final Handler backgroundHandler)
-	{
-		this.wallet = wallet;
-		this.backgroundHandler = backgroundHandler;
-		this.callbackHandler = new Handler(Looper.myLooper());
-	}
+    public SendCoinsOfflineTask(@Nonnull final Wallet wallet, @Nonnull final Handler backgroundHandler)
+    {
+        this.wallet = wallet;
+        this.backgroundHandler = backgroundHandler;
+        this.callbackHandler = new Handler(Looper.myLooper());
+    }
 
-	public final void sendCoinsOffline(@Nonnull final SendRequest sendRequest)
-	{
-		backgroundHandler.post(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					final Transaction transaction = wallet.sendCoinsOffline(sendRequest); // can take long
+    public final void sendCoinsOffline(@Nonnull final SendRequest sendRequest)
+    {
+        backgroundHandler.post(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        try
+                        {
+                            final Transaction transaction = wallet.sendCoinsOffline(sendRequest); // can take long
 
-					callbackHandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							onSuccess(transaction);
-						}
-					});
-				}
-				catch (final InsufficientMoneyException x)
-				{
-					callbackHandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							onInsufficientMoney(x.missing);
-						}
-					});
-				}
-				catch (final KeyCrypterException x)
-				{
-					callbackHandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							onInvalidKey();
-						}
-					});
-				}
-				catch (final CouldNotAdjustDownwards x)
-				{
-					callbackHandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							onEmptyWalletFailed();
-						}
-					});
-				}
-				catch (final CompletionException x)
-				{
-					callbackHandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							onFailure(x);
-						}
-					});
-				}
-			}
-		});
-	}
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onSuccess(transaction);
+                                        }
+                                    });
+                        }
+                        catch (final InsufficientMoneyException x)
+                        {
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onInsufficientMoney(x.missing);
+                                        }
+                                    });
+                        }
+                        catch (final KeyCrypterException x)
+                        {
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onInvalidKey();
+                                        }
+                                    });
+                        }
+                        catch (final CouldNotAdjustDownwards x)
+                        {
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onEmptyWalletFailed();
+                                        }
+                                    });
+                        }
+                        catch (final CompletionException x)
+                        {
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onFailure(x);
+                                        }
+                                    });
+                        } catch (final IOException x) {
+                            callbackHandler.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            onFailure(x);
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
 
-	protected abstract void onSuccess(@Nonnull Transaction transaction);
+    protected abstract void onSuccess(@Nonnull Transaction transaction);
 
-	protected abstract void onInsufficientMoney(@Nonnull Coin missing);
+    protected abstract void onInsufficientMoney(@Nonnull Coin missing);
 
-	protected abstract void onInvalidKey();
+    protected abstract void onInvalidKey();
 
-	protected void onEmptyWalletFailed()
-	{
-		onFailure(new CouldNotAdjustDownwards());
-	}
+    protected void onEmptyWalletFailed()
+    {
+        onFailure(new CouldNotAdjustDownwards());
+    }
 
-	protected abstract void onFailure(@Nonnull Exception exception);
+    protected abstract void onFailure(@Nonnull Exception exception);
 }

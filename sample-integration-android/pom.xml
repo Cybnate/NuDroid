@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.matthewmitchell</groupId>
             <artifactId>nubitsj</artifactId>
-            <version>0.14.3</version>
+            <version>0.14.4</version>
         </dependency>
 
         <dependency>

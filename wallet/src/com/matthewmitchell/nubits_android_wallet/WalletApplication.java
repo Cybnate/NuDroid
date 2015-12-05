@@ -41,6 +41,7 @@ import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import com.matthewmitchell.nubits_android_wallet.R;
 import com.matthewmitchell.nubits_android_wallet.service.BlockchainService;
 import com.matthewmitchell.nubits_android_wallet.service.BlockchainServiceImpl;
+import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
 import com.matthewmitchell.nubits_android_wallet.util.CrashReporter;
 import com.matthewmitchell.nubits_android_wallet.util.Io;
 import com.matthewmitchell.nubits_android_wallet.util.LinuxSecureRandom;
@@ -51,6 +52,7 @@ import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.crypto.MnemonicCode;
 import com.matthewmitchell.nubitsj.shapeshift.ShapeShift;
 import com.matthewmitchell.nubitsj.store.UnreadableWalletException;
+import com.matthewmitchell.nubitsj.store.ValidHashStore;
 import com.matthewmitchell.nubitsj.store.WalletProtobufSerializer;
 import com.matthewmitchell.nubitsj.utils.Threading;
 import com.matthewmitchell.nubitsj.wallet.Protos;
@@ -92,6 +94,9 @@ public class WalletApplication extends Application
     private File walletFile;
     private Wallet wallet;
     private PackageInfo packageInfo;
+    
+    public File validHashStoreFile = null;
+    public ValidHashStore validHashStore = null;
 
     public static final String ACTION_WALLET_CHANGED = WalletApplication.class.getPackage().getName() + ".wallet_changed";
 
@@ -101,6 +106,15 @@ public class WalletApplication extends Application
     private boolean isLoaded = false;
 
     private void initWallet() {
+        
+        try {
+            validHashStore = new ValidHashStore(validHashStoreFile, TrustedServerList.getInstance(this));
+        } catch (IOException x) {
+            validHashStoreFile.delete();
+            final String msg = "validhashstore cannot be created";
+            log.error(msg, x);
+            throw new Error(msg, x);
+        }
 
         new LinuxSecureRandom(); // init proper random number generator
         initLogging();
@@ -171,6 +185,8 @@ public class WalletApplication extends Application
         blockchainServiceCancelCoinsReceivedIntent = new Intent(BlockchainService.ACTION_CANCEL_COINS_RECEIVED, null, this,
                 BlockchainServiceImpl.class);
         blockchainServiceResetBlockchainIntent = new Intent(BlockchainService.ACTION_RESET_BLOCKCHAIN, null, this, BlockchainServiceImpl.class);
+        
+        validHashStoreFile = new File(getDir("validhashes", Context.MODE_PRIVATE), Constants.Files.VALID_HASHES_FILENAME);
 
         ShapeShift.addAllCoins();
 
@@ -299,7 +315,7 @@ public class WalletApplication extends Application
             {
                 walletStream = new FileInputStream(walletFile);
 
-                wallet = new WalletProtobufSerializer().readWallet(walletStream);
+                wallet = new WalletProtobufSerializer().readWallet(walletStream, validHashStore);
 
                 if (!wallet.getParams().equals(Constants.NETWORK_PARAMETERS))
                     throw new UnreadableWalletException("bad wallet network parameters: " + wallet.getParams().getId());
@@ -349,7 +365,7 @@ public class WalletApplication extends Application
         }
         else
         {
-            wallet = new Wallet(Constants.NETWORK_PARAMETERS);
+            wallet = new Wallet(Constants.NETWORK_PARAMETERS, validHashStore);
 
             backupWallet();
 
@@ -367,7 +383,7 @@ public class WalletApplication extends Application
         {
             is = openFileInput(Constants.Files.WALLET_KEY_BACKUP_PROTOBUF);
 
-            final Wallet wallet = new WalletProtobufSerializer().readWallet(is);
+            final Wallet wallet = new WalletProtobufSerializer().readWallet(is, validHashStore);
 
             if (!wallet.isConsistent())
                 throw new Error("inconsistent backup");

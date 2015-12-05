@@ -1,3 +1,9 @@
+v4.4
+
+* Added support for py-nugetfee and therefore Nu 2.0 dynamic transaction fees. Nu 3.0 may 
+also be compatible
+* When restoring a wallet, show the most recent backups first.
+
 v4.3
 
 * Bugfixes and improvements.

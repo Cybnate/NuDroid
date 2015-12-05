@@ -565,7 +565,7 @@ public final class WalletActivity extends AfterUpdateActivity
                     @Override
                     public int compare(final File lhs, final File rhs)
                     {
-                        return lhs.getName().compareToIgnoreCase(rhs.getName());
+                        return rhs.getName().compareToIgnoreCase(lhs.getName());
                     }
                 });
 

@@ -7,7 +7,7 @@
     <groupId>com.matthewmitchell.nubits_android_wallet</groupId>
     <artifactId>base</artifactId>
     <name>base</name>
-    <version>4.3</version>
+    <version>4.4</version>
     <packaging>pom</packaging>
 
     <modules>
