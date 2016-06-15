@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Address;
 import com.matthewmitchell.nubitsj.core.Wallet;
@@ -40,27 +39,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.NfcManager;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Spanned;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.matthewmitchell.nubits_android_wallet.Configuration;
 import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.util.BitmapFragment;
 import com.matthewmitchell.nubits_android_wallet.util.Qr;
 import com.matthewmitchell.nubits_android_wallet.util.ThrottlingWalletChangeListener;
-import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -70,14 +71,15 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 {
 	private WalletActivity activity;
 	private WalletApplication application;
+	private Configuration config;
 	private LoaderManager loaderManager;
-	@CheckForNull
+	@Nullable
 	private NfcAdapter nfcAdapter;
 
 	private ImageView currentAddressQrView;
 
 	private Bitmap currentAddressQrBitmap = null;
-	private Spanned currentAddressQrLabel = null;
+	private AddressAndLabel currentAddressQrAddress = null;
 	private final AtomicReference<String> currentAddressUriRef = new AtomicReference<String>();
 
 	private static final int ID_ADDRESS_LOADER = 0;
@@ -89,9 +91,9 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 
 		this.activity = (WalletActivity)activity;
 		this.application = (WalletApplication) activity.getApplication();
+		this.config = application.getConfiguration();
 		this.loaderManager = getLoaderManager();
-		final NfcManager nfcManager = (NfcManager) activity.getSystemService(Context.NFC_SERVICE);
-		this.nfcAdapter = nfcManager.getDefaultAdapter();
+		this.nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
 	}
 
 	@Override
@@ -109,7 +111,10 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 		final View view = inflater.inflate(R.layout.wallet_address_fragment, container, false);
 		currentAddressQrView = (ImageView) view.findViewById(R.id.nubits_address_qr);
 
-		currentAddressQrView.setOnClickListener(new OnClickListener()
+		final CardView currentAddressQrCardView = (CardView) view.findViewById(R.id.bitcoin_address_qr_card);
+		currentAddressQrCardView.setCardBackgroundColor(Color.WHITE);
+		currentAddressQrCardView.setPreventCornerOverlap(false);
+		currentAddressQrCardView.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(final View v)
@@ -154,7 +159,7 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 
 	private void handleShowQRCode()
 	{
-		BitmapFragment.show(getFragmentManager(), currentAddressQrBitmap, currentAddressQrLabel);
+		WalletAddressDialogFragment.show(getFragmentManager(), currentAddressQrBitmap, currentAddressQrAddress.address);
 	}
 
 	public static class AddressData {
@@ -169,16 +174,18 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 		private LocalBroadcastManager broadcastManager;
 		private final Wallet wallet;
 		private final int size;
+		private Configuration config;
 
 		private static final Logger log = LoggerFactory.getLogger(WalletBalanceLoader.class);
 
-		public CurrentAddressLoader(final Context context, @Nonnull final Wallet wallet, final int size)
+		public CurrentAddressLoader(final Context context, final Wallet wallet, final Configuration config, final int size)
 		{
 			super(context);
 
 			this.broadcastManager = LocalBroadcastManager.getInstance(context.getApplicationContext());
 			this.wallet = wallet;
 			this.size = size;
+			this.config = config;
 		}
 
 		@Override
@@ -187,7 +194,8 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 			super.onStartLoading();
 
 			wallet.addEventListener(walletChangeListener, Threading.SAME_THREAD);
-			broadcastManager.registerReceiver(walletChangeReceiver, new IntentFilter(WalletApplication.ACTION_WALLET_CHANGED));
+			broadcastManager.registerReceiver(walletChangeReceiver, new IntentFilter(WalletApplication.ACTION_WALLET_REFERENCE_CHANGED));
+			config.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
 
 			safeForceLoad();
 		}
@@ -195,6 +203,7 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 		@Override
 		protected void onStopLoading()
 		{
+			config.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
 			broadcastManager.unregisterReceiver(walletChangeReceiver);
 			wallet.removeEventListener(walletChangeListener);
 			walletChangeListener.removeCallbacks();
@@ -205,6 +214,7 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 		@Override
 		protected void onReset()
 		{
+			config.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
 			broadcastManager.unregisterReceiver(walletChangeReceiver);
 			wallet.removeEventListener(walletChangeListener);
 			walletChangeListener.removeCallbacks();
@@ -214,6 +224,8 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 
 		@Override
 		public AddressData loadInBackground() {
+
+			Context.propagate(Constants.CONTEXT);
 			
 			AddressData data = new AddressData();
 			data.address = wallet.currentReceiveAddress();
@@ -243,6 +255,15 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 			}
 		};
 
+		private final OnSharedPreferenceChangeListener preferenceChangeListener = new OnSharedPreferenceChangeListener()
+		{
+			@Override
+			public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key)
+			{
+				if (Configuration.PREFS_KEY_OWN_NAME.equals(key))
+					safeForceLoad();
+			}
+		};
 		private void safeForceLoad()
 		{
 			try
@@ -258,22 +279,20 @@ public final class WalletAddressFragment extends Fragment implements NfcAdapter.
 
 	private final LoaderCallbacks<AddressData> addressLoaderCallbacks = new LoaderManager.LoaderCallbacks<AddressData>()
 	{
-		private Address lastAddress;
 
 		@Override
 		public Loader<AddressData> onCreateLoader(final int id, final Bundle args) {
 			final int size = getResources().getDimensionPixelSize(R.dimen.bitmap_dialog_qr_size);
-			return new CurrentAddressLoader(activity, application.getWallet(), size);
+			return new CurrentAddressLoader(activity, application.getWallet(), config, size);
 		}
 
 		@Override
 		public void onLoadFinished(final Loader<AddressData> loader, final AddressData currentAddress)
 		{
-			if (!currentAddress.equals(lastAddress))
+			if (!currentAddress.equals(currentAddressQrAddress))
 			{
-				lastAddress = currentAddress.address;
+				currentAddressQrAddress = new AddressAndLabel(currentAddress.address, config.getOwnName());
 				currentAddressQrBitmap = currentAddress.bitmap;
-				currentAddressQrLabel = currentAddress.label;
 				currentAddressUriRef.set(currentAddress.addressStr);
 
 				updateView();

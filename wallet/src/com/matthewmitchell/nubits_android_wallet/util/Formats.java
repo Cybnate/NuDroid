@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package com.matthewmitchell.nubits_android_wallet.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubits_android_wallet.Constants;
 
@@ -37,12 +38,20 @@ public final class Formats
 
 	private static final Pattern PATTERN_OUTER_HTML_PARAGRAPH = Pattern.compile("<p[^>]*>(.*)</p>\n?", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-	public static String maybeRemoveOuterHtmlParagraph(final String html)
+	public static String maybeRemoveOuterHtmlParagraph(final CharSequence html)
 	{
 		final Matcher m = PATTERN_OUTER_HTML_PARAGRAPH.matcher(html);
 		if (m.matches())
 			return m.group(1);
 		else
-			return html;
+			return html.toString();
+	}
+
+
+	@Nullable
+	public static String[] sanitizeMemo(final @Nullable String memo)
+	{
+		// NuDroid: No BitPay or Coinbase
+		return memo;
 	}
 }

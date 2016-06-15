@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 package com.matthewmitchell.nubits_android_wallet.offline;
+import java.io.IOException;
 
 import com.matthewmitchell.nubitsj.core.Transaction;
 import com.matthewmitchell.nubitsj.core.VerificationException;
@@ -36,6 +37,9 @@ import android.os.PowerManager.WakeLock;
 import android.text.format.DateUtils;
 
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
+import de.schildbach.wallet.util.CrashReporter;
+import de.schildbach.wallet.util.Toast;
+import de.schildbach.wallet_test.R;
 
 /**
  * @author Andreas Schildbach
@@ -90,6 +94,8 @@ public final class AcceptBluetoothService extends Service
 
 		registerReceiver(bluetoothStateChangeReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
 
+		try
+		{
 		classicThread = new AcceptBluetoothThread.ClassicBluetoothThread(bluetoothAdapter)
 		{
 			@Override
@@ -98,7 +104,6 @@ public final class AcceptBluetoothService extends Service
 				return AcceptBluetoothService.this.handleTx(tx);
 			}
 		};
-		classicThread.start();
 
 		paymentProtocolThread = new AcceptBluetoothThread.PaymentProtocolThread(bluetoothAdapter)
 		{
@@ -108,7 +113,14 @@ public final class AcceptBluetoothService extends Service
 				return AcceptBluetoothService.this.handleTx(tx);
 			}
 		};
+			classicThread.start();
 		paymentProtocolThread.start();
+		}
+		catch (final IOException x)
+		{
+			new Toast(this).longToast(R.string.error_bluetooth, x.getMessage());
+			CrashReporter.saveBackgroundTrace(x, application.packageInfo());
+		}
 	}
 
 	private boolean handleTx(final Transaction tx)

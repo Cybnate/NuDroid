@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import javax.annotation.Nonnull;
 
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
@@ -32,7 +31,7 @@ public final class ShowPasswordCheckListener implements OnCheckedChangeListener
 {
 	private EditText[] passwordViews;
 
-	public ShowPasswordCheckListener(@Nonnull final EditText... passwordViews)
+	public ShowPasswordCheckListener(final EditText... passwordViews)
 	{
 		this.passwordViews = passwordViews;
 	}

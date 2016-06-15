@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ package com.matthewmitchell.nubits_android_wallet;
 
 import java.io.File;
 
+import com.matthewmitchell.nubitsj.core.Context;
 import com.matthewmitchell.nubitsj.core.NetworkParameters;
 import com.matthewmitchell.nubitsj.params.MainNetParams;
 import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
@@ -26,6 +27,8 @@ import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
 import android.os.Build;
 import android.os.Environment;
 import android.text.format.DateUtils;
+
+import com.google.common.io.BaseEncoding;
 
 import com.matthewmitchell.nubits_android_wallet.R;
 
@@ -38,6 +41,9 @@ public final class Constants
 
     public static final NetworkParameters NETWORK_PARAMETERS = MainNetParams.get();
 
+    /** nubitsj global context. */
+    public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
+
     public final static class Files
     {
 
@@ -49,6 +55,10 @@ public final class Constants
 
         /** Filename of the automatic wallet backup. */
         public static final String WALLET_KEY_BACKUP_PROTOBUF = "nubits-key-backup-protobuf";
+
+	/** Path to external storage */
+	public static final File EXTERNAL_STORAGE_DIR = Environment.getExternalStorageDirectory();
+
 
         /** Manual backups go here. */
         public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -71,8 +81,6 @@ public final class Constants
 
     /** Maximum size of backups. Files larger will be rejected. */
     public static final long BACKUP_MAX_CHARS = 10000000;
-
-    public static final String EXPLORE_BASE_URL = "https://svr1.nubitsexplorer.nu/";
 
     /** URL to fetch version alerts from. */
     public static final String VERSION_URL = "";
@@ -116,25 +124,31 @@ public final class Constants
 
     public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
 
+    public static final BaseEncoding HEX = BaseEncoding.base16().lowerCase();
+
     public static final String SOURCE_URL = "https://github.com/Cybnate/Nubits-Android-wallet";
     public static final String BINARY_URL = "https://github.com/Cybnate/Nubits-Android-wallet/releases";
     public static final String MARKET_APP_URL = "market://details?id=%s";
     public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
 
     public static final int HTTP_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
+    public static final int PEER_DISCOVERY_TIMEOUT_MS = 10 * (int) DateUtils.SECOND_IN_MILLIS;
     public static final int PEER_TIMEOUT_MS = 8 * (int) DateUtils.SECOND_IN_MILLIS;
 
     public static final long LAST_USAGE_THRESHOLD_JUST_MS = DateUtils.HOUR_IN_MILLIS;
     public static final long LAST_USAGE_THRESHOLD_RECENTLY_MS = 2 * DateUtils.DAY_IN_MILLIS;
 
-    public static final int SDK_JELLY_BEAN = 16;
-    public static final int SDK_JELLY_BEAN_MR2 = 18;
+    public static final long LAST_USAGE_THRESHOLD_INACTIVE_MS = 4 * DateUtils.WEEK_IN_MILLIS;
 
     public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
-    public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Constants.SDK_JELLY_BEAN
-        && Build.VERSION.RELEASE.startsWith("4.1.1");
+    public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
+	&& Build.VERSION.RELEASE.startsWith("4.1.1");
 
     public static final int MEMORY_CLASS_LOWEND = 48;
+
+    public static final int NOTIFICATION_ID_CONNECTED = 0;
+    public static final int NOTIFICATION_ID_COINS_RECEIVED = 1;
+    public static final int NOTIFICATION_ID_INACTIVITY = 2;
 
 }

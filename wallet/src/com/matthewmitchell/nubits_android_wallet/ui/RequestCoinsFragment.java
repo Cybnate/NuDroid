@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Address;
 import com.matthewmitchell.nubitsj.core.Coin;
@@ -44,14 +44,15 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.NfcManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,6 +80,7 @@ import com.matthewmitchell.nubits_android_wallet.util.BitmapFragment;
 import com.matthewmitchell.nubits_android_wallet.util.Bluetooth;
 import com.matthewmitchell.nubits_android_wallet.util.Nfc;
 import com.matthewmitchell.nubits_android_wallet.util.Qr;
+import de.schildbach.wallet.util.Toast;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -92,9 +94,9 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 	private Wallet wallet;
 	private LoaderManager loaderManager;
 	private ClipboardManager clipboardManager;
-	@CheckForNull
+	@Nullable
 	private BluetoothAdapter bluetoothAdapter;
-	@CheckForNull
+	@Nullable
 	private NfcAdapter nfcAdapter;
 
 	private ImageView qrView;
@@ -102,9 +104,9 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 	private CheckBox acceptBluetoothPaymentView;
 	private TextView initiateRequestView;
 
-	@CheckForNull
+	@Nullable
 	private String bluetoothMac;
-	@CheckForNull
+	@Nullable
 	private Intent bluetoothServiceIntent;
 	private AtomicReference<byte[]> paymentRequestRef = new AtomicReference<byte[]>();
 
@@ -115,7 +117,6 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 
 	private static final int ID_RATE_LOADER = 0;
 
-	private static boolean ENABLE_BLUETOOTH_LISTENING = Build.VERSION.SDK_INT >= Constants.SDK_JELLY_BEAN_MR2;
 
 	private static final Logger log = LoggerFactory.getLogger(RequestCoinsFragment.class);
 
@@ -157,7 +158,7 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		this.clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
 		this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		final NfcManager nfcManager = (NfcManager) activity.getSystemService(Context.NFC_SERVICE);
-		this.nfcAdapter = nfcManager.getDefaultAdapter();
+		this.nfcAdapter = NfcAdapter.getDefaultAdapter(activity);
 		
 		this.activity.runAfterLoad(new Runnable() {
 
@@ -185,6 +186,7 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 				@Override
 				public void run() {
 					address = wallet.freshReceiveAddress();
+			log.info("request coins started: {}", address);
 				}
 
 			});
@@ -198,7 +200,10 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		final View view = inflater.inflate(R.layout.request_coins_fragment, container, false);
 
 		qrView = (ImageView) view.findViewById(R.id.request_coins_qr);
-		qrView.setOnClickListener(new OnClickListener()
+		final CardView qrCardView = (CardView) view.findViewById(R.id.request_coins_qr_card);
+		qrCardView.setCardBackgroundColor(Color.WHITE);
+		qrCardView.setPreventCornerOverlap(false);
+		qrCardView.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(final View v)
@@ -225,14 +230,14 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		amountCalculatorLink = new CurrencyCalculatorLink(NBTAmountView, localAmountView);
 
 		acceptBluetoothPaymentView = (CheckBox) view.findViewById(R.id.request_coins_accept_bluetooth_payment);
-		acceptBluetoothPaymentView.setVisibility(ENABLE_BLUETOOTH_LISTENING && bluetoothAdapter != null ? View.VISIBLE : View.GONE);
-		acceptBluetoothPaymentView.setChecked(ENABLE_BLUETOOTH_LISTENING && bluetoothAdapter != null && bluetoothAdapter.isEnabled());
+		acceptBluetoothPaymentView.setVisibility(Bluetooth.canListen(bluetoothAdapter) ? View.VISIBLE : View.GONE);
+		acceptBluetoothPaymentView.setChecked(Bluetooth.canListen(bluetoothAdapter) && bluetoothAdapter.isEnabled());
 		acceptBluetoothPaymentView.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 			@Override
 			public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked)
 			{
-				if (ENABLE_BLUETOOTH_LISTENING && bluetoothAdapter != null && isChecked)
+				if (Bluetooth.canListen(bluetoothAdapter) && isChecked)
 				{
 					if (bluetoothAdapter.isEnabled())
 					{
@@ -296,7 +301,7 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 			}
 		});
 
-		if (ENABLE_BLUETOOTH_LISTENING && bluetoothAdapter != null && bluetoothAdapter.isEnabled() && acceptBluetoothPaymentView.isChecked())
+		if (Bluetooth.canListen(bluetoothAdapter) && bluetoothAdapter.isEnabled() && acceptBluetoothPaymentView.isChecked())
 			startBluetoothListening();
 
 		this.activity.runAfterLoad(new Runnable() {
@@ -415,15 +420,17 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		final Uri request = Uri.parse(determineNubitsRequestStr(false));
 		clipboardManager.setPrimaryClip(ClipData.newRawUri("NuBits payment request", request));
 		log.info("payment request copied to clipboard: {}", request);
-		activity.toast(R.string.request_coins_clipboard_msg);
+		new Toast(activity).toast(R.string.request_coins_clipboard_msg);
 	}
 
 	private void handleShare()
 	{
+		final String request = determineNubitsRequestStr(false);
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_TEXT, determineNubitsRequestStr(false));
+		intent.putExtra(Intent.EXTRA_TEXT, request);
 		startActivity(Intent.createChooser(intent, getString(R.string.request_coins_share_dialog_title)));
+		log.info("payment request shared via intent: {}", request);
 	}
 
 	private void handleLocalApp()
@@ -440,7 +447,7 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		}
 		catch (final ActivityNotFoundException x)
 		{
-			activity.toast(R.string.request_coins_no_local_app_msg);
+			new Toast(activity).longToast(R.string.request_coins_no_local_app_msg);
 		}
 		finally
 		{
@@ -484,11 +491,12 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 	private String determineNubitsRequestStr(final boolean includeBluetoothMac)
 	{
 		final Coin amount = amountCalculatorLink.getAmount();
+		final String ownName = config.getOwnName();
 
-		final StringBuilder uri = new StringBuilder(NubitsURI.convertToNubitsURI(address, amount, null, null));
+		final StringBuilder uri = new StringBuilder(NubitsURI.convertToNubitsURI(address, amount, ownName, null));
 		if (includeBluetoothMac && bluetoothMac != null)
 		{
-			uri.append(amount == null ? '?' : '&');
+			uri.append(amount == null && ownName == null ? '?' : '&');
 			uri.append(Bluetooth.MAC_URI_PARAM).append('=').append(bluetoothMac);
 		}
 		return uri.toString();
@@ -499,7 +507,8 @@ public final class RequestCoinsFragment extends Fragment implements NfcAdapter.C
 		final Coin amount = amountCalculatorLink.getAmount();
 		final String paymentUrl = includeBluetoothMac && bluetoothMac != null ? "bt:" + bluetoothMac : null;
 
-		return PaymentProtocol.createPaymentRequest(Constants.NETWORK_PARAMETERS, amount, address, null, paymentUrl, null).build().toByteArray();
+		return PaymentProtocol.createPaymentRequest(Constants.NETWORK_PARAMETERS, amount, address, config.getOwnName(), paymentUrl, null).build()
+				.toByteArray();
 	}
 
 	@Override

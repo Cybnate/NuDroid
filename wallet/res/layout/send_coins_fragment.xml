@@ -1,85 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    tools:ignore="RequiredSize"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:orientation="vertical"
+	tools:ignore="RequiredSize" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginTop="8dp"
-        android:text="@string/send_coins_fragment_receiving_address_label"
-        android:textColor="#000"
-        android:textSize="@dimen/font_size_small"
-        android:textStyle="bold" />
+	<LinearLayout
+		android:id="@+id/send_coins_payee_group"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/send_coins_payee_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginTop="8dp"
-        android:singleLine="true"
-        android:textColor="@color/fg_significant"
-        android:textSize="@dimen/font_size_normal" />
+		<TextView
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
+		    android:text="@string/send_coins_fragment_receiving_address_label"
+		    android:textSize="@dimen/font_size_small"
+		    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/send_coins_payee_verified_by"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:singleLine="true"
-        android:textColor="@color/fg_less_significant"
-        android:textSize="@dimen/font_size_small" />
+		<TextView
+		    android:id="@+id/send_coins_payee_name"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginTop="8dp"
+		    android:singleLine="true" />
 
-    <AutoCompleteTextView
-        android:id="@+id/send_coins_receiving_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
-        android:layout_marginRight="@dimen/list_entry_padding_horizontal"
-        android:completionThreshold="1"
-        android:hint="@string/send_coins_fragment_receiving_address_hint"
-        android:imeOptions="flagNoExtractUi"
-        android:singleLine="true"
-        android:textColor="#000"
-        android:textSize="@dimen/font_size_normal" />
+		<TextView
+		    android:id="@+id/send_coins_payee_verified_by"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
+		    android:singleLine="true"
+		    android:textColor="@color/fg_less_significant"
+		    android:textSize="@dimen/font_size_small" />
 
-    <LinearLayout
-        android:id="@+id/send_coins_receiving_static"
-        style="@android:style/Widget.Holo.Light.EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
-        android:layout_marginRight="@dimen/list_entry_padding_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone" >
+		<AutoCompleteTextView
+		    android:id="@+id/send_coins_receiving_address"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
+		    android:layout_marginRight="@dimen/list_entry_padding_horizontal"
+		    android:completionThreshold="1"
+		    android:hint="@string/send_coins_fragment_receiving_address_hint"
+		    android:imeOptions="flagNoExtractUi"
+		    android:singleLine="true" />
 
-        <TextView
-            android:id="@+id/send_coins_receiving_static_label"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:singleLine="false"
-            android:textSize="@dimen/font_size_normal"
-            android:textStyle="bold" />
+		<LinearLayout
+		    android:id="@+id/send_coins_receiving_static"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
+		    android:layout_marginTop="6dp"
+		    android:orientation="horizontal"
+		    android:visibility="gone" >
 
-        <TextView
-            android:id="@+id/send_coins_receiving_static_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
-            android:textSize="@dimen/font_size_normal" />
-    </LinearLayout>
+			<TextView
+			    android:id="@+id/send_coins_receiving_static_label"
+			    android:layout_width="0px"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="left"
+			    android:layout_weight="1"
+			    android:ellipsize="end"
+			    android:maxLines="3"
+			    android:singleLine="false"
+			    android:textStyle="bold" />
+
+			<TextView
+			    android:id="@+id/send_coins_receiving_static_address"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="@dimen/list_entry_padding_horizontal" />
+	    </LinearLayout>
 
     <!-- SHAPESHIFT LAYOUT  -->
 
@@ -128,7 +125,6 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
             android:text="@string/send_coins_fragment_shapeshift_foreign_label"
             android:textSize="@dimen/font_size_small"
             android:textStyle="bold" />
@@ -137,7 +133,6 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
             android:text="@string/send_coins_fragment_shapeshift_rate_label"
             android:textSize="@dimen/font_size_small"
             android:textStyle="bold" />
@@ -193,7 +188,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:layout_marginTop="8dp"
         android:text="@string/send_coins_fragment_amount_label"
         android:textSize="@dimen/font_size_small"
         android:textStyle="bold" />
@@ -237,6 +231,7 @@
                 tools:ignore="TextFields" />
         </com.matthewmitchell.nubits_android_wallet.ui.CurrencyAmountView>
     </LinearLayout>
+	</LinearLayout>
 
     <CheckBox
         android:id="@+id/send_coins_direct_payment_enable"
@@ -245,12 +240,9 @@
         android:layout_marginLeft="@dimen/list_entry_padding_horizontal"
         android:layout_marginRight="@dimen/list_entry_padding_horizontal"
         android:layout_marginTop="8dp"
-        android:text="@string/send_coins_fragment_direct_payment_enable"
-        android:textSize="@dimen/font_size_normal" />
+		android:text="@string/send_coins_fragment_direct_payment_enable" />
 
-    <!-- stretch dummy -->
-
-    <ImageView
+	<Space
         android:layout_width="0px"
         android:layout_height="0px"
         android:layout_weight="1" />
@@ -299,21 +291,18 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/send_coins_fragment_private_key_password"
+			android:hint="@string/private_key_password"
             android:imeOptions="flagNoExtractUi"
             android:inputType="numberPassword"
-            android:singleLine="true"
-            android:textColor="#000"
-            android:textSize="@dimen/font_size_normal" />
+			android:singleLine="true" />
 
         <TextView
             android:id="@+id/send_coins_private_key_bad_password"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/send_coins_fragment_private_key_bad_password"
+			android:text="@string/private_key_bad_password"
             android:textColor="@color/fg_error"
-            android:textSize="@dimen/font_size_normal"
             android:textStyle="bold"
             android:visibility="invisible" />
     </LinearLayout>
@@ -325,13 +314,13 @@
         android:layout_marginBottom="@dimen/list_entry_padding_vertical"
         android:layout_marginLeft="@dimen/list_entry_padding_horizontal_lax"
         android:layout_marginRight="@dimen/list_entry_padding_horizontal_lax"
-        android:textSize="@dimen/font_size_normal"
         android:visibility="gone" />
 
-    <ListView
+	<FrameLayout
         android:id="@+id/send_coins_sent_transaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:layoutAnimation="@anim/transaction_layout_anim"
         android:visibility="gone" />
 
     <include layout="@layout/send_coins_buttons_include" />

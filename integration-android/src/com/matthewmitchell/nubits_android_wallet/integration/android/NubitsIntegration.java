@@ -57,7 +57,7 @@ public final class NubitsIntegration
 	 * @param address
 	 *            NuBits address
 	 * @param amount
-	 *            NuBits amount in nanocoins
+	 *            NuBits amount in smallest unit
 	 */
 	public static void request(final Context context, final String address, final long amount)
 	{

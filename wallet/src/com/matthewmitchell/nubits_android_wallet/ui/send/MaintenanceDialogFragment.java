@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@ package com.matthewmitchell.nubits_android_wallet.ui.send;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Coin;
 import com.matthewmitchell.nubitsj.core.Transaction;
@@ -57,6 +56,9 @@ import android.widget.TextView;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import com.matthewmitchell.nubitsj.core.Context;
+
+import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.ui.AbstractWalletActivity;
 import com.matthewmitchell.nubits_android_wallet.ui.DialogBuilder;
@@ -85,7 +87,7 @@ public class MaintenanceDialogFragment extends DialogFragment
 	private WalletApplication application;
 	private Wallet wallet;
 
-	@CheckForNull
+	@Nullable
 	private AlertDialog dialog;
 
 	private View passwordGroup;
@@ -210,9 +212,9 @@ public class MaintenanceDialogFragment extends DialogFragment
 	@Override
 	public void onDismiss(final DialogInterface dialog)
 	{
-		wipePasswords();
-
 		this.dialog = null;
+
+		wipePasswords();
 
 		super.onDismiss(dialog);
 	}
@@ -235,7 +237,7 @@ public class MaintenanceDialogFragment extends DialogFragment
 			new DeriveKeyTask(backgroundHandler)
 			{
 				@Override
-				protected void onSuccess(@Nonnull KeyParameter encryptionKey)
+				protected void onSuccess(KeyParameter encryptionKey)
 				{
 					doMaintenance(encryptionKey);
 				}
@@ -256,6 +258,9 @@ public class MaintenanceDialogFragment extends DialogFragment
 			@Override
 			public void run()
 			{
+
+				Context.propagate(Constants.CONTEXT);
+
 				try
 				{
 					wallet.doMaintenance(encryptionKey, true);
@@ -332,12 +337,13 @@ public class MaintenanceDialogFragment extends DialogFragment
 		if (dialog == null)
 			return;
 
-		passwordGroup.setVisibility(wallet.isEncrypted() ? View.VISIBLE : View.GONE);
+		final boolean needsPassword = wallet.isEncrypted();
+		passwordGroup.setVisibility(needsPassword ? View.VISIBLE : View.GONE);
 
 		if (state == State.INPUT)
 		{
 			positiveButton.setText(R.string.maintenance_dialog_button_move);
-			positiveButton.setEnabled(true);
+			positiveButton.setEnabled(!needsPassword || passwordView.getText().toString().trim().length() > 0);
 			negativeButton.setEnabled(true);
 		}
 		else if (state == State.DECRYPTING)

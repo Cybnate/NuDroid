@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 
 import java.math.BigInteger;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Coin;
 import com.matthewmitchell.nubitsj.core.Wallet;
@@ -75,9 +75,9 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 	private String query = null;
 
 	private Coin balance = null;
-	@CheckForNull
+	@Nullable
 	private BlockchainState blockchainState = null;
-	@CheckForNull
+	@Nullable
 	private String defaultCurrency = null;
 
 	private static final int ID_BALANCE_LOADER = 0;
@@ -110,7 +110,7 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
-		setHasOptionsMenu(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB);
+		setHasOptionsMenu(true);
 
 		adapter = new ExchangeRatesAdapter(activity);
 		setListAdapter(adapter);
@@ -282,13 +282,8 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 				
 				balance = application.getWallet().getBalance(BalanceType.ESTIMATED);
 				
-				if (adapter != null) {
-					final int NBTShift = config.getNBTShift();
-
-					final Coin base = NBTShift == 0 ? Coin.COIN : Coin.MILLICOIN;
-
-					adapter.setRateBase(base);
-				}
+				if (adapter != null)
+					adapter.setRateBase(config.getNbtBase());
 				
 			}
 			
@@ -418,7 +413,7 @@ public final class ExchangeRatesFragment extends FancyListFragment implements On
 			currencyCodeView.setText(exchangeRate.getCurrencyCode());
 
 			final CurrencyTextView rateView = (CurrencyTextView) view.findViewById(R.id.exchange_rate_row_rate);
-			rateView.setFormat(Constants.LOCAL_FORMAT);
+			rateView.setFormat(!rateBase.isLessThan(Coin.COIN) ? Constants.LOCAL_FORMAT.minDecimals(2) : Constants.LOCAL_FORMAT.minDecimals(4));
 			rateView.setAmount(exchangeRate.rate.coinToFiat(rateBase));
 
 			final CurrencyTextView walletView = (CurrencyTextView) view.findViewById(R.id.exchange_rate_row_balance);

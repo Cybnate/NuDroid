@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import android.content.Context;
@@ -39,6 +37,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.matthewmitchell.nubitsj.core.Constants;
 import com.matthewmitchell.nubitsj.core.Coin;
 import com.matthewmitchell.nubitsj.core.Monetary;
 import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
@@ -102,7 +101,7 @@ public final class CurrencyAmountView extends FrameLayout
         significantColor = resources.getColor(R.color.fg_significant);
         lessSignificantColor = resources.getColor(R.color.fg_less_significant);
         errorColor = resources.getColor(R.color.fg_error);
-        deleteButtonDrawable = resources.getDrawable(R.drawable.ic_input_delete);
+		deleteButtonDrawable = resources.getDrawable(R.drawable.ic_clear_grey600_24dp);
     }
 
     @Override
@@ -260,7 +259,7 @@ public final class CurrencyAmountView extends FrameLayout
         this.validateAmount = validateAmount;
     }
 
-    public void setContextButton(final int contextButtonResId, @Nonnull final OnClickListener contextButtonClickListener)
+	public void setContextButton(final int contextButtonResId, final OnClickListener contextButtonClickListener)
     {
         this.contextButtonDrawable = getContext().getResources().getDrawable(contextButtonResId);
         this.contextButtonClickListener = contextButtonClickListener;
@@ -268,13 +267,14 @@ public final class CurrencyAmountView extends FrameLayout
         updateAppearance();
     }
 
-    public void setListener(@Nonnull final Listener listener)
+	public void setListener(final Listener listener)
     {
         this.listener = listener;
     }
 
-    @CheckForNull
-    public Monetary getAmount() {
+	@Nullable
+	public Monetary getAmount()
+	{
         if (!isValidAmount(false))
             return null;
 
@@ -353,9 +353,11 @@ public final class CurrencyAmountView extends FrameLayout
         try {
             if (!str.isEmpty()) {
                 final Monetary amount;
-                if (currencyType == CurrencyType.COIN)
+                if (currencyType == CurrencyType.COIN) {
                     amount = inputFormat.parse(str);
-                else if (currencyType == CurrencyType.FIAT)
+		    if (((Coin) amount).isGreaterThan(Constants.NETWORK_PARAMETERS.getMaxMoney()))
+			return false;
+                } else if (currencyType == CurrencyType.FIAT)
                     amount = inputFormat.parseFiat(localCurrencyCode, str);
                 else
                     amount = inputFormat.parseShapeShiftCoin(str, smallestExponent);

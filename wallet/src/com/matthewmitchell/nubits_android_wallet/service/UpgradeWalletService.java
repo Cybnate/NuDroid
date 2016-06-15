@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,16 @@
 
 package com.matthewmitchell.nubits_android_wallet.service;
 
-import javax.annotation.Nonnull;
 
 import com.matthewmitchell.nubitsj.core.Wallet;
+import com.matthewmitchell.nubitsj.core.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 
 /**
@@ -38,7 +39,7 @@ import com.matthewmitchell.nubits_android_wallet.WalletApplication;
  */
 public final class UpgradeWalletService extends IntentService
 {
-	public static void startUpgrade(@Nonnull final Context context)
+	public static void startUpgrade(final Context context)
 	{
 		context.startService(new Intent(context, UpgradeWalletService.class));
 	}
@@ -72,6 +73,8 @@ public final class UpgradeWalletService extends IntentService
 			@Override
 			public void run() {
 				
+				Context.propagate(Constants.CONTEXT);
+
 				final Wallet wallet = application.getWallet();
 
 				if (wallet.isDeterministicUpgradeRequired())

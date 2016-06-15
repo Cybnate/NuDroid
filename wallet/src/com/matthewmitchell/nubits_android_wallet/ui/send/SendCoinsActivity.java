@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui.send;
 
-import javax.annotation.Nonnull;
-
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.matthewmitchell.nubitsj.core.AddressFormatException;
+import com.matthewmitchell.nubitsj.core.Coin;
+
+import de.schildbach.wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.data.PaymentIntent;
 import com.matthewmitchell.nubits_android_wallet.ui.AbstractBindServiceActivity;
 import com.matthewmitchell.nubits_android_wallet.ui.HelpDialogFragment;
@@ -37,11 +38,18 @@ public final class SendCoinsActivity extends AbstractBindServiceActivity
 {
 	public static final String INTENT_EXTRA_PAYMENT_INTENT = "payment_intent";
 
-	public static void start(final Context context, @Nonnull PaymentIntent paymentIntent)
+	public static void start(final Context context, final PaymentIntent paymentIntent, final int intentFlags)
 	{
 		final Intent intent = new Intent(context, SendCoinsActivity.class);
 		intent.putExtra(INTENT_EXTRA_PAYMENT_INTENT, paymentIntent);
+		if (intentFlags != 0)
+			intent.setFlags(intentFlags);
 		context.startActivity(intent);
+	}
+
+	public static void start(final Context context, final PaymentIntent paymentIntent)
+	{
+		start(context, paymentIntent, 0);
 	}
 
 	@Override
@@ -60,8 +68,6 @@ public final class SendCoinsActivity extends AbstractBindServiceActivity
 			
 		});
 
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

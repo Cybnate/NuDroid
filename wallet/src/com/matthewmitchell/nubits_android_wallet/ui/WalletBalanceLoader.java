@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 
 import java.util.concurrent.RejectedExecutionException;
 
-import javax.annotation.Nonnull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +34,7 @@ import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.core.Wallet.BalanceType;
 import com.matthewmitchell.nubitsj.utils.Threading;
 
+import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.util.ThrottlingWalletChangeListener;
 
@@ -49,7 +48,7 @@ public final class WalletBalanceLoader extends AsyncTaskLoader<Coin>
 
 	private static final Logger log = LoggerFactory.getLogger(WalletBalanceLoader.class);
 
-	public WalletBalanceLoader(final Context context, @Nonnull final Wallet wallet)
+	public WalletBalanceLoader(final Context context, final Wallet wallet)
 	{
 		super(context);
 
@@ -63,7 +62,7 @@ public final class WalletBalanceLoader extends AsyncTaskLoader<Coin>
 		super.onStartLoading();
 
 		wallet.addEventListener(walletChangeListener, Threading.SAME_THREAD);
-		broadcastManager.registerReceiver(walletChangeReceiver, new IntentFilter(WalletApplication.ACTION_WALLET_CHANGED));
+		broadcastManager.registerReceiver(walletChangeReceiver, new IntentFilter(WalletApplication.ACTION_WALLET_REFERENCE_CHANGED));
 
 		safeForceLoad();
 	}
@@ -91,6 +90,7 @@ public final class WalletBalanceLoader extends AsyncTaskLoader<Coin>
 	@Override
 	public Coin loadInBackground()
 	{
+		Context.propagate(Constants.CONTEXT);
 		return wallet.getBalance(BalanceType.ESTIMATED);
 	}
 

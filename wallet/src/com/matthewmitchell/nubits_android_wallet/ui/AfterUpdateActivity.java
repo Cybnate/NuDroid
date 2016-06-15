@@ -26,7 +26,7 @@ import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
- * @author Andreas Schildbach
+ * @author Matthew Mitchell
  */
 public abstract class AfterUpdateActivity extends AbstractWalletActivity implements ConfirmationDialogFragment.ConfirmationDialogCallbacks {
 

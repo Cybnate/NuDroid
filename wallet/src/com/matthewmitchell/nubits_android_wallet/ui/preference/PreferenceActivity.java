@@ -19,8 +19,6 @@ package com.matthewmitchell.nubits_android_wallet.ui.preference;
 
 import java.util.List;
 
-import android.app.ActionBar;
-import android.os.Bundle;
 import android.view.MenuItem;
 import com.matthewmitchell.nubits_android_wallet.R;
 
@@ -29,15 +27,6 @@ import com.matthewmitchell.nubits_android_wallet.R;
  */
 public final class PreferenceActivity extends android.preference.PreferenceActivity
 {
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
-
 	@Override
 	public void onBuildHeaders(final List<Header> target)
 	{
@@ -55,5 +44,12 @@ public final class PreferenceActivity extends android.preference.PreferenceActiv
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected boolean isValidFragment(final String fragmentName)
+	{
+		return SettingsFragment.class.getName().equals(fragmentName) || DiagnosticsFragment.class.getName().equals(fragmentName)
+				|| AboutFragment.class.getName().equals(fragmentName);
 	}
 }

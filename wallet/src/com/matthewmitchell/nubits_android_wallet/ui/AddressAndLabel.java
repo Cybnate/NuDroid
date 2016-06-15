@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,12 @@ import com.matthewmitchell.nubitsj.core.NetworkParameters;
 import com.matthewmitchell.nubitsj.core.WrongNetworkException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.google.common.base.Objects;
+
+import com.matthewmitchell.nubits_android_wallet.Constants;
+import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 
 /**
  * @author Andreas Schildbach
@@ -36,16 +40,39 @@ public class AddressAndLabel implements Parcelable
 	public final Address address;
 	public final String label;
 
-	public AddressAndLabel(@Nonnull final NetworkParameters addressParams, @Nonnull final String address, @Nullable final String label)
-			throws WrongNetworkException, AddressFormatException {
-		this.address = new Address(addressParams, address);
+	public AddressAndLabel(final Address address, @Nullable final String label)
+	{
+		this.address = address;
 		this.label = label;
+	}
+
+	public AddressAndLabel(final NetworkParameters addressParams, final String address, @Nullable final String label) throws WrongNetworkException,
+			AddressFormatException
+	{
+		this(new Address(addressParams, address), label);
 	}
 	
 	public AddressAndLabel(@Nonnull final List<NetworkParameters> addressParams, @Nonnull final String address, @Nullable final String label)
 			throws WrongNetworkException, AddressFormatException {
 		this.address = new Address(addressParams, address);
 		this.label = label;
+	}
+
+	@Override
+	public boolean equals(final Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		final AddressAndLabel other = (AddressAndLabel) o;
+		return Objects.equal(this.address, other.address) && Objects.equal(this.label, other.label);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(address, label);
 	}
 
 	@Override
@@ -64,7 +91,7 @@ public class AddressAndLabel implements Parcelable
 		for (NetworkParameters network: networks)
 			dest.writeSerializable(network);
 		
-		dest.writeByteArray(address.getHash160());
+		dest.writeString(address.toString());
 		dest.writeString(label);
 	}
 
@@ -91,9 +118,7 @@ public class AddressAndLabel implements Parcelable
 		for (int x = 0; x < paramsSize; x++)
 			addressParameters.add((NetworkParameters) in.readSerializable());
 		
-		final byte[] addressHash = new byte[Address.LENGTH];
-		in.readByteArray(addressHash);
-		address = new Address(addressParameters, addressHash);
+		address = WalletUtils.newAddressOrThrow(addressParameters, in.readString());
 
 		label = in.readString();
 	}

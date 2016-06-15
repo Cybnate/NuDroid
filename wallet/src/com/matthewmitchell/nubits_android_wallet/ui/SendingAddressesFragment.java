@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,15 +44,18 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import com.matthewmitchell.nubits_android_wallet.AddressBookProvider;
 import com.matthewmitchell.nubits_android_wallet.Constants;
+import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.R;
 import com.matthewmitchell.nubits_android_wallet.data.PaymentIntent;
 import com.matthewmitchell.nubits_android_wallet.ui.InputParser.StringInputParser;
 import com.matthewmitchell.nubits_android_wallet.ui.send.SendCoinsActivity;
 import com.matthewmitchell.nubits_android_wallet.util.BitmapFragment;
 import com.matthewmitchell.nubits_android_wallet.util.Qr;
+import com.matthewmitchell.nubits_android_wallet.util.Toast;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 import com.matthewmitchell.nubits_android_wallet.util.WholeStringBuilder;
 import com.matthewmitchell.nubitsj.core.Address;
+import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.core.AddressFormatException;
 import com.matthewmitchell.nubitsj.core.Transaction;
 import com.matthewmitchell.nubitsj.core.VerificationException;
@@ -69,12 +72,12 @@ import org.slf4j.LoggerFactory;
 public final class SendingAddressesFragment extends FancyListFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnPrimaryClipChangedListener
 {
 	private AbstractWalletActivity activity;
+	private Wallet wallet;
 	private ClipboardManager clipboardManager;
 	private LoaderManager loaderManager;
 
 	private SimpleCursorAdapter adapter;
 	private String walletAddressesSelection;
-	private MenuItem pasteMenuItem;
 
 	private final Handler handler = new Handler();
 
@@ -88,6 +91,8 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 		super.onAttach(activity);
 
 		this.activity = (AbstractWalletActivity) activity;
+		final WalletApplication application = (WalletApplication) activity.getApplication();
+		this.wallet = application.getWallet();
 		this.clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
 		this.loaderManager = getLoaderManager();
 	}
@@ -163,9 +168,17 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 						public void run()
 						{
 							if (paymentIntent.hasAddress())
-								EditAddressBookEntryFragment.edit(getFragmentManager(), paymentIntent.getAddress().toString());
+							{
+								final Address address = paymentIntent.getAddress();
+								if (!wallet.isPubKeyHashMine(address.getHash160()))
+									EditAddressBookEntryFragment.edit(getFragmentManager(), address);
 							else
+									dialog(activity, null, R.string.address_book_options_scan_title, R.string.address_book_options_scan_own_address);
+							}
+							else
+							{
 								dialog(activity, null, R.string.address_book_options_scan_title, R.string.address_book_options_scan_invalid);
+						}
 						}
 					}, 500);
 				}
@@ -225,16 +238,23 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 	private void handlePasteClipboard()
 	{
 		final Address address = getAddressFromPrimaryClip();
-		if (address != null)
+		if (address == null)
 		{
-			EditAddressBookEntryFragment.edit(getFragmentManager(), address.toString());
-		}
-		else
-		{
-			// should currently not be reached since menu item is disabled
 			final DialogBuilder dialog = new DialogBuilder(activity);
 			dialog.setTitle(R.string.address_book_options_paste_from_clipboard_title);
 			dialog.setMessage(R.string.address_book_options_paste_from_clipboard_invalid);
+			dialog.singleDismissButton(null);
+			dialog.show();
+		}
+		else if (!wallet.isPubKeyHashMine(address.getHash160()))
+		{
+			EditAddressBookEntryFragment.edit(getFragmentManager(), address);
+		}
+		else
+		{
+			final DialogBuilder dialog = new DialogBuilder(activity);
+			dialog.setTitle(R.string.address_book_options_paste_from_clipboard_title);
+			dialog.setMessage(R.string.address_book_options_paste_from_clipboard_own_address);
 			dialog.singleDismissButton(null);
 			dialog.show();
 		}
@@ -293,7 +313,7 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 						return true;
 
 					case R.id.sending_addresses_context_show_qr:
-						handleShowQr(getAddress(position));
+						handleShowQr(getAddress(position), getLabel(position));
 
 						mode.finish();
 						return true;
@@ -343,9 +363,9 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 		activity.getContentResolver().delete(uri, null, null);
 	}
 
-	private void handleShowQr(final String address)
+	private void handleShowQr(final String address, final String label)
 	{
-		final String uri = NubitsURI.convertToNubitsURI(address, null, null, null);
+		final String uri = NubitsURI.convertToNubitsURI(address, null, label, null);
 		final int size = getResources().getDimensionPixelSize(R.dimen.bitmap_dialog_qr_size);
 		BitmapFragment.show(getFragmentManager(), Qr.bitmap(uri, size));
 	}
@@ -353,8 +373,8 @@ public final class SendingAddressesFragment extends FancyListFragment implements
 	private void handleCopyToClipboard(final String address)
 	{
 		clipboardManager.setPrimaryClip(ClipData.newPlainText("NuBits address", address));
-		log.info("address copied to clipboard: {}", address.toString());
-		activity.toast(R.string.wallet_address_fragment_clipboard_msg);
+		log.info("sending address copied to clipboard: {}", address.toString());
+		new Toast(activity).toast(R.string.wallet_address_fragment_clipboard_msg);
 	}
 
 	@Override

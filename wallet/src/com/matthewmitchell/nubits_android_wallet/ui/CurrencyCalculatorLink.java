@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Coin;
@@ -85,7 +83,7 @@ public final class CurrencyCalculatorLink
 		}
 	};
 
-	public CurrencyCalculatorLink(@Nonnull final CurrencyAmountView NBTAmountView, @Nonnull final CurrencyAmountView localAmountView)
+	public CurrencyCalculatorLink(final CurrencyAmountView NBTAmountView, final CurrencyAmountView localAmountView)
 	{
 		this.NBTAmountView = NBTAmountView;
 		this.NBTAmountView.setListener(NBTAmountViewListener);
@@ -108,14 +106,19 @@ public final class CurrencyCalculatorLink
 		update();
 	}
 
-	public void setExchangeRate(@Nonnull final ExchangeRate exchangeRate)
+	public void setExchangeRate(final ExchangeRate exchangeRate)
 	{
 		this.exchangeRate = exchangeRate;
 
 		update();
 	}
 
-	@CheckForNull
+	public ExchangeRate getExchangeRate()
+	{
+		return exchangeRate;
+	}
+
+	@Nullable
 	public Coin getAmount()
 	{
 		if (exchangeDirection)
@@ -215,7 +218,7 @@ public final class CurrencyCalculatorLink
 		activeTextView().requestFocus();
 	}
 
-	public void setNBTAmount(@Nonnull final Coin amount)
+	public void setNBTAmount(final Coin amount)
 	{
 		final Listener listener = this.listener;
 		this.listener = null;

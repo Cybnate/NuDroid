@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 
 import java.security.SecureRandom;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Wallet;
 import com.matthewmitchell.nubitsj.crypto.KeyCrypter;
@@ -76,7 +76,7 @@ public class EncryptKeysDialogFragment extends DialogFragment
     private WalletApplication application;
     private Wallet wallet;
 
-    @CheckForNull
+	@Nullable
     private AlertDialog dialog;
 
     private View oldPasswordGroup;

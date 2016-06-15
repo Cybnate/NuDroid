@@ -6,4 +6,11 @@
 	<string name="symbol_internal">⇄</string>
 	<string name="app_name">NuDroid</string>
 
+	<string-array name="preferences_block_explorer_values">
+		<item>https://svr1.nubitsexplorer.nu/</item>
+	</string-array>
+	<string-array name="preferences_block_explorer_labels">
+		<item>nubitsexplorer.nu</item>
+	</string-array>
+
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -37,7 +37,7 @@ import static junit.framework.Assert.assertTrue;
  */
 public abstract class AbstractBindServiceActivity extends AbstractWalletActivity
 {
-	@CheckForNull
+	@Nullable
 	private BlockchainService blockchainService;
 
 	private final ServiceConnection serviceConnection = new ServiceConnection()

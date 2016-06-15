@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,6 +57,7 @@ import com.matthewmitchell.nubits_android_wallet.Constants;
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.util.BitmapFragment;
 import com.matthewmitchell.nubits_android_wallet.util.Qr;
+mport com.matthewmitchell.nubits_android_wallet.util.Toast;
 import com.matthewmitchell.nubits_android_wallet.util.WalletUtils;
 import com.matthewmitchell.nubits_android_wallet.util.WholeStringBuilder;
 import com.matthewmitchell.nubits_android_wallet.R;
@@ -70,6 +69,7 @@ public final class WalletAddressesFragment extends FancyListFragment
 {
 	private AddressBookActivity activity;
 	private WalletApplication application;
+	private Configuration config;
 	private Wallet wallet;
 	private ClipboardManager clipboardManager;
 	private ContentResolver contentResolver;
@@ -85,6 +85,7 @@ public final class WalletAddressesFragment extends FancyListFragment
 
 		this.activity = (AddressBookActivity) activity;
 		this.application = (WalletApplication) activity.getApplication();
+		this.config = application.getConfiguration();
 		this.clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
 		this.contentResolver = activity.getContentResolver();
 		
@@ -214,8 +215,8 @@ public final class WalletAddressesFragment extends FancyListFragment
 						return true;
 
 					case R.id.wallet_addresses_context_browse:
-						startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.EXPLORE_BASE_URL + "address/"
-								+ getAddress(position).toString())));
+						startActivity(new Intent(Intent.ACTION_VIEW,
+								Uri.withAppendedPath(config.getBlockExplorer(), "address/" + getAddress(position).toString())));
 
 						mode.finish();
 						return true;
@@ -239,23 +240,23 @@ public final class WalletAddressesFragment extends FancyListFragment
 				return getKey(position).toAddress(Constants.NETWORK_PARAMETERS);
 			}
 
-			private void handleEdit(@Nonnull final Address address)
+			private void handleEdit(final Address address)
 			{
-				EditAddressBookEntryFragment.edit(getFragmentManager(), address.toString());
+				EditAddressBookEntryFragment.edit(getFragmentManager(), address);
 			}
 
-			private void handleShowQr(@Nonnull final Address address)
+			private void handleShowQr(final Address address)
 			{
-				final String uri = NubitsURI.convertToNubitsURI(address, null, null, null);
+				final String uri = NubitsURI.convertToNubitsURI(address, null, config.getOwnName(), null);
 				final int size = getResources().getDimensionPixelSize(R.dimen.bitmap_dialog_qr_size);
 				BitmapFragment.show(getFragmentManager(), Qr.bitmap(uri, size));
 			}
 
-			private void handleCopyToClipboard(@Nonnull final Address address)
+			private void handleCopyToClipboard(final Address address)
 			{
 				clipboardManager.setPrimaryClip(ClipData.newPlainText("NuBits address", address.toString()));
-				log.info("address copied to clipboard: {}", address.toString());
-				activity.toast(R.string.wallet_address_fragment_clipboard_msg);
+				log.info("wallet address copied to clipboard: {}", address.toString());
+				new Toast(activity).toast(R.string.wallet_address_fragment_clipboard_msg);
 			}
 
 		});
@@ -284,9 +285,10 @@ public final class WalletAddressesFragment extends FancyListFragment
 		@Override
 		public void onKeysAdded(final List<ECKey> keysAdded)
 		{
-			final List<ECKey> keys = wallet.getImportedKeys();
+			final List<ECKey> derivedKeys = wallet.getIssuedReceiveKeys();
+			final List<ECKey> randomKeys = wallet.getImportedKeys();
 
-			Collections.sort(keys, new Comparator<ECKey>()
+			Collections.sort(randomKeys, new Comparator<ECKey>()
 			{
 				@Override
 				public int compare(final ECKey lhs, final ECKey rhs)
@@ -309,7 +311,8 @@ public final class WalletAddressesFragment extends FancyListFragment
 				@Override
 				public void run()
 				{
-					adapter.replace(keys);
+					adapter.replaceDerivedKeys(derivedKeys);
+					adapter.replaceRandomKeys(randomKeys);
 				}
 			});
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 package com.matthewmitchell.nubits_android_wallet.ui;
 
 
-import javax.annotation.Nonnull;
 
 import com.matthewmitchell.nubitsj.core.Monetary;
 import com.matthewmitchell.nubitsj.utils.MonetaryFormat;
@@ -27,6 +26,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import com.matthewmitchell.nubits_android_wallet.Constants;
@@ -55,13 +55,13 @@ public final class CurrencyTextView extends TextView
 		super(context, attrs);
 	}
 
-	public void setAmount(@Nonnull final Monetary amount)
+	public void setAmount(final Monetary amount)
 	{
 		this.amount = amount;
 		updateView();
 	}
 
-	public void setFormat(@Nonnull final MonetaryFormat format)
+	public void setFormat(final MonetaryFormat format)
 	{
 		this.format = format.codeSeparator(Constants.CHAR_HAIR_SPACE);
 		updateView();
@@ -101,12 +101,19 @@ public final class CurrencyTextView extends TextView
 		updateView();
 	}
 
+	public void setPrefixScaleX(final float prefixScaleX)
+	{
+		this.prefixScaleXSpan = new ScaleXSpan(prefixScaleX);
+		updateView();
+	}
+
 	@Override
 	protected void onFinishInflate()
 	{
 		super.onFinishInflate();
 
 		setPrefixColor(getResources().getColor(R.color.fg_less_significant));
+		setPrefixScaleX(1);
 		setInsignificantRelativeSize(0.85f);
 		setSingleLine();
 	}
@@ -116,8 +123,8 @@ public final class CurrencyTextView extends TextView
 		final MonetarySpannable text;
 
 		if (amount != null)
-			text = new MonetarySpannable(format, alwaysSigned, amount).applyMarkup(new Object[] { prefixRelativeSizeSpan, prefixColorSpan },
-					new Object[] { insignificantRelativeSizeSpan });
+			text = new MonetarySpannable(format, alwaysSigned, amount).applyMarkup(new Object[] { prefixRelativeSizeSpan, prefixScaleXSpan,
+			    prefixColorSpan }, new Object[] { insignificantRelativeSizeSpan });
 		else
 			text = null;
 

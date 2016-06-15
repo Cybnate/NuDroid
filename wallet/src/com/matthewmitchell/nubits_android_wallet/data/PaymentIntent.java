@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,8 +46,6 @@ import com.matthewmitchell.nubitsj.uri.NubitsURIParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +84,7 @@ public final class PaymentIntent implements Parcelable
             }
             catch (final ScriptException x)
             {
-                throw new PaymentProtocolException.InvalidOutputs("unparseable script in output: " + Arrays.toString(output.scriptData));
+				throw new PaymentProtocolException.InvalidOutputs("unparseable script in output: " + Constants.HEX.encode(output.scriptData));
             }
         }
 
@@ -107,8 +105,7 @@ public final class PaymentIntent implements Parcelable
             if (script.isSentToAddress() || script.isPayToScriptHash())
                 builder.append(script.getToAddress(Constants.NETWORK_PARAMETERS));
             else if (script.isSentToRawPubKey())
-                for (final byte b : script.getPubKey())
-                    builder.append(String.format("%02x", b));
+				builder.append(Constants.HEX.encode(script.getPubKey()));
             else if (script.isSentToMultiSig())
                 builder.append("multisig");
             else
@@ -184,31 +181,31 @@ public final class PaymentIntent implements Parcelable
         }
     }
 
-    @CheckForNull
+	@Nullable
     public final Standard standard;
 
-    @CheckForNull
+	@Nullable
     public final String payeeName;
 
-    @CheckForNull
+	@Nullable
     public final String payeeVerifiedBy;
 
-    @CheckForNull
+	@Nullable
     public final Output[] outputs;
 
-    @CheckForNull
+	@Nullable
     public final String memo;
 
-    @CheckForNull
+	@Nullable
     public final String paymentUrl;
 
-    @CheckForNull
+	@Nullable
     public final byte[] payeeData;
 
-    @CheckForNull
+	@Nullable
     public final String paymentRequestUrl;
 
-    @CheckForNull
+	@Nullable
     public final byte[] paymentRequestHash;
 
     public final List<NetworkParameters> networks;
@@ -231,7 +228,7 @@ public final class PaymentIntent implements Parcelable
         this.networks = networks;
     }
 
-    private PaymentIntent(@Nonnull final Address address, @Nullable final String addressLabel) {
+    private PaymentIntent(final Address address, @Nullable final String addressLabel) {
         this(null, null, null, buildSimplePayTo(Coin.ZERO, address), addressLabel, null, null, null, null, address.getParameters());
     }
 
@@ -240,18 +237,18 @@ public final class PaymentIntent implements Parcelable
         return new PaymentIntent(null, null, null, null, null, null, null, null, null, null);
     }
 
-    public static PaymentIntent fromAddress(@Nonnull final Address address, @Nullable final String addressLabel)
+    public static PaymentIntent fromAddress(final Address address, @Nullable final String addressLabel)
     {
         return new PaymentIntent(address, addressLabel);
     }
 
-    public static PaymentIntent fromAddress(@Nonnull final String address, @Nullable final String addressLabel) throws WrongNetworkException,
+    public static PaymentIntent fromAddress(final String address, @Nullable final String addressLabel) throws WrongNetworkException,
            AddressFormatException
            {
                return new PaymentIntent(new Address(address), addressLabel);
            }
 
-    public static PaymentIntent fromNubitsUri(@Nonnull final NubitsURI NubitsUri)
+    public static PaymentIntent fromNubitsUri(final NubitsURI NubitsUri)
     {
         final Address address = NubitsUri.getAddress();
         final Output[] outputs = address != null ? buildSimplePayTo(NubitsUri.getAmount(), address) : null;
@@ -548,8 +545,8 @@ public final class PaymentIntent implements Parcelable
         builder.append(paymentUrl);
         if (payeeData != null)
         {
-            builder.append(',');
-            builder.append(Arrays.toString(payeeData));
+			builder.append(",payeeData=");
+			builder.append(Constants.HEX.encode(payeeData));
         }
         if (paymentRequestUrl != null)
         {
@@ -559,7 +556,7 @@ public final class PaymentIntent implements Parcelable
         if (paymentRequestHash != null)
         {
             builder.append(",paymentRequestHash=");
-            builder.append(BaseEncoding.base16().lowerCase().encode(paymentRequestHash));
+            builder.append(Constants.HEX.encode(paymentRequestHash));
         }
         if (networks != null) {
             builder.append(",networks=[");

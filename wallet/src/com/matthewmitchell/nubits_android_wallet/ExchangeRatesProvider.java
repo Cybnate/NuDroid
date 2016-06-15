@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 package com.matthewmitchell.nubits_android_wallet;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -34,11 +35,11 @@ import java.util.zip.GZIPInputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.matthewmitchell.nubitsj.core.Coin;
 import com.matthewmitchell.nubitsj.utils.Fiat;
+import org.bitcoinj.utils.MonetaryFormat;
 import com.matthewmitchell.nubitsj.utils.ExchangeRate;
 
 import org.json.JSONArray;
@@ -58,6 +59,7 @@ import android.provider.BaseColumns;
 import android.text.format.DateUtils;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Strings;
 
 import com.matthewmitchell.nubits_android_wallet.util.GenericUtils;
 import com.matthewmitchell.nubits_android_wallet.util.Io;
@@ -69,8 +71,9 @@ public class ExchangeRatesProvider extends ContentProvider
 {
 	public static class WalletExchangeRate
 	{
-		public WalletExchangeRate(@Nonnull final ExchangeRate rate, final String source)
+		public WalletExchangeRate(final ExchangeRate rate, final String source)
 		{
+			checkNotNull(rate.fiat.currencyCode);
 			this.rate = rate;
 			this.source = source;
 		}
@@ -101,7 +104,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	private Configuration config;
 	private String userAgent;
 
-	@CheckForNull
+	@Nullable
 	private Map<String, WalletExchangeRate> exchangeRates = null;
 	private long lastUpdated = 0;
 
@@ -126,7 +129,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	{
 		final Context context = getContext();
 
-		this.config = new Configuration(PreferenceManager.getDefaultSharedPreferences(context));
+		this.config = new Configuration(PreferenceManager.getDefaultSharedPreferences(context), context.getResources());
 
 		this.userAgent = WalletApplication.httpUserAgent(WalletApplication.packageInfoFromContext(context).versionName);
 
@@ -140,7 +143,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		return true;
 	}
 
-	public static Uri contentUri(@Nonnull final String packageName, final boolean offline)
+	public static Uri contentUri(final String packageName, final boolean offline)
 	{
 		final Uri.Builder uri = Uri.parse("content://" + packageName + '.' + "exchange_rates").buildUpon();
 		if (offline)
@@ -242,7 +245,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		}
 	}
 
-	public static WalletExchangeRate getExchangeRate(@Nonnull final Cursor cursor)
+	public static WalletExchangeRate getExchangeRate(final Cursor cursor)
 	{
 		final String currencyCode = cursor.getString(cursor.getColumnIndexOrThrow(ExchangeRatesProvider.KEY_CURRENCY_CODE));
 		final Coin rateCoin = Coin.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow(ExchangeRatesProvider.KEY_RATE_COIN)));

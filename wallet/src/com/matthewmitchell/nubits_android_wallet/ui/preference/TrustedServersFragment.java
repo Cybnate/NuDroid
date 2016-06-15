@@ -111,8 +111,6 @@ public class TrustedServersFragment extends ListFragment
         return (DragSortListView) super.getListView();
     }
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(TrustedServersFragment.class);
-
     private LoaderManager.LoaderCallbacks<TrustedServerList> serverListLoaderCallbacks = new LoaderManager.LoaderCallbacks<TrustedServerList> () {
 
         @Override

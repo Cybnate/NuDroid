@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014 the original author or authors.
+ * Copyright 2012-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,7 @@ package com.matthewmitchell.nubits_android_wallet.offline;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.annotation.Nonnull;
 
 import com.matthewmitchell.nubitsj.protocols.payments.Protos;
 import com.matthewmitchell.nubitsj.protocols.payments.Protos.PaymentACK;
@@ -58,9 +55,10 @@ public abstract class AcceptBluetoothThread extends Thread
 
 	public static abstract class ClassicBluetoothThread extends AcceptBluetoothThread
 	{
-		public ClassicBluetoothThread(@Nonnull final BluetoothAdapter adapter)
+		public ClassicBluetoothThread(final BluetoothAdapter adapter) throws IOException
 		{
-			super(listen(adapter, Bluetooth.CLASSIC_PAYMENT_PROTOCOL_NAME, Bluetooth.CLASSIC_PAYMENT_PROTOCOL_UUID));
+			super(adapter
+					.listenUsingInsecureRfcommWithServiceRecord(Bluetooth.CLASSIC_PAYMENT_PROTOCOL_NAME, Bluetooth.CLASSIC_PAYMENT_PROTOCOL_UUID));
 		}
 
 		@Override
@@ -156,9 +154,9 @@ public abstract class AcceptBluetoothThread extends Thread
 
 	public static abstract class PaymentProtocolThread extends AcceptBluetoothThread
 	{
-		public PaymentProtocolThread(@Nonnull final BluetoothAdapter adapter)
+		public PaymentProtocolThread(final BluetoothAdapter adapter) throws IOException
 		{
-			super(listen(adapter, Bluetooth.BIP70_PAYMENT_PROTOCOL_NAME, Bluetooth.BIP70_PAYMENT_PROTOCOL_UUID));
+			super(adapter.listenUsingInsecureRfcommWithServiceRecord(Bluetooth.BIP70_PAYMENT_PROTOCOL_NAME, Bluetooth.BIP70_PAYMENT_PROTOCOL_UUID));
 		}
 
 		@Override
@@ -259,17 +257,5 @@ public abstract class AcceptBluetoothThread extends Thread
 		}
 	}
 
-	protected static BluetoothServerSocket listen(final BluetoothAdapter adapter, final String serviceName, final UUID serviceUuid)
-	{
-		try
-		{
-			return adapter.listenUsingInsecureRfcommWithServiceRecord(serviceName, serviceUuid);
-		}
-		catch (final IOException x)
-		{
-			throw new RuntimeException(x);
-		}
-	}
-
-	protected abstract boolean handleTx(@Nonnull Transaction tx);
+	protected abstract boolean handleTx(Transaction tx);
 }

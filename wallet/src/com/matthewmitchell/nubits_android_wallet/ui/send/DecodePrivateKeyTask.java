@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui.send;
 
-import javax.annotation.Nonnull;
 
 import com.matthewmitchell.nubitsj.core.ECKey;
 import com.matthewmitchell.nubitsj.crypto.BIP38PrivateKey;
@@ -33,13 +32,13 @@ public abstract class DecodePrivateKeyTask
 	private final Handler backgroundHandler;
 	private final Handler callbackHandler;
 
-	public DecodePrivateKeyTask(@Nonnull final Handler backgroundHandler)
+	public DecodePrivateKeyTask(final Handler backgroundHandler)
 	{
 		this.backgroundHandler = backgroundHandler;
 		this.callbackHandler = new Handler(Looper.myLooper());
 	}
 
-	public final void decodePrivateKey(@Nonnull final BIP38PrivateKey encryptedKey, @Nonnull final String passphrase)
+	public final void decodePrivateKey(final BIP38PrivateKey encryptedKey, final String passphrase)
 	{
 		backgroundHandler.post(new Runnable()
 		{
@@ -74,7 +73,7 @@ public abstract class DecodePrivateKeyTask
 		});
 	}
 
-	protected abstract void onSuccess(@Nonnull ECKey decryptedKey);
+	protected abstract void onSuccess(ECKey decryptedKey);
 
 	protected abstract void onBadPassphrase();
 }

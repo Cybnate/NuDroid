@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -29,10 +29,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.matthewmitchell.nubitsj.core.Coin;
@@ -46,6 +48,7 @@ import com.matthewmitchell.nubits_android_wallet.ExchangeRatesProvider.WalletExc
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
 import com.matthewmitchell.nubits_android_wallet.service.BlockchainState;
 import com.matthewmitchell.nubits_android_wallet.service.BlockchainStateLoader;
+import com.matthewmitchell.nubits_android_wallet.ui.send.SendCoinsActivity;
 import com.matthewmitchell.nubits_android_wallet.R;
 
 /**
@@ -60,17 +63,17 @@ public final class WalletBalanceFragment extends Fragment
 	private View viewBalance;
 	private CurrencyTextView viewBalanceNBT;
 	private View viewBalanceTooMuch;
-	private FrameLayout viewBalanceLocalFrame;
 	private CurrencyTextView viewBalanceLocal;
 	private TextView viewProgress;
 
 	private boolean showLocalBalance;
+	private boolean installedFromGooglePlay;
 
-	@CheckForNull
+	@Nullable
 	private Coin balance = null;
-	@CheckForNull
+	@Nullable
 	private WalletExchangeRate exchangeRate = null;
-	@CheckForNull
+	@Nullable
 	private BlockchainState blockchainState = null;
 
 	private static final int ID_BALANCE_LOADER = 0;
@@ -78,6 +81,8 @@ public final class WalletBalanceFragment extends Fragment
 	private static final int ID_BLOCKCHAIN_STATE_LOADER = 2;
 
 	private static final long BLOCKCHAIN_UPTODATE_THRESHOLD_MS = DateUtils.HOUR_IN_MILLIS;
+	private static final Coin SOME_BALANCE_THRESHOLD = Coin.COIN.multiply(5);
+	private static final Coin TOO_MUCH_BALANCE_THRESHOLD = Coin.COIN.multiply(500);
 
 	@Override
 	public void onAttach(final Activity activity)
@@ -89,6 +94,15 @@ public final class WalletBalanceFragment extends Fragment
 		this.loaderManager = getLoaderManager();
 
 		showLocalBalance = getResources().getBoolean(R.bool.show_local_balance);
+		installedFromGooglePlay = "com.android.vending".equals(application.getPackageManager().getInstallerPackageName(application.getPackageName()));
+	}
+
+	@Override
+	public void onCreate(final Bundle savedInstanceState)
+	{
+		setHasOptionsMenu(true);
+
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -122,12 +136,9 @@ public final class WalletBalanceFragment extends Fragment
 		}
 
 		viewBalanceNBT = (CurrencyTextView) view.findViewById(R.id.wallet_balance_nbt);
+		viewBalanceNBT.setPrefixScaleX(0.9f);
 
 		viewBalanceTooMuch = view.findViewById(R.id.wallet_balance_too_much);
-
-		viewBalanceLocalFrame = (FrameLayout) view.findViewById(R.id.wallet_balance_local_frame);
-		if (showExchangeRatesOption)
-			viewBalanceLocalFrame.setForeground(getResources().getDrawable(R.drawable.dropdown_ic_arrow_small));
 
 		viewBalanceLocal = (CurrencyTextView) view.findViewById(R.id.wallet_balance_local);
 		viewBalanceLocal.setInsignificantRelativeSize(1);
@@ -162,6 +173,37 @@ public final class WalletBalanceFragment extends Fragment
 		loaderManager.destroyLoader(ID_BALANCE_LOADER);
 
 		super.onPause();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater)
+	{
+		inflater.inflate(R.menu.wallet_balance_fragment_options, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(final Menu menu)
+	{
+		final boolean hasSomeBalance = balance != null && !balance.isLessThan(SOME_BALANCE_THRESHOLD);
+		menu.findItem(R.id.wallet_balance_options_donate)
+				.setVisible(Constants.DONATION_ADDRESS != null && (!installedFromGooglePlay || hasSomeBalance));
+
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case R.id.wallet_balance_options_donate:
+				handleDonate();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void updateView()
@@ -213,7 +255,7 @@ public final class WalletBalanceFragment extends Fragment
 			viewBalance.setVisibility(View.VISIBLE);
 
 			if (!showLocalBalance)
-				viewBalanceLocalFrame.setVisibility(View.GONE);
+				viewBalanceLocal.setVisibility(View.GONE);
 
 			if (balance != null) {
 			    
@@ -222,7 +264,7 @@ public final class WalletBalanceFragment extends Fragment
 				viewBalanceNBT.setFormat(application.getConfiguration().getFormat());
 				viewBalanceNBT.setAmount(balance);
 
-				final boolean tooMuch = balance.isGreaterThan(Coin.COIN.multiply(500));
+				final boolean tooMuch = balance.isGreaterThan(TOO_MUCH_BALANCE_THRESHOLD);
 				
 				viewBalanceTooMuch.setVisibility(tooMuch ? View.VISIBLE : View.GONE);
 
@@ -231,14 +273,14 @@ public final class WalletBalanceFragment extends Fragment
 					if (exchangeRate != null)
 					{
 						final Fiat localValue = exchangeRate.rate.coinToFiat(balance);
-						viewBalanceLocalFrame.setVisibility(View.VISIBLE);
+						viewBalanceLocal.setVisibility(View.VISIBLE);
 						viewBalanceLocal.setFormat(Constants.LOCAL_FORMAT.code(0, Constants.PREFIX_ALMOST_EQUAL_TO + exchangeRate.getCurrencyCode()));
 						viewBalanceLocal.setAmount(localValue);
 						viewBalanceLocal.setTextColor(getResources().getColor(R.color.fg_less_significant));
 					}
 					else
 					{
-						viewBalanceLocalFrame.setVisibility(View.INVISIBLE);
+						viewBalanceLocal.setVisibility(View.INVISIBLE);
 					}
 				}
 			}
@@ -291,6 +333,7 @@ public final class WalletBalanceFragment extends Fragment
 		{
 			WalletBalanceFragment.this.balance = balance;
 
+			activity.invalidateOptionsMenu();
 			updateView();
 		}
 

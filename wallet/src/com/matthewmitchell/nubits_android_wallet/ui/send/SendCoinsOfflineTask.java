@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2014 the original author or authors.
+ * Copyright 2013-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 
 package com.matthewmitchell.nubits_android_wallet.ui.send;
 
-import javax.annotation.Nonnull;
 
 import com.matthewmitchell.nubitsj.core.Coin;
+import com.matthewmitchell.nubitsj.core.ECKey;
 import com.matthewmitchell.nubitsj.core.InsufficientMoneyException;
 import com.matthewmitchell.nubitsj.core.Transaction;
 import com.matthewmitchell.nubitsj.core.Wallet;
@@ -27,6 +27,8 @@ import com.matthewmitchell.nubitsj.core.Wallet.CompletionException;
 import com.matthewmitchell.nubitsj.core.Wallet.CouldNotAdjustDownwards;
 import com.matthewmitchell.nubitsj.core.Wallet.SendRequest;
 import com.matthewmitchell.nubitsj.crypto.KeyCrypterException;
+
+import com.matthewmitchell.nubits_android_wallet.Constants;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -43,20 +45,21 @@ public abstract class SendCoinsOfflineTask
     private final Handler backgroundHandler;
     private final Handler callbackHandler;
 
-    public SendCoinsOfflineTask(@Nonnull final Wallet wallet, @Nonnull final Handler backgroundHandler)
+	public SendCoinsOfflineTask(final Wallet wallet, final Handler backgroundHandler)
     {
         this.wallet = wallet;
         this.backgroundHandler = backgroundHandler;
         this.callbackHandler = new Handler(Looper.myLooper());
     }
 
-    public final void sendCoinsOffline(@Nonnull final SendRequest sendRequest)
+	public final void sendCoinsOffline(final SendRequest sendRequest)
     {
         backgroundHandler.post(new Runnable()
                 {
                     @Override
                     public void run()
                     {
+			Context.propagate(Constants.CONTEXT);
                         try
                         {
                             final Transaction transaction = wallet.sendCoinsOffline(sendRequest); // can take long
@@ -81,6 +84,17 @@ public abstract class SendCoinsOfflineTask
                                         }
                                     });
                         }
+			catch (final ECKey.KeyIsEncryptedException x)
+				{
+					callbackHandler.post(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							onFailure(x);
+						}
+					});
+				}
                         catch (final KeyCrypterException x)
                         {
                             callbackHandler.post(new Runnable()
@@ -127,9 +141,9 @@ public abstract class SendCoinsOfflineTask
                 });
     }
 
-    protected abstract void onSuccess(@Nonnull Transaction transaction);
+	protected abstract void onSuccess(Transaction transaction);
 
-    protected abstract void onInsufficientMoney(@Nonnull Coin missing);
+	protected abstract void onInsufficientMoney(Coin missing);
 
     protected abstract void onInvalidKey();
 
@@ -138,5 +152,5 @@ public abstract class SendCoinsOfflineTask
         onFailure(new CouldNotAdjustDownwards());
     }
 
-    protected abstract void onFailure(@Nonnull Exception exception);
+	protected abstract void onFailure(Exception exception);
 }

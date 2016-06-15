@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 the original author or authors.
+ * Copyright 2011-2015 the original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,19 +19,14 @@ package com.matthewmitchell.nubits_android_wallet.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.matthewmitchell.nubits_android_wallet.WalletApplication;
-import com.matthewmitchell.nubits_android_wallet.R;
 import com.matthewmitchell.nubits_android_wallet.ui.RestoreWalletTask.CloseAction;
 import com.matthewmitchell.nubits_android_wallet.ui.preference.TrustedServerList;
 
@@ -62,52 +57,6 @@ public abstract class AbstractWalletActivity extends LoaderActivity
     protected WalletApplication getWalletApplication()
     {
         return application;
-    }
-
-    protected final void toast(@Nonnull final String text, final Object... formatArgs)
-    {
-        toast(text, 0, Toast.LENGTH_SHORT, formatArgs);
-    }
-
-    protected final void longToast(@Nonnull final String text, final Object... formatArgs)
-    {
-        toast(text, 0, Toast.LENGTH_LONG, formatArgs);
-    }
-
-    protected final void toast(@Nonnull final String text, final int imageResId, final int duration, final Object... formatArgs)
-    {
-        final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
-        TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
-        tv.setText(String.format(text, formatArgs));
-        tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
-
-        final Toast toast = new Toast(this);
-        toast.setView(view);
-        toast.setDuration(duration);
-        toast.show();
-    }
-
-    protected final void toast(final int textResId, final Object... formatArgs)
-    {
-        toast(textResId, 0, Toast.LENGTH_SHORT, formatArgs);
-    }
-
-    protected final void longToast(final int textResId, final Object... formatArgs)
-    {
-        toast(textResId, 0, Toast.LENGTH_LONG, formatArgs);
-    }
-
-    protected final void toast(final int textResId, final int imageResId, final int duration, final Object... formatArgs)
-    {
-        final View view = getLayoutInflater().inflate(R.layout.transient_notification, null);
-        TextView tv = (TextView) view.findViewById(R.id.transient_notification_text);
-        tv.setText(getString(textResId, formatArgs));
-        tv.setCompoundDrawablesWithIntrinsicBounds(imageResId, 0, 0, 0);
-
-        final Toast toast = new Toast(this);
-        toast.setView(view);
-        toast.setDuration(duration);
-        toast.show();
     }
 
     protected void restoreWalletFromEncrypted(@Nonnull final InputStream cipher, @Nonnull final String password, final CloseAction closeAction) {
